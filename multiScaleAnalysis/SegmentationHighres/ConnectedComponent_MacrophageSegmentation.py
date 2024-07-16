@@ -251,7 +251,7 @@ if __name__ == "__main__":
         connected_components_labels_cleaned = grad_filters.remove_small_labels(connected_components_labels, min_size=3000)
 
         # =============================================================================
-        # save image and visualization of segmentatino
+        # save image and Visualization of segmentatino
         # =============================================================================
 
         labels_3D_connectedcomp_color = np.uint8(255 * skcolor.label2rgb(connected_components_labels_cleaned,

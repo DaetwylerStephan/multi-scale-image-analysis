@@ -27,7 +27,7 @@ class image_visualizer_stitched():
 
     def load_visualize_images(self, vis_param):
         """
-        Load images from folder and render them according visualization parameters specified.
+        Load images from folder and render them according Visualization parameters specified.
 
         :param vis_param: Python dictionary of visulization paramters, e.g. vis_param['camera_angle1']
         """
@@ -144,7 +144,7 @@ if __name__ == '__main__':
     )
 
     imagevisu = image_visualizer_stitched()
-    rawdatafolder_parent = '/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/visualization/'
+    rawdatafolder_parent = '/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/Visualization/'
     imagevisu.rawdatafolder = os.path.join(rawdatafolder_parent, "rawdata")
     # segmented data
     imagevisu.segmentationfolder = os.path.join(rawdatafolder_parent, "lowres_segmentation_labelimages")

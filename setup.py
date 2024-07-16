@@ -17,7 +17,7 @@ with open("requirements.txt", "r") as fp:
 
 setup(name='multiScaleAnalysis',
 	  version='0.1.0',
-	  description='Analysis and visualization of multi-scale light-sheet data',
+	  description='Analysis and Visualization of multi-scale light-sheet data',
 	  author='Stephan Daetwyler, Felix Y. Zhou, Hanieh Mazloom Farsibaf',
 	  packages=['multiScaleAnalysis'] + ['multiScaleAnalysis.'+ pkg for pkg in subpkgs] + ['multiScaleAnalysis.SegmentationHighres.gradient_watershed'],
 	  include_package_data=True,

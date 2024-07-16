@@ -404,12 +404,12 @@
 <span class="sd">        (optionally) clip data.</span>
 
 <span class="sd">        :param imagelist: Filepaths of images to stitch</span>
-<span class="sd">        :param image_crops_x: (Optional) crop images before stitching</span>
-<span class="sd">        :param image_crops_y: (Optional) crop images before stitching</span>
+<span class="sd">        :param image_crops_x: (Optional) crop images before Stitching</span>
+<span class="sd">        :param image_crops_y: (Optional) crop images before Stitching</span>
 <span class="sd">        :param optimizeAlignment: (Optional) run optimization of alignment for stack (1 = yes, 0 = no)</span>
 <span class="sd">        :param limit_search: (Optional) if you want to limit the search to a region around a pre-aligned setting</span>
 <span class="sd">        :param clipped: (Optional) clip stack so that no zero value pixels are in the image (1 = yes, 0 = no)</span>
-<span class="sd">        :param use_reference: (Optional) use a reference set at the beginning for stitching so that parameters don&#39;t drift outside expected values</span>
+<span class="sd">        :param use_reference: (Optional) use a reference set at the beginning for Stitching so that parameters don&#39;t drift outside expected values</span>
 <span class="sd">        :return: Fused image of files in imagelist</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -422,7 +422,7 @@
         <span class="k">if</span> <span class="n">image_crops_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">crop_images</span><span class="p">(</span><span class="n">image_crops_x</span><span class="p">,</span> <span class="n">image_crops_y</span><span class="p">)</span>
 
-        <span class="c1">#make max projection for stitching</span>
+        <span class="c1">#make max projection for Stitching</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">make_maxprojections</span><span class="p">()</span>
 
         <span class="c1">#optimize alignments</span>
@@ -432,7 +432,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="o">==</span><span class="p">[]:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;load expected displacement as parameters for stitching&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;load expected displacement as parameters for Stitching&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_x</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_y</span>
 
@@ -481,16 +481,16 @@
 <span class="sd">        Iterate over the output of the low-resolution imaging of the multi-scale microscope to stitch all the data based on an initial guess of the translational shift (from the stage positions).</span>
 
 <span class="sd">        :param experimentfolder_parent: Folder where all timepoints are in</span>
-<span class="sd">        :param experimentfolder_result: Folder to save the result of stitching</span>
+<span class="sd">        :param experimentfolder_result: Folder to save the result of Stitching</span>
 <span class="sd">        :param channelnames: List of channels to stitch</span>
 <span class="sd">        :param region: List of regions, e.g. &quot;low_stack000&quot;</span>
-<span class="sd">        :param sample: Which fish/sample are you stitching, e.g. &quot;fish3&quot;</span>
+<span class="sd">        :param sample: Which fish/sample are you Stitching, e.g. &quot;fish3&quot;</span>
 <span class="sd">        :param image_crops_y: Cropping parameters so that empty regions/at border can be removed, e.g. [[396, 396 + 3336], [308, 308 + 3336], [212, 212 + 3052]]</span>
 <span class="sd">        :param image_crops_x: Cropping parameters so that empty regions/at border can be removed, e.g. [[200, 2200], [200, 2200], [200, 2200]]</span>
 <span class="sd">        :param displacement_x: Approximate displacement in x</span>
 <span class="sd">        :param displacement_y: Approximate displacement in y</span>
 <span class="sd">        :param optimize_alignment: (Optional) do you want to optimize the alignment per timepoint or apply the same parameters to whole timelapse</span>
-<span class="sd">        :param limit_search: (Optional) do you want to restrict the finding of optimal stitching to a small overlap window? if yes, give a range: [100, 15]</span>
+<span class="sd">        :param limit_search: (Optional) do you want to restrict the finding of optimal Stitching to a small overlap window? if yes, give a range: [100, 15]</span>
 <span class="sd">        :param use_reference: Use a reference for individual timepoints</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">textfilepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="n">sample</span> <span class="o">+</span> <span class="s2">&quot;_textfile.txt&quot;</span><span class="p">)</span>
@@ -527,7 +527,7 @@
                 <span class="c1"># (e.g. cancer cells have almost no signal and any alignment there is faulty</span>
                 <span class="n">optimize_channelalignment</span> <span class="o">=</span> <span class="n">optimize_alignment</span>
                 <span class="k">if</span> <span class="n">optimize_alignment</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
-                    <span class="c1">#only align vascular channel / one channel so that other channels get same stitching parameters</span>
+                    <span class="c1">#only align vascular channel / one channel so that other channels get same Stitching parameters</span>
                     <span class="k">if</span> <span class="n">imagechannelname</span><span class="o">==</span><span class="s2">&quot;1_CH594_000000&quot;</span><span class="p">:</span>
                         <span class="n">optimize_channelalignment</span> <span class="o">=</span><span class="mi">1</span>
                     <span class="k">else</span><span class="p">:</span>
@@ -590,11 +590,11 @@
     <span class="c1"># Load the images and generate save folder</span>
     <span class="c1"># =============================================================================</span>
 
-    <span class="n">experimentfolder_parent</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/stitching&quot;</span>
+    <span class="n">experimentfolder_parent</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/Stitching&quot;</span>
     <span class="n">experimentfolder_result</span> <span class="o">=</span> <span class="n">experimentfolder_parent</span> <span class="o">+</span> <span class="s2">&quot;_stitched_test&quot;</span>
 
     <span class="c1"># =============================================================================</span>
-    <span class="c1"># run parameters for stitching on all timepoints</span>
+    <span class="c1"># run parameters for Stitching on all timepoints</span>
     <span class="c1"># =============================================================================</span>
 
     <span class="n">region</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;low_stack000&quot;</span><span class="p">,</span> <span class="s2">&quot;low_stack001&quot;</span><span class="p">,</span> <span class="s2">&quot;low_stack002&quot;</span><span class="p">]</span>

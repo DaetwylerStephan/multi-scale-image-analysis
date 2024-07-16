@@ -277,12 +277,12 @@ class image_stitcher():
         (optionally) clip data.
 
         :param imagelist: Filepaths of images to stitch
-        :param image_crops_x: (Optional) crop images before stitching
-        :param image_crops_y: (Optional) crop images before stitching
+        :param image_crops_x: (Optional) crop images before Stitching
+        :param image_crops_y: (Optional) crop images before Stitching
         :param optimizeAlignment: (Optional) run optimization of alignment for stack (1 = yes, 0 = no)
         :param limit_search: (Optional) if you want to limit the search to a region around a pre-aligned setting
         :param clipped: (Optional) clip stack so that no zero value pixels are in the image (1 = yes, 0 = no)
-        :param use_reference: (Optional) use a reference set at the beginning for stitching so that parameters don't drift outside expected values
+        :param use_reference: (Optional) use a reference set at the beginning for Stitching so that parameters don't drift outside expected values
         :return: Fused image of files in imagelist
         """
 
@@ -295,7 +295,7 @@ class image_stitcher():
         if image_crops_x is not None:
             self.crop_images(image_crops_x, image_crops_y)
 
-        #make max projection for stitching
+        #make max projection for Stitching
         self.make_maxprojections()
 
         #optimize alignments
@@ -305,7 +305,7 @@ class image_stitcher():
             self.expecteddisplacement_x = self.calculated_displacement_x
             self.expecteddisplacement_y = self.calculated_displacement_y
         elif self.calculated_displacement_y==[]:
-            print("load expected displacement as parameters for stitching")
+            print("load expected displacement as parameters for Stitching")
             self.calculated_displacement_x = self.expecteddisplacement_x
             self.calculated_displacement_y = self.expecteddisplacement_y
 
@@ -351,16 +351,16 @@ class image_stitcher():
         Iterate over the output of the low-resolution imaging of the multi-scale microscope to stitch all the data based on an initial guess of the translational shift (from the stage positions).
 
         :param experimentfolder_parent: Folder where all timepoints are in
-        :param experimentfolder_result: Folder to save the result of stitching
+        :param experimentfolder_result: Folder to save the result of Stitching
         :param channelnames: List of channels to stitch
         :param region: List of regions, e.g. "low_stack000"
-        :param sample: Which fish/sample are you stitching, e.g. "fish3"
+        :param sample: Which fish/sample are you Stitching, e.g. "fish3"
         :param image_crops_y: Cropping parameters so that empty regions/at border can be removed, e.g. [[396, 396 + 3336], [308, 308 + 3336], [212, 212 + 3052]]
         :param image_crops_x: Cropping parameters so that empty regions/at border can be removed, e.g. [[200, 2200], [200, 2200], [200, 2200]]
         :param displacement_x: Approximate displacement in x
         :param displacement_y: Approximate displacement in y
         :param optimize_alignment: (Optional) do you want to optimize the alignment per timepoint or apply the same parameters to whole timelapse
-        :param limit_search: (Optional) do you want to restrict the finding of optimal stitching to a small overlap window? if yes, give a range: [100, 15]
+        :param limit_search: (Optional) do you want to restrict the finding of optimal Stitching to a small overlap window? if yes, give a range: [100, 15]
         :param use_reference: Use a reference for individual timepoints
         """
         textfilepath = os.path.join(experimentfolder_result, sample + "_textfile.txt")
@@ -397,7 +397,7 @@ class image_stitcher():
                 # (e.g. cancer cells have almost no signal and any alignment there is faulty
                 optimize_channelalignment = optimize_alignment
                 if optimize_alignment==1:
-                    #only align vascular channel / one channel so that other channels get same stitching parameters
+                    #only align vascular channel / one channel so that other channels get same Stitching parameters
                     if imagechannelname=="1_CH594_000000":
                         optimize_channelalignment =1
                     else:
@@ -458,11 +458,11 @@ if __name__ == '__main__':
     # Load the images and generate save folder
     # =============================================================================
 
-    experimentfolder_parent = "/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/stitching"
+    experimentfolder_parent = "/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/Stitching"
     experimentfolder_result = experimentfolder_parent + "_stitched_test"
 
     # =============================================================================
-    # run parameters for stitching on all timepoints
+    # run parameters for Stitching on all timepoints
     # =============================================================================
 
     region = ["low_stack000", "low_stack001", "low_stack002"]

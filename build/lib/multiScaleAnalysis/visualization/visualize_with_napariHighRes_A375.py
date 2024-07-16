@@ -26,7 +26,7 @@ class image_visualizer():
 
     def load_images(self, vis_param):
         """
-        Load images from folder and render them according visualization parameters specified.
+        Load images from folder and render them according Visualization parameters specified.
 
         :param vis_param: Python dictionary of visulization paramters, e.g. vis_param['camera_angle1']
         """

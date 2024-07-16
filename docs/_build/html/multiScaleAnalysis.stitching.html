@@ -156,16 +156,16 @@ away parts of the image that were not properly illuminated.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>experimentfolder_parent</strong> – Folder where all timepoints are in</p></li>
-<li><p><strong>experimentfolder_result</strong> – Folder to save the result of stitching</p></li>
+<li><p><strong>experimentfolder_result</strong> – Folder to save the result of Stitching</p></li>
 <li><p><strong>channelnames</strong> – List of channels to stitch</p></li>
 <li><p><strong>region</strong> – List of regions, e.g. “low_stack000”</p></li>
-<li><p><strong>sample</strong> – Which fish/sample are you stitching, e.g. “fish3”</p></li>
+<li><p><strong>sample</strong> – Which fish/sample are you Stitching, e.g. “fish3”</p></li>
 <li><p><strong>image_crops_y</strong> – Cropping parameters so that empty regions/at border can be removed, e.g. [[396, 396 + 3336], [308, 308 + 3336], [212, 212 + 3052]]</p></li>
 <li><p><strong>image_crops_x</strong> – Cropping parameters so that empty regions/at border can be removed, e.g. [[200, 2200], [200, 2200], [200, 2200]]</p></li>
 <li><p><strong>displacement_x</strong> – Approximate displacement in x</p></li>
 <li><p><strong>displacement_y</strong> – Approximate displacement in y</p></li>
 <li><p><strong>optimize_alignment</strong> – (Optional) do you want to optimize the alignment per timepoint or apply the same parameters to whole timelapse</p></li>
-<li><p><strong>limit_search</strong> – (Optional) do you want to restrict the finding of optimal stitching to a small overlap window? if yes, give a range: [100, 15]</p></li>
+<li><p><strong>limit_search</strong> – (Optional) do you want to restrict the finding of optimal Stitching to a small overlap window? if yes, give a range: [100, 15]</p></li>
 <li><p><strong>use_reference</strong> – Use a reference for individual timepoints</p></li>
 </ul>
 </dd>
@@ -257,12 +257,12 @@ away parts of the image that were not properly illuminated.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>imagelist</strong> – Filepaths of images to stitch</p></li>
-<li><p><strong>image_crops_x</strong> – (Optional) crop images before stitching</p></li>
-<li><p><strong>image_crops_y</strong> – (Optional) crop images before stitching</p></li>
+<li><p><strong>image_crops_x</strong> – (Optional) crop images before Stitching</p></li>
+<li><p><strong>image_crops_y</strong> – (Optional) crop images before Stitching</p></li>
 <li><p><strong>optimizeAlignment</strong> – (Optional) run optimization of alignment for stack (1 = yes, 0 = no)</p></li>
 <li><p><strong>limit_search</strong> – (Optional) if you want to limit the search to a region around a pre-aligned setting</p></li>
 <li><p><strong>clipped</strong> – (Optional) clip stack so that no zero value pixels are in the image (1 = yes, 0 = no)</p></li>
-<li><p><strong>use_reference</strong> – (Optional) use a reference set at the beginning for stitching so that parameters don’t drift outside expected values</p></li>
+<li><p><strong>use_reference</strong> – (Optional) use a reference set at the beginning for Stitching so that parameters don’t drift outside expected values</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
