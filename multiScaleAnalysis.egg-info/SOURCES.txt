@@ -28,7 +28,6 @@ multiScaleAnalysis/SegmentationLowres/segment_lowres_3d_stitched.py
 multiScaleAnalysis/Tools/PSF_measurements.py
 multiScaleAnalysis/Tools/ShannonEntropyAnalysis.py
 multiScaleAnalysis/Tools/__init__.py
-multiScaleAnalysis/docs/conf.py
 multiScaleAnalysis/stitching/__init__.py
 multiScaleAnalysis/stitching/multiScale_stitching.py
 multiScaleAnalysis/visualization/__init__.py
