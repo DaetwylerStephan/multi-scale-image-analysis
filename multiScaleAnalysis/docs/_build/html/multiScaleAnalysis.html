@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>multiScaleAnalysis package &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="multiScaleAnalysis.SegmentationHighres package" href="multiScaleAnalysis.SegmentationHighres.html" />
+    <link rel="prev" title="multiScaleAnalysis" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Self-driving, multi-scale image analysis
+              <img src="_static/multi_scale_analysis_logo.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started and installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Microscope characterization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PSF_analysis.html">PSF analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ShannonEntropyAnalysis.html">Shannon Entropy Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Low-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Data_stitching.html">Data stitching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LowRes_Segmentation.html">Low-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HopkinsStatistics.html">Hopkins Statistics Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">High-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="HighRes_Segmentation.html">High-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cell_ShapeAnalysis.html">Cell Shape Feature Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cell_CurvatureAnalysis.html">Cell Curvature Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data visualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Data_visualization.html">Data visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python references</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">multiScaleAnalysis</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">multiScaleAnalysis package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html">multiScaleAnalysis.SegmentationHighres package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html">multiScaleAnalysis.SegmentationLowres package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.Tools.html">multiScaleAnalysis.Tools package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html">multiScaleAnalysis.stitching package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html">multiScaleAnalysis.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-multiScaleAnalysis">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Self-driving, multi-scale image analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">multiScaleAnalysis</a></li>
+      <li class="breadcrumb-item active">multiScaleAnalysis package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/multiScaleAnalysis.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="multiscaleanalysis-package">
+<h1>multiScaleAnalysis package<a class="headerlink" href="#multiscaleanalysis-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html">multiScaleAnalysis.SegmentationHighres package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html">multiScaleAnalysis.SegmentationHighres.gradient_watershed package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html#module-multiScaleAnalysis.SegmentationHighres.gradient_watershed.filters">multiScaleAnalysis.SegmentationHighres.gradient_watershed.filters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html#module-multiScaleAnalysis.SegmentationHighres.gradient_watershed.flows">multiScaleAnalysis.SegmentationHighres.gradient_watershed.flows module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html#module-multiScaleAnalysis.SegmentationHighres.gradient_watershed.flows_backup">multiScaleAnalysis.SegmentationHighres.gradient_watershed.flows_backup module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html#module-multiScaleAnalysis.SegmentationHighres.gradient_watershed.metrics">multiScaleAnalysis.SegmentationHighres.gradient_watershed.metrics module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html#module-multiScaleAnalysis.SegmentationHighres.gradient_watershed.plotting">multiScaleAnalysis.SegmentationHighres.gradient_watershed.plotting module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html#module-multiScaleAnalysis.SegmentationHighres.gradient_watershed.segmentation">multiScaleAnalysis.SegmentationHighres.gradient_watershed.segmentation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html#module-multiScaleAnalysis.SegmentationHighres.gradient_watershed.watershed">multiScaleAnalysis.SegmentationHighres.gradient_watershed.watershed module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html#module-multiScaleAnalysis.SegmentationHighres.gradient_watershed.watershed_backup">multiScaleAnalysis.SegmentationHighres.gradient_watershed.watershed_backup module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.gradient_watershed.html#module-multiScaleAnalysis.SegmentationHighres.gradient_watershed">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#module-multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation">multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation.generate2Dsegmentations"><code class="docutils literal notranslate"><span class="pre">generate2Dsegmentations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation.generate_binaryimage"><code class="docutils literal notranslate"><span class="pre">generate_binaryimage()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation.merge_masks"><code class="docutils literal notranslate"><span class="pre">merge_masks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation.register_stack"><code class="docutils literal notranslate"><span class="pre">register_stack()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#module-multiScaleAnalysis.SegmentationHighres.ConnectedComponent_MacrophageSegmentation">multiScaleAnalysis.SegmentationHighres.ConnectedComponent_MacrophageSegmentation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.ConnectedComponent_MacrophageSegmentation.generate_binaryimage"><code class="docutils literal notranslate"><span class="pre">generate_binaryimage()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.ConnectedComponent_MacrophageSegmentation.prepare_segmentations"><code class="docutils literal notranslate"><span class="pre">prepare_segmentations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.ConnectedComponent_MacrophageSegmentation.register_stack"><code class="docutils literal notranslate"><span class="pre">register_stack()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#module-multiScaleAnalysis.SegmentationHighres.Manual_curation">multiScaleAnalysis.SegmentationHighres.Manual_curation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Manual_curation.manual_curate_segmentation"><code class="docutils literal notranslate"><span class="pre">manual_curate_segmentation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Manual_curation.manual_curate_segmentation.give_label_new_identiyinarea"><code class="docutils literal notranslate"><span class="pre">manual_curate_segmentation.give_label_new_identiyinarea()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Manual_curation.manual_curate_segmentation.merge_label"><code class="docutils literal notranslate"><span class="pre">manual_curate_segmentation.merge_label()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Manual_curation.manual_curate_segmentation.remove_label"><code class="docutils literal notranslate"><span class="pre">manual_curate_segmentation.remove_label()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Manual_curation.manual_curate_segmentation.replace_one_label"><code class="docutils literal notranslate"><span class="pre">manual_curate_segmentation.replace_one_label()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Manual_curation.manual_curate_segmentation.saveimage"><code class="docutils literal notranslate"><span class="pre">manual_curate_segmentation.saveimage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Manual_curation.manual_curate_segmentation.takeLabel_fromanotherstack"><code class="docutils literal notranslate"><span class="pre">manual_curate_segmentation.takeLabel_fromanotherstack()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Manual_curation.manual_curate_segmentation.takeLabel_fromanotherstack_range"><code class="docutils literal notranslate"><span class="pre">manual_curate_segmentation.takeLabel_fromanotherstack_range()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#module-multiScaleAnalysis.SegmentationHighres.Merge_ConnectedComponents_Cellpose">multiScaleAnalysis.SegmentationHighres.Merge_ConnectedComponents_Cellpose module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Merge_ConnectedComponents_Cellpose.merge_segmentations"><code class="docutils literal notranslate"><span class="pre">merge_segmentations</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Merge_ConnectedComponents_Cellpose.merge_segmentations.__init__"><code class="docutils literal notranslate"><span class="pre">merge_segmentations.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Merge_ConnectedComponents_Cellpose.merge_segmentations.iterate_throughfolder"><code class="docutils literal notranslate"><span class="pre">merge_segmentations.iterate_throughfolder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Merge_ConnectedComponents_Cellpose.merge_segmentations.process_timepoint"><code class="docutils literal notranslate"><span class="pre">merge_segmentations.process_timepoint()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#module-multiScaleAnalysis.SegmentationHighres.postprocessing_removeCancersignal">multiScaleAnalysis.SegmentationHighres.postprocessing_removeCancersignal module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#module-multiScaleAnalysis.SegmentationHighres.preprocessing_class">multiScaleAnalysis.SegmentationHighres.preprocessing_class module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing.__init__"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing.anisodiff"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing.anisodiff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing.apply_unmix_model"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing.apply_unmix_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing.demix_videos"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing.demix_videos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing.mkdir"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing.mkdir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing.normalize"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing.normalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing.normalize99"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing.normalize99()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing.normalize_mi_ma"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing.normalize_mi_ma()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing.smooth_vol"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing.smooth_vol()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.preprocessing_class.ImagePreprocessing.spectral_unmix_RGB"><code class="docutils literal notranslate"><span class="pre">ImagePreprocessing.spectral_unmix_RGB()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html#module-multiScaleAnalysis.SegmentationHighres">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html">multiScaleAnalysis.SegmentationLowres package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html#module-multiScaleAnalysis.SegmentationLowres.segment_lowres_3d_stitched">multiScaleAnalysis.SegmentationLowres.segment_lowres_3d_stitched module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html#multiScaleAnalysis.SegmentationLowres.segment_lowres_3d_stitched.segment_macrophage_lowres_class"><code class="docutils literal notranslate"><span class="pre">segment_macrophage_lowres_class</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html#multiScaleAnalysis.SegmentationLowres.segment_lowres_3d_stitched.segment_macrophage_lowres_class.__init__"><code class="docutils literal notranslate"><span class="pre">segment_macrophage_lowres_class.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html#multiScaleAnalysis.SegmentationLowres.segment_lowres_3d_stitched.segment_macrophage_lowres_class.iterate_throughfolder"><code class="docutils literal notranslate"><span class="pre">segment_macrophage_lowres_class.iterate_throughfolder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html#multiScaleAnalysis.SegmentationLowres.segment_lowres_3d_stitched.segment_macrophage_lowres_class.open_image"><code class="docutils literal notranslate"><span class="pre">segment_macrophage_lowres_class.open_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html#multiScaleAnalysis.SegmentationLowres.segment_lowres_3d_stitched.segment_macrophage_lowres_class.segment_cancercells"><code class="docutils literal notranslate"><span class="pre">segment_macrophage_lowres_class.segment_cancercells()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html#multiScaleAnalysis.SegmentationLowres.segment_lowres_3d_stitched.segment_macrophage_lowres_class.segment_macrophage"><code class="docutils literal notranslate"><span class="pre">segment_macrophage_lowres_class.segment_macrophage()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html#module-multiScaleAnalysis.SegmentationLowres">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multiScaleAnalysis.Tools.html">multiScaleAnalysis.Tools package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.Tools.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.Tools.html#module-multiScaleAnalysis.Tools.PSF_measurements">multiScaleAnalysis.Tools.PSF_measurements module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.Gauss"><code class="docutils literal notranslate"><span class="pre">Gauss()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.binarize_label_image"><code class="docutils literal notranslate"><span class="pre">binarize_label_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.determinePSFvalues"><code class="docutils literal notranslate"><span class="pre">determinePSFvalues()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.filter_centroidpositions"><code class="docutils literal notranslate"><span class="pre">filter_centroidpositions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.filter_psfvalues"><code class="docutils literal notranslate"><span class="pre">filter_psfvalues()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.get_centroidpositions"><code class="docutils literal notranslate"><span class="pre">get_centroidpositions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.get_psfvalues"><code class="docutils literal notranslate"><span class="pre">get_psfvalues()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.load_image"><code class="docutils literal notranslate"><span class="pre">load_image()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.Tools.html#module-multiScaleAnalysis.Tools.ShannonEntropyAnalysis">multiScaleAnalysis.Tools.ShannonEntropyAnalysis module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.ShannonEntropyAnalysis.fast_normalized_dct_shannon_entropy"><code class="docutils literal notranslate"><span class="pre">fast_normalized_dct_shannon_entropy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.ShannonEntropyAnalysis.load_image"><code class="docutils literal notranslate"><span class="pre">load_image()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.Tools.html#module-multiScaleAnalysis.Tools">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multiScaleAnalysis.stitching.html">multiScaleAnalysis.stitching package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.stitching.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.stitching.html#module-multiScaleAnalysis.stitching.multiScale_stitching">multiScaleAnalysis.stitching.multiScale_stitching module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher"><code class="docutils literal notranslate"><span class="pre">image_stitcher</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.__init__"><code class="docutils literal notranslate"><span class="pre">image_stitcher.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.crop_images"><code class="docutils literal notranslate"><span class="pre">image_stitcher.crop_images()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.iterate_overfolder"><code class="docutils literal notranslate"><span class="pre">image_stitcher.iterate_overfolder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.load_image"><code class="docutils literal notranslate"><span class="pre">image_stitcher.load_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.make_maxprojections"><code class="docutils literal notranslate"><span class="pre">image_stitcher.make_maxprojections()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.optimize_overlap"><code class="docutils literal notranslate"><span class="pre">image_stitcher.optimize_overlap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_2D_maximum_fusion"><code class="docutils literal notranslate"><span class="pre">image_stitcher.perform_2D_maximum_fusion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_2D_weighted_average_fusion"><code class="docutils literal notranslate"><span class="pre">image_stitcher.perform_2D_weighted_average_fusion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_3D_fusion"><code class="docutils literal notranslate"><span class="pre">image_stitcher.perform_3D_fusion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.stitching_workflow"><code class="docutils literal notranslate"><span class="pre">image_stitcher.stitching_workflow()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.stitching.html#module-multiScaleAnalysis.stitching">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="multiScaleAnalysis.visualization.html">multiScaleAnalysis.visualization package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.visualization.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.visualization.html#module-multiScaleAnalysis.visualization.visualize_stitched_lowres">multiScaleAnalysis.visualization.visualize_stitched_lowres module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_stitched_lowres.image_visualizer_stitched"><code class="docutils literal notranslate"><span class="pre">image_visualizer_stitched</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_stitched_lowres.image_visualizer_stitched.__init__"><code class="docutils literal notranslate"><span class="pre">image_visualizer_stitched.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_stitched_lowres.image_visualizer_stitched.load_visualize_images"><code class="docutils literal notranslate"><span class="pre">image_visualizer_stitched.load_visualize_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.visualization.html#module-multiScaleAnalysis.visualization.visualize_with_napariHighRes_A375">multiScaleAnalysis.visualization.visualize_with_napariHighRes_A375 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_A375.image_visualizer"><code class="docutils literal notranslate"><span class="pre">image_visualizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_A375.image_visualizer.__init__"><code class="docutils literal notranslate"><span class="pre">image_visualizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_A375.image_visualizer.load_images"><code class="docutils literal notranslate"><span class="pre">image_visualizer.load_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.visualization.html#module-multiScaleAnalysis.visualization.visualize_with_napariHighRes_MDAMB231">multiScaleAnalysis.visualization.visualize_with_napariHighRes_MDAMB231 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_MDAMB231.image_visualizer"><code class="docutils literal notranslate"><span class="pre">image_visualizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_MDAMB231.image_visualizer.__init__"><code class="docutils literal notranslate"><span class="pre">image_visualizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_MDAMB231.image_visualizer.load_images"><code class="docutils literal notranslate"><span class="pre">image_visualizer.load_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.visualization.html#module-multiScaleAnalysis.visualization.visualize_with_napariHighRes_MDAMB231_2">multiScaleAnalysis.visualization.visualize_with_napariHighRes_MDAMB231_2 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_MDAMB231_2.image_visualizer"><code class="docutils literal notranslate"><span class="pre">image_visualizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_MDAMB231_2.image_visualizer.__init__"><code class="docutils literal notranslate"><span class="pre">image_visualizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_MDAMB231_2.image_visualizer.load_images"><code class="docutils literal notranslate"><span class="pre">image_visualizer.load_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.visualization.html#module-multiScaleAnalysis.visualization.visualize_with_napariHighRes_U2OS">multiScaleAnalysis.visualization.visualize_with_napariHighRes_U2OS module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_U2OS.image_visualizer"><code class="docutils literal notranslate"><span class="pre">image_visualizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_U2OS.image_visualizer.__init__"><code class="docutils literal notranslate"><span class="pre">image_visualizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_U2OS.image_visualizer.load_images"><code class="docutils literal notranslate"><span class="pre">image_visualizer.load_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.visualization.html#module-multiScaleAnalysis.visualization.visualize_with_napariHighRes_U2OS_segmentation">multiScaleAnalysis.visualization.visualize_with_napariHighRes_U2OS_segmentation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_U2OS_segmentation.image_visualizer"><code class="docutils literal notranslate"><span class="pre">image_visualizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_U2OS_segmentation.image_visualizer.__init__"><code class="docutils literal notranslate"><span class="pre">image_visualizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_U2OS_segmentation.image_visualizer.load_images"><code class="docutils literal notranslate"><span class="pre">image_visualizer.load_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.visualization.html#module-multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones">multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2"><code class="docutils literal notranslate"><span class="pre">image_visualizer2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2.__init__"><code class="docutils literal notranslate"><span class="pre">image_visualizer2.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2.load_images"><code class="docutils literal notranslate"><span class="pre">image_visualizer2.load_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.visualization.html#module-multiScaleAnalysis.visualization.visualize_with_napariHighRes_spheroids">multiScaleAnalysis.visualization.visualize_with_napariHighRes_spheroids module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_spheroids.image_visualizer"><code class="docutils literal notranslate"><span class="pre">image_visualizer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_spheroids.image_visualizer.__init__"><code class="docutils literal notranslate"><span class="pre">image_visualizer.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_spheroids.image_visualizer.load_images"><code class="docutils literal notranslate"><span class="pre">image_visualizer.load_images()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="multiScaleAnalysis.visualization.html#module-multiScaleAnalysis.visualization">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-multiScaleAnalysis">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-multiScaleAnalysis" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="multiScaleAnalysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="multiScaleAnalysis.SegmentationHighres.html" class="btn btn-neutral float-right" title="multiScaleAnalysis.SegmentationHighres package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Daetwyler Stephan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

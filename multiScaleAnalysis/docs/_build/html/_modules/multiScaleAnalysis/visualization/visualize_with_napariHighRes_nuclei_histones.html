@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Self-driving, multi-scale image analysis
+              <img src="../../../_static/multi_scale_analysis_logo.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started and installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation.html">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Microscope characterization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../PSF_analysis.html">PSF analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ShannonEntropyAnalysis.html">Shannon Entropy Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Low-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Data_stitching.html">Data stitching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LowRes_Segmentation.html">Low-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../HopkinsStatistics.html">Hopkins Statistics Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">High-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../HighRes_Segmentation.html">High-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Cell_ShapeAnalysis.html">Cell Shape Feature Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Cell_CurvatureAnalysis.html">Cell Curvature Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data visualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Data_visualization.html">Data visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python references</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">multiScaleAnalysis</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Self-driving, multi-scale image analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">napari</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">skimage.transform</span>
+<span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imwrite</span>
+
+<div class="viewcode-block" id="image_visualizer2">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2">[docs]</a>
+<span class="k">class</span> <span class="nc">image_visualizer2</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       This class generates visualizations of highres segmentation results.</span>
+<span class="sd">       &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="image_visualizer2.__init__">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize data folders and start Napari</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">=</span> <span class="s2">&quot;rawdatafolder&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segmentationfolder</span> <span class="o">=</span> <span class="s2">&quot;segmenteddatafolder&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span> <span class="o">=</span> <span class="s2">&quot;outputfolder&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="s2">&quot;high_stack_001&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">establish_param</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span> <span class="o">=</span> <span class="n">napari</span><span class="o">.</span><span class="n">Viewer</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="image_visualizer2.load_images">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2.load_images">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vis_param</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="sd">        Load images from folder and render them according visualization parameters specified.</span>
+
+<span class="sd">        :param vis_param: Python dictionary of visulization paramters, e.g. vis_param[&#39;camera_angle1&#39;]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#get all timepoints from folder</span>
+        <span class="n">image_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawdatafolder</span><span class="p">)</span>
+
+        <span class="n">image_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">establish_param</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">image_list</span> <span class="o">=</span><span class="p">[</span><span class="n">image_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="k">for</span> <span class="n">i_time</span> <span class="ow">in</span> <span class="n">image_list</span><span class="p">:</span>
+            <span class="c1">#generate filepaths and folders</span>
+            <span class="n">rawimagepath_histones</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawdatafolder</span><span class="p">,</span> <span class="n">i_time</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">rawimagepath_histones</span><span class="p">)</span>
+            <span class="n">visualization_folder1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="p">,</span> <span class="s2">&quot;angle_1a&quot;</span><span class="p">)</span>
+            <span class="n">visualization_folder2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="p">,</span> <span class="s2">&quot;angle_2a&quot;</span><span class="p">)</span>
+            <span class="n">visualization_folder3</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="p">,</span> <span class="s2">&quot;angle_2a_frame&quot;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">visualization_folder1</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">visualization_folder2</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">visualization_folder3</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">visualized_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">visualization_folder1</span><span class="p">,</span>  <span class="n">i_time</span><span class="p">)</span>
+            <span class="n">visualized_file2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">visualization_folder2</span><span class="p">,</span> <span class="n">i_time</span> <span class="p">)</span>
+            <span class="n">visualized_file3</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">visualization_folder3</span><span class="p">,</span> <span class="n">i_time</span> <span class="p">)</span>
+
+            <span class="c1">#open images</span>
+            <span class="n">input_image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">rawimagepath_histones</span><span class="p">)</span>
+
+
+            <span class="c1">#add images as layers</span>
+            <span class="n">image_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;raw_gamma&#39;</span><span class="p">],</span> <span class="n">contrast_limits</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;raw_contrast_limits&#39;</span><span class="p">],</span> <span class="n">colormap</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;raw_colormap&#39;</span><span class="p">])</span>
+
+            <span class="c1">#set rendering to 3D and set camera zoom parameters</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">dims</span><span class="o">.</span><span class="n">ndisplay</span> <span class="o">=</span> <span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;rendering_dimension&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">zoom</span> <span class="o">=</span> <span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;camera_zoom&#39;</span><span class="p">]</span>
+
+            <span class="c1">#rescale 3D data to be correct dimensions</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;input_image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;raw_rescale_factor&#39;</span><span class="p">]</span>
+
+            <span class="c1">#interpolation to cubic</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;input_image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">interpolation3d</span> <span class="o">=</span><span class="s1">&#39;cubic&#39;</span>
+
+            <span class="c1">#save a first camera position</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;camera_angle1&#39;</span><span class="p">]</span>
+            <span class="n">imagereturn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;scale_to_save&#39;</span><span class="p">])</span>
+            <span class="n">imwrite</span><span class="p">(</span><span class="n">visualized_file</span><span class="p">,</span> <span class="n">imagereturn</span><span class="p">)</span>
+
+            <span class="c1">#save without vasculature</span>
+            <span class="c1">#get angle from napari by entering: viewer.camera.angles in console</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;camera_angle2&#39;</span><span class="p">]</span>
+            <span class="c1">#self.viewer.layers.remove(&#39;cancer_image&#39;)</span>
+
+            <span class="n">imagereturn2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;scale_to_save&#39;</span><span class="p">])</span>
+            <span class="n">imwrite</span><span class="p">(</span><span class="n">visualized_file2</span><span class="p">,</span> <span class="n">imagereturn2</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="s1">&#39;input_image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bounding_box</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">imagereturn3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="n">canvas_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;scale_to_save&#39;</span><span class="p">])</span>
+            <span class="n">imwrite</span><span class="p">(</span><span class="n">visualized_file3</span><span class="p">,</span> <span class="n">imagereturn3</span><span class="p">)</span>
+
+            <span class="c1">#if you establish the parameters, run napari, otherwise delete the layers for next timepoint</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">establish_param</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">napari</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;input_image&#39;</span><span class="p">)</span></div>
+</div>
+
+                <span class="c1">#self.viewer.layers.remove(&#39;cancer_image&#39;)</span>
+
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">visualization_param</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">camera_angle1</span><span class="o">=</span><span class="p">(</span><span class="mf">25.71195010907721</span><span class="p">,</span> <span class="o">-</span><span class="mf">21.600485468575528</span><span class="p">,</span> <span class="mf">137.18437963747954</span><span class="p">),</span>
+        <span class="n">camera_angle2</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">154.05133249286894</span><span class="p">,</span> <span class="mf">20.38038635676573</span><span class="p">,</span> <span class="mf">47.39396029366354</span><span class="p">),</span>
+        <span class="n">camera_zoom</span><span class="o">=</span><span class="mf">0.295</span><span class="p">,</span>
+        <span class="c1">#raw_contrast_limits=(126,482),</span>
+        <span class="n">raw_contrast_limits</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">1150</span><span class="p">),</span>
+        <span class="n">raw_contrast_limits_cancer</span><span class="o">=</span><span class="p">(</span><span class="mi">102</span><span class="p">,</span> <span class="mi">1529</span><span class="p">),</span>
+        <span class="n">raw_gamma</span><span class="o">=</span><span class="mf">0.67</span><span class="p">,</span>
+        <span class="n">raw_gamma_cancer</span><span class="o">=</span><span class="mf">0.59</span><span class="p">,</span>
+        <span class="n">raw_colormap</span> <span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">,</span>
+        <span class="n">cancer_colormap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+        <span class="n">opacity_cancer</span><span class="o">=</span><span class="mf">0.58</span><span class="p">,</span>
+        <span class="n">opacity_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">rendering_dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">label_blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span>
+        <span class="c1"># raw_rescale_factor =[9.210526, 1, 1],</span>
+        <span class="c1"># label_rescale_factor = [9.210526, 1, 1],</span>
+        <span class="n">raw_rescale_factor</span> <span class="o">=</span><span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">label_rescale_factor</span> <span class="o">=</span><span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="c1">#raw_rescale_factor=[1, 1, 1],</span>
+        <span class="c1">#label_rescale_factor=[1, 1, 1],</span>
+        <span class="n">establish_param</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">set_label_colormap</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span>
+        <span class="n">scale_to_save</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">display_rawcancersignal</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">imagename_raw</span><span class="o">=</span><span class="s2">&quot;1_CH488_000000.tif&quot;</span>
+    <span class="p">)</span>
+    <span class="n">imagevisu</span> <span class="o">=</span> <span class="n">image_visualizer2</span><span class="p">()</span>
+
+    <span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/nuclei_movie/Experiment005_cropped/high_resolution&quot;</span>
+    <span class="n">experimentfolder_result</span> <span class="o">=</span> <span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">+</span> <span class="s2">&quot;_highres_visualized&quot;</span>
+    <span class="n">imagevisu</span><span class="o">.</span><span class="n">segmentationfolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="s1">&#39;high_stack_001&#39;</span><span class="p">)</span>
+    <span class="n">imagevisu</span><span class="o">.</span><span class="n">visualizedfolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="s1">&#39;visualized_3&#39;</span><span class="p">)</span>
+    <span class="n">imagevisu</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;high_stack_001&#39;</span>
+    <span class="n">imagevisu</span><span class="o">.</span><span class="n">establish_param</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">imagevisu</span><span class="o">.</span><span class="n">load_images</span><span class="p">(</span><span class="n">visualization_param</span><span class="p">)</span>
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Daetwyler Stephan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
