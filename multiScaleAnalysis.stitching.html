@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>multiScaleAnalysis.stitching package &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="multiScaleAnalysis.visualization package" href="multiScaleAnalysis.visualization.html" />
+    <link rel="prev" title="multiScaleAnalysis.Tools package" href="multiScaleAnalysis.Tools.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Self-driving, multi-scale image analysis
+              <img src="_static/multi_scale_analysis_logo.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started and installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Microscope characterization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PSF_analysis.html">PSF analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ShannonEntropyAnalysis.html">Shannon Entropy Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Low-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Data_stitching.html">Data stitching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LowRes_Segmentation.html">Low-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HopkinsStatistics.html">Hopkins Statistics Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">High-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="HighRes_Segmentation.html">High-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cell_ShapeAnalysis.html">Cell Shape Feature Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cell_CurvatureAnalysis.html">Cell Curvature Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data visualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Data_visualization.html">Data visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python references</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">multiScaleAnalysis</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="multiScaleAnalysis.html">multiScaleAnalysis package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="multiScaleAnalysis.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationHighres.html">multiScaleAnalysis.SegmentationHighres package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.SegmentationLowres.html">multiScaleAnalysis.SegmentationLowres package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.Tools.html">multiScaleAnalysis.Tools package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">multiScaleAnalysis.stitching package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="multiScaleAnalysis.visualization.html">multiScaleAnalysis.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="multiScaleAnalysis.html#module-multiScaleAnalysis">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Self-driving, multi-scale image analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">multiScaleAnalysis</a></li>
+          <li class="breadcrumb-item"><a href="multiScaleAnalysis.html">multiScaleAnalysis package</a></li>
+      <li class="breadcrumb-item active">multiScaleAnalysis.stitching package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/multiScaleAnalysis.stitching.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="multiscaleanalysis-stitching-package">
+<h1>multiScaleAnalysis.stitching package<a class="headerlink" href="#multiscaleanalysis-stitching-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-multiScaleAnalysis.stitching.multiScale_stitching">
+<span id="multiscaleanalysis-stitching-multiscale-stitching-module"></span><h2>multiScaleAnalysis.stitching.multiScale_stitching module<a class="headerlink" href="#module-multiScaleAnalysis.stitching.multiScale_stitching" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">multiScaleAnalysis.stitching.multiScale_stitching.</span></span><span class="sig-name descname"><span class="pre">image_stitcher</span></span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class stitches images from the low-resolution data acquisiton of the self-driving, multi-scale microscope.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize stitcher</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.crop_images">
+<span class="sig-name descname"><span class="pre">crop_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_crops_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_crops_y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher.crop_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.crop_images" title="Link to this definition"></a></dt>
+<dd><p>Remove/crop parts of the images and update self.rawimage array with cropped images. This is function is helpful, e.g. to cut
+away parts of the image that were not properly illuminated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_crops_x</strong> – For every image specify cropping in x direction [startpoint, endpoint], e.g. [[396, 396 + 3300], [208, 208 + 3236], [200, 200 + 3052]]</p></li>
+<li><p><strong>image_crops_y</strong> – For every image specify cropping in y direction [startpoint, endpoint], e.g. [[396, 396 + 3300], [208, 208 + 3236], [200, 200 + 3052]]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.iterate_overfolder">
+<span class="sig-name descname"><span class="pre">iterate_overfolder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experimentfolder_parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experimentfolder_result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channelnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_crops_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_crops_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">displacement_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">displacement_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize_alignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_search</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_reference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher.iterate_overfolder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.iterate_overfolder" title="Link to this definition"></a></dt>
+<dd><p>Iterate over the output of the low-resolution imaging of the multi-scale microscope to stitch all the data based on an initial guess of the translational shift (from the stage positions).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experimentfolder_parent</strong> – Folder where all timepoints are in</p></li>
+<li><p><strong>experimentfolder_result</strong> – Folder to save the result of stitching</p></li>
+<li><p><strong>channelnames</strong> – List of channels to stitch</p></li>
+<li><p><strong>region</strong> – List of regions, e.g. “low_stack000”</p></li>
+<li><p><strong>sample</strong> – Which fish/sample are you stitching, e.g. “fish3”</p></li>
+<li><p><strong>image_crops_y</strong> – Cropping parameters so that empty regions/at border can be removed, e.g. [[396, 396 + 3336], [308, 308 + 3336], [212, 212 + 3052]]</p></li>
+<li><p><strong>image_crops_x</strong> – Cropping parameters so that empty regions/at border can be removed, e.g. [[200, 2200], [200, 2200], [200, 2200]]</p></li>
+<li><p><strong>displacement_x</strong> – Approximate displacement in x</p></li>
+<li><p><strong>displacement_y</strong> – Approximate displacement in y</p></li>
+<li><p><strong>optimize_alignment</strong> – (Optional) do you want to optimize the alignment per timepoint or apply the same parameters to whole timelapse</p></li>
+<li><p><strong>limit_search</strong> – (Optional) do you want to restrict the finding of optimal stitching to a small overlap window? if yes, give a range: [100, 15]</p></li>
+<li><p><strong>use_reference</strong> – Use a reference for individual timepoints</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.load_image">
+<span class="sig-name descname"><span class="pre">load_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathlist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher.load_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.load_image" title="Link to this definition"></a></dt>
+<dd><p>Load the images specified by the path list and populate the self.rawimages array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pathlist</strong> – Array of image paths to open</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.make_maxprojections">
+<span class="sig-name descname"><span class="pre">make_maxprojections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher.make_maxprojections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.make_maxprojections" title="Link to this definition"></a></dt>
+<dd><p>Make maximum projections of the images in the self.rawimages array and save them in the self.maxprojections array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.optimize_overlap">
+<span class="sig-name descname"><span class="pre">optimize_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit_search</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extendfactor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher.optimize_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.optimize_overlap" title="Link to this definition"></a></dt>
+<dd><p>Optimizes the provided overlap, based on the maximum projections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>limit_search</strong> – Constrain the search around the center of a predefined position, e.g. what maximum displacement is expected</p></li>
+<li><p><strong>extendfactor</strong> – Determines how large the overlap region is on which you calculate the overlap.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The optimized translation values (translation_values_x, translation_values_y).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_2D_maximum_fusion">
+<span class="sig-name descname"><span class="pre">perform_2D_maximum_fusion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imagearrays</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher.perform_2D_maximum_fusion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_2D_maximum_fusion" title="Link to this definition"></a></dt>
+<dd><p>Perform image fusion by selecting the maximum intensity of both images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>imagearrays</strong> – list of images to fuse, translation based on self.calculated_displacement</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>fused maximum projection image of imagearrays</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_2D_weighted_average_fusion">
+<span class="sig-name descname"><span class="pre">perform_2D_weighted_average_fusion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imagearrays</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher.perform_2D_weighted_average_fusion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_2D_weighted_average_fusion" title="Link to this definition"></a></dt>
+<dd><p>Perform fusion based on a sigmoidal blending curve of both images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>imagearrays</strong> – list of images to fuse</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>weighted average fused image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_3D_fusion">
+<span class="sig-name descname"><span class="pre">perform_3D_fusion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'weighted'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher.perform_3D_fusion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_3D_fusion" title="Link to this definition"></a></dt>
+<dd><p>Perform plane-by-plane wise fusion on 3D stack.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mode</strong> – select mode of image fusion (maximum or weighted)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>fused_image. 3D image fused stack.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.stitching_workflow">
+<span class="sig-name descname"><span class="pre">stitching_workflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imagelist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_crops_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_crops_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizeAlignment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_search</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clipped</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_reference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/stitching/multiScale_stitching.html#image_stitcher.stitching_workflow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.stitching_workflow" title="Link to this definition"></a></dt>
+<dd><p>Process one set of filepaths, load images, (optionally) crop them, (optionally) improve alignment, fuse data and
+(optionally) clip data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>imagelist</strong> – Filepaths of images to stitch</p></li>
+<li><p><strong>image_crops_x</strong> – (Optional) crop images before stitching</p></li>
+<li><p><strong>image_crops_y</strong> – (Optional) crop images before stitching</p></li>
+<li><p><strong>optimizeAlignment</strong> – (Optional) run optimization of alignment for stack (1 = yes, 0 = no)</p></li>
+<li><p><strong>limit_search</strong> – (Optional) if you want to limit the search to a region around a pre-aligned setting</p></li>
+<li><p><strong>clipped</strong> – (Optional) clip stack so that no zero value pixels are in the image (1 = yes, 0 = no)</p></li>
+<li><p><strong>use_reference</strong> – (Optional) use a reference set at the beginning for stitching so that parameters don’t drift outside expected values</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fused image of files in imagelist</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-multiScaleAnalysis.stitching">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-multiScaleAnalysis.stitching" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="multiScaleAnalysis.Tools.html" class="btn btn-neutral float-left" title="multiScaleAnalysis.Tools package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="multiScaleAnalysis.visualization.html" class="btn btn-neutral float-right" title="multiScaleAnalysis.visualization package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Daetwyler Stephan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
