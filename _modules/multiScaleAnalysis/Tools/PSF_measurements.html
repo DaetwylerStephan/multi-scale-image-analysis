@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>multiScaleAnalysis.Tools.PSF_measurements &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Self-driving, multi-scale image analysis
+              <img src="../../../_static/multi_scale_analysis_logo.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started and installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation.html">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Microscope characterization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../PSF_analysis.html">PSF analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ShannonEntropyAnalysis.html">Shannon Entropy Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Low-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Data_stitching.html">Data stitching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LowRes_Segmentation.html">Low-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../HopkinsStatistics.html">Hopkins Statistics Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">High-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../HighRes_Segmentation.html">High-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Cell_ShapeAnalysis.html">Cell Shape Feature Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Cell_CurvatureAnalysis.html">Cell Curvature Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data visualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Data_visualization.html">Data visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python references</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">multiScaleAnalysis</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Self-driving, multi-scale image analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">multiScaleAnalysis.Tools.PSF_measurements</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for multiScaleAnalysis.Tools.PSF_measurements</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Script to analyze the PSF values over an entire image.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">skimage.filters</span> <span class="k">as</span> <span class="nn">skfilters</span>
+<span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imwrite</span>
+<span class="kn">import</span> <span class="nn">skimage.measure</span> <span class="k">as</span> <span class="nn">skmeasure</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<div class="viewcode-block" id="load_image">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.load_image">[docs]</a>
+<span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load an image from disk.</span>
+
+<span class="sd">    :param filename: filepath to image</span>
+<span class="sd">    :return: np.array (image stack)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;load: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">input_image</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">input_image</span></div>
+
+
+<div class="viewcode-block" id="binarize_label_image">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.binarize_label_image">[docs]</a>
+<span class="k">def</span> <span class="nf">binarize_label_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Binarize and label individual beads in image.</span>
+
+<span class="sd">    :param image: np.array /3D image to analyze</span>
+<span class="sd">    :param threshold: selected threshold to identify beads</span>
+<span class="sd">    :return: np.array with labelled beads</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">im_binary</span> <span class="o">=</span> <span class="n">image</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">threshold</span><span class="p">)</span> <span class="c1"># +0.1;</span>
+    <span class="n">connected_components_labels</span> <span class="o">=</span> <span class="n">skmeasure</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="n">im_binary</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">connected_components_labels</span></div>
+
+
+<div class="viewcode-block" id="get_centroidpositions">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.get_centroidpositions">[docs]</a>
+<span class="k">def</span> <span class="nf">get_centroidpositions</span><span class="p">(</span><span class="n">props</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the centroids as an array from region props.</span>
+
+<span class="sd">    :param props: Region properties construct</span>
+<span class="sd">    :return: np.array(n beads, 3) with centroid positions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">centroidarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">props</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">props</span><span class="p">)):</span>
+        <span class="n">centroidarray</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">centroidarray</span></div>
+
+
+<div class="viewcode-block" id="filter_centroidpositions">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.filter_centroidpositions">[docs]</a>
+<span class="k">def</span> <span class="nf">filter_centroidpositions</span><span class="p">(</span><span class="n">centroidlist</span><span class="p">,</span> <span class="n">areaarray</span><span class="p">,</span> <span class="n">im_shape</span><span class="p">,</span> <span class="n">axial_dist</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lateral_dist</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">areacutoff</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filter the centroid positions to remove beads at the edge and beads that are too big (not point sources)</span>
+<span class="sd">    or too small.</span>
+
+<span class="sd">    :param centroidlist: list of centroid positions</span>
+<span class="sd">    :param areaarray:</span>
+<span class="sd">    :param im_shape:</span>
+<span class="sd">    :param axial_dist:</span>
+<span class="sd">    :param lateral_dist:</span>
+<span class="sd">    :param areacutoff: largest area/volume acceptable for a bead</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">centroidarray_filtered_v1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">centroidlist</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+    <span class="n">iternumber</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">centroidlist</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">centroidlist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">axial_dist</span><span class="o">&lt;</span><span class="mi">0</span> <span class="ow">or</span> <span class="n">centroidlist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">axial_dist</span><span class="o">&gt;</span> <span class="n">im_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">centroidlist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">lateral_dist</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">centroidlist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">lateral_dist</span> <span class="o">&gt;</span> <span class="n">im_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">centroidlist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">lateral_dist</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">centroidlist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">lateral_dist</span> <span class="o">&gt;</span> <span class="n">im_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">areaarray</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="n">areacutoff</span> <span class="ow">or</span> <span class="n">areaarray</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">centroidarray_filtered_v1</span><span class="p">[</span><span class="n">iternumber</span><span class="p">]</span><span class="o">=</span> <span class="n">centroidlist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">iternumber</span> <span class="o">=</span> <span class="n">iternumber</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">centroidarray_filtered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">iternumber</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+    <span class="n">centroidarray_filtered</span> <span class="o">=</span> <span class="n">centroidarray_filtered_v1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">iternumber</span><span class="p">,:]</span>
+    <span class="k">return</span> <span class="n">centroidarray_filtered</span></div>
+
+
+<div class="viewcode-block" id="Gauss">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.Gauss">[docs]</a>
+<span class="k">def</span> <span class="nf">Gauss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Definition of a Gaussian function for fitting:</span>
+<span class="sd">    # y = a + (b-a) * np.exp(-(x-c)**2/(2 * d ** 2))</span>
+
+<span class="sd">    :param x: x variable</span>
+<span class="sd">    :param a: a parameter</span>
+<span class="sd">    :param b: b parameter</span>
+<span class="sd">    :param c: c parameter</span>
+<span class="sd">    :param d: d parameter</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Define the Gaussian function</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">c</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="determinePSFvalues">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.determinePSFvalues">[docs]</a>
+<span class="k">def</span> <span class="nf">determinePSFvalues</span><span class="p">(</span><span class="n">croppedimage</span><span class="p">,</span> <span class="n">lateralstepsize</span><span class="o">=</span><span class="mf">0.117</span><span class="p">,</span> <span class="n">axialstepsize</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine the point spread function (PSF) value of a single bead in a cropped image.</span>
+
+<span class="sd">    :param croppedimage: image containing a single bead.</span>
+<span class="sd">    :param lateralstepsize: Physical dimension of voxel in lateral direction.</span>
+<span class="sd">    :param axialstepsize: Physical dimension of voxel in axial direction.</span>
+<span class="sd">    :return: PSF value array: [lateralX_FWHM, lateralY_FWHM, axial_FWHM], returns nan if no</span>
+<span class="sd">             Gaussian fit to the function could be found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># find max index</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">croppedimage</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span> <span class="n">croppedimage</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="c1">#axialPSF</span>
+    <span class="n">lineZ</span> <span class="o">=</span> <span class="n">croppedimage</span><span class="p">[:,</span><span class="n">ind</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">ind</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="n">xdata</span> <span class="o">=</span> <span class="n">axialstepsize</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lineZ</span><span class="p">)))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">parametersZ</span><span class="p">,</span> <span class="n">covariance</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">Gauss</span><span class="p">,</span> <span class="n">xdata</span><span class="p">,</span> <span class="n">lineZ</span><span class="p">)</span>
+        <span class="n">axial_FWHM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">parametersZ</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="mf">2.355</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">axial_FWHM</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">)</span>
+
+    <span class="c1">#lateralPSF</span>
+    <span class="n">lineY</span> <span class="o">=</span> <span class="n">croppedimage</span><span class="p">[</span><span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">],:,</span><span class="n">ind</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="n">xdata</span> <span class="o">=</span> <span class="n">lateralstepsize</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">lineY</span><span class="p">)))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">parametersY</span><span class="p">,</span> <span class="n">covariance</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">Gauss</span><span class="p">,</span> <span class="n">xdata</span><span class="p">,</span> <span class="n">lineY</span><span class="p">)</span>
+        <span class="n">lateralY_FWHM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">parametersY</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="mf">2.355</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">lateralY_FWHM</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">)</span>
+
+    <span class="c1"># lateralPSF</span>
+    <span class="n">lineX</span> <span class="o">=</span> <span class="n">croppedimage</span><span class="p">[</span><span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ind</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">:]</span>
+    <span class="n">xdata</span> <span class="o">=</span> <span class="n">lateralstepsize</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lineX</span><span class="p">)))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">parametersX</span><span class="p">,</span> <span class="n">covariance</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">Gauss</span><span class="p">,</span> <span class="n">xdata</span><span class="p">,</span> <span class="n">lineX</span><span class="p">)</span>
+        <span class="n">lateralX_FWHM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">parametersX</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">*</span> <span class="mf">2.355</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">lateralX_FWHM</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">)</span>
+
+    <span class="n">PSF_array</span> <span class="o">=</span> <span class="p">[</span><span class="n">lateralX_FWHM</span><span class="p">,</span> <span class="n">lateralY_FWHM</span><span class="p">,</span> <span class="n">axial_FWHM</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">PSF_array</span></div>
+
+
+
+<div class="viewcode-block" id="get_psfvalues">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.get_psfvalues">[docs]</a>
+<span class="k">def</span> <span class="nf">get_psfvalues</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">centroidlist_filtered</span><span class="p">,</span> <span class="n">axial_dist</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lateral_dist</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lateralstepsize</span><span class="o">=</span><span class="mf">0.117</span><span class="p">,</span> <span class="n">axialstepsize</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Iterate over all beads in an image and generate an image crop for each bead. Calls the determinePSFvalues function</span>
+<span class="sd">    to calculate the point spread function (PSF) value of the bead in the image crop, and enter the obtained PSF value</span>
+<span class="sd">    into a list of PSF values.</span>
+
+<span class="sd">    :param image: np.array/image with beads</span>
+<span class="sd">    :param centroidlist_filtered: List of centroid positions.</span>
+<span class="sd">    :param axial_dist: An image crop is generated with extend of centroid_z +/- axial_dist to calculate the PSF.</span>
+<span class="sd">    :param lateral_dist: An image crop is generated with extend of centroid_x +/- lateral_dist and centroid_y +/- lateral_dist to calculate the PSF.</span>
+<span class="sd">    :param lateralstepsize: Physical dimension of voxel in lateral direction.</span>
+<span class="sd">    :param axialstepsize: Physical dimension of voxel in axial direction.</span>
+<span class="sd">    :return: An array of PSF values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">psf_values_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">centroidlist_filtered</span><span class="p">),</span> <span class="mi">6</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
+
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">centroidlist_filtered</span><span class="p">)):</span>
+        <span class="c1"># get roi of bead</span>
+        <span class="n">psf_values_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">centroidlist_filtered</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">psf_values_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">centroidlist_filtered</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">psf_values_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">centroidlist_filtered</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="c1">#generate image crop</span>
+        <span class="n">testimage</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">centroidlist_filtered</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">axial_dist</span><span class="p">:</span><span class="n">centroidlist_filtered</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">axial_dist</span><span class="p">,</span>
+                    <span class="n">centroidlist_filtered</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">lateral_dist</span><span class="p">:</span><span class="n">centroidlist_filtered</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">lateral_dist</span><span class="p">,</span>
+                    <span class="n">centroidlist_filtered</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">lateral_dist</span><span class="p">:</span><span class="n">centroidlist_filtered</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">lateral_dist</span><span class="p">]</span>
+
+        <span class="n">psf_results</span> <span class="o">=</span> <span class="n">determinePSFvalues</span><span class="p">(</span><span class="n">testimage</span><span class="p">,</span> <span class="n">lateralstepsize</span><span class="p">,</span> <span class="n">axialstepsize</span><span class="p">)</span>
+        <span class="n">psf_values_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">psf_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">psf_values_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">psf_results</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">psf_values_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">psf_results</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">psf_values_array</span></div>
+
+
+
+<div class="viewcode-block" id="filter_psfvalues">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Tools.html#multiScaleAnalysis.Tools.PSF_measurements.filter_psfvalues">[docs]</a>
+<span class="k">def</span> <span class="nf">filter_psfvalues</span><span class="p">(</span><span class="n">psf_list</span><span class="p">,</span> <span class="n">highestlateralvalue</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">highestaxialvalue</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filter the PSF values to remove clustered beads/aggregates etc.</span>
+
+<span class="sd">    :param psf_list: list of psf values</span>
+<span class="sd">    :param highestlateralvalue: highest expected lateral value from a single bead</span>
+<span class="sd">    :param highestaxialvalue: highest expected axial value from a single bead</span>
+<span class="sd">    :return: filtered list of psf values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">psfvalues_filtered_v1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">psf_list</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">iternumber</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">psfvalues_filtered_v1</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">psf_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">highestlateralvalue</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">psf_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">]):</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">psf_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">highestlateralvalue</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">psf_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">4</span><span class="p">]):</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">psf_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">highestaxialvalue</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">psf_list</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">5</span><span class="p">]):</span>
+            <span class="k">continue</span>
+        <span class="n">psfvalues_filtered_v1</span><span class="p">[</span><span class="n">iternumber</span><span class="p">]</span><span class="o">=</span> <span class="n">psf_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">iternumber</span> <span class="o">=</span> <span class="n">iternumber</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">psfvalues_filtered</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">iternumber</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+    <span class="n">psfvalues_filtered</span> <span class="o">=</span> <span class="n">psfvalues_filtered_v1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">iternumber</span><span class="p">,:]</span>
+    <span class="k">return</span> <span class="n">psfvalues_filtered</span></div>
+
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="c1"># generate file paths</span>
+    <span class="n">parentfolder</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/beads/bead_sampleASLM/&quot;</span>
+    <span class="n">imagefilepath</span> <span class="o">=</span> <span class="n">parentfolder</span> <span class="o">+</span> <span class="s2">&quot;1_CH488_000000.tif&quot;</span>  <span class="c1"># rawimage name</span>
+    <span class="n">imagefilepath_labelled</span> <span class="o">=</span> <span class="n">parentfolder</span> <span class="o">+</span> <span class="s2">&quot;1_CH488_000000labelled.tif&quot;</span>  <span class="c1"># save image with bead positions</span>
+    <span class="n">imagefilepath_plot</span> <span class="o">=</span> <span class="n">parentfolder</span> <span class="o">+</span> <span class="s2">&quot;psf_plot2.jpg&quot;</span>  <span class="c1"># plot bead profiles along image/stack axis</span>
+    <span class="n">imagefilepath_Excelfile</span> <span class="o">=</span> <span class="n">parentfolder</span> <span class="o">+</span> <span class="s2">&quot;psf_values.xlsx&quot;</span>  <span class="c1"># save bead positions and their values to Excel file</span>
+    <span class="n">imagefilepath_textfile</span> <span class="o">=</span> <span class="n">parentfolder</span> <span class="o">+</span> <span class="s2">&quot;psf_values.txt&quot;</span>  <span class="c1"># save summary textfile</span>
+
+    <span class="c1"># parameters</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">lateral_dist</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">axial_dist</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">areacutoff</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">pixelvalue_lateral_um</span> <span class="o">=</span> <span class="mf">0.117</span>
+    <span class="n">pixelvalue_axial_um</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="n">cutoff_lateralPSFvalue</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">cutoff_axialPSFvalue</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">showbeadplot</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1">#load image</span>
+    <span class="n">image</span><span class="o">=</span><span class="n">load_image</span><span class="p">(</span><span class="n">imagefilepath</span><span class="p">)</span>
+
+    <span class="c1">#find beads in image</span>
+    <span class="n">image_binary</span> <span class="o">=</span> <span class="n">binarize_label_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="n">skmeasure</span><span class="o">.</span><span class="n">regionprops</span><span class="p">(</span><span class="n">image_binary</span><span class="p">)</span>
+
+    <span class="c1">#optional: save label image to see if all beads were identified</span>
+    <span class="n">imwrite</span><span class="p">(</span><span class="n">imagefilepath_labelled</span><span class="p">,</span> <span class="n">image_binary</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;uint16&quot;</span><span class="p">))</span>
+
+    <span class="c1">#get centroidlist and filter it to remove beads at the image borders</span>
+    <span class="n">centroidlist</span> <span class="o">=</span> <span class="n">get_centroidpositions</span><span class="p">(</span><span class="n">props</span><span class="p">)</span>
+
+    <span class="c1">#get arealist</span>
+    <span class="n">areaarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">props</span><span class="p">)))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">props</span><span class="p">)):</span>
+        <span class="n">areaarray</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">area</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+
+    <span class="c1">#plot histogram of area values to make an informed guess about which bead areas are acceptable</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">areaarray</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">])</span>  <span class="c1"># density=False would make counts</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="c1">#get filtered list</span>
+    <span class="n">centroidlist_filtered</span> <span class="o">=</span> <span class="n">filter_centroidpositions</span><span class="p">(</span><span class="n">centroidlist</span><span class="p">,</span> <span class="n">areaarray</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">axial_dist</span><span class="o">=</span><span class="n">axial_dist</span><span class="p">,</span><span class="n">lateral_dist</span><span class="o">=</span><span class="n">lateral_dist</span><span class="p">,</span> <span class="n">areacutoff</span><span class="o">=</span><span class="n">areacutoff</span><span class="p">)</span>
+
+    <span class="c1">#get roi of bead to check if crop is good</span>
+    <span class="c1">#imagefilepath_test = parentfolder + &quot;test_bead.tif&quot;</span>
+    <span class="c1"># beadid = 3</span>
+    <span class="c1"># croppedimage = image[centroidlist_filtered[beadid][0]-axial_dist:centroidlist_filtered[beadid][0]+axial_dist, centroidlist_filtered[beadid][1] - lateral_dist:centroidlist_filtered[beadid][1] + lateral_dist, centroidlist_filtered[beadid][2]-lateral_dist:centroidlist_filtered[beadid][2]+lateral_dist]</span>
+    <span class="c1"># imwrite(imagefilepath_test, croppedimage.astype(&quot;uint16&quot;))</span>
+    <span class="c1"># psfvalue_array = determinePSFvalues(croppedimage)</span>
+
+    <span class="c1">#obtain the psf values of all beads and filter the list</span>
+    <span class="n">psf_list</span> <span class="o">=</span> <span class="n">get_psfvalues</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">centroidlist_filtered</span><span class="p">,</span> <span class="n">axial_dist</span><span class="p">,</span> <span class="n">lateral_dist</span><span class="p">,</span> <span class="n">lateralstepsize</span><span class="o">=</span><span class="n">pixelvalue_lateral_um</span><span class="p">,</span> <span class="n">axialstepsize</span><span class="o">=</span><span class="n">pixelvalue_axial_um</span><span class="p">)</span>
+    <span class="n">psf_values_filtered</span> <span class="o">=</span> <span class="n">filter_psfvalues</span><span class="p">(</span><span class="n">psf_list</span><span class="p">,</span> <span class="n">highestlateralvalue</span><span class="o">=</span><span class="n">cutoff_lateralPSFvalue</span><span class="p">,</span> <span class="n">highestaxialvalue</span><span class="o">=</span><span class="n">cutoff_axialPSFvalue</span><span class="p">)</span>
+
+    <span class="c1">#report values</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span><span class="mi">4</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]))</span>
+
+    <span class="c1">#plot values</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">psf_values_filtered</span><span class="p">[:,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(position x)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;(lateral resolution x)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(position x)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;(lateral resolution y)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">psf_values_filtered</span><span class="p">[:,</span><span class="mi">5</span><span class="p">])</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(position x)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;(axial resolution )&#39;</span><span class="p">)</span>
+
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(position y)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;(lateral resolution x)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(position y)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;(lateral resolution y)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">])</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;(position y)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;(axial resolution )&#39;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">imagefilepath_plot</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">showbeadplot</span> <span class="o">==</span><span class="kc">True</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="c1">#save values as Excel file</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">imagefilepath_Excelfile</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">imagefilepath_textfile</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;x: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; y: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">])))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; z: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">])))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; number of beads: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">psf_values_filtered</span><span class="p">)))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Daetwyler Stephan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
