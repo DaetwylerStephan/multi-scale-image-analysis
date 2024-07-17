@@ -30,13 +30,40 @@ projections of the 3D stacks) are saved..
 Hopkins statistics calculation
 ==============================
 
-Next, a Matlab script enables calculation of the Hopkins statistic:
+Next, a Matlab script enables calculation of the Hopkins statistic. It requires a
+list of position of real macrophage positions in an Excel file (t0000.xlsx) and
+an image with a binary mask for the volume to simulate random positions (fishvolume_t00000.tif).
 
+.. code-block:: none
+
+    .
+    |-- TimeSeries
+    |   |-- t00000
+    |   |   |-- fishvolume_t00000.tif
+    |   |   |-- t00000.xlsx
+            ...
+
+To modify the Matlab script, ....
 
 Matlab compiled version
 =======================
 
-If you do not have access to Matlab, we provide a compiled version of the code:
+If you do not have access to Matlab, we provide a compiled version of the code as ".exe" file.
+To run it, please double click on the compiled version and follow the installation instructions.
+In the installation process also a `Matlab runtime <https://www.mathworks.com/products/compiler/matlab-runtime.html>`_
+environment is installed to run the code. After installation, the compile code is ready to run.
+
+Test data for cell shape feature analysis
+=========================================
+
+Test data is available for the cell shape feature analysis on Synapse in the folder
+Code_Example_Datasets/Exemplary_ShapeFeatureAnalysis:
+
+LINK
+
+It contains a folder to a collection of cells from two timepoints.
+
+
 
 
 

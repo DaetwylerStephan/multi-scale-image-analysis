@@ -2,14 +2,57 @@
 Cell Shape Feature Analysis
 ===========================
 
-TODO
+Cell shape feature analysis performs classification of global morphological cell shape
+features for cell classification. This analysis pipeline was first pioneered and described
+in our paper "In vivo 3D profiling of site-specific human cancer cell morphotypes in zebrafish"
+(`Link to paper <https://doi.org/10.1083/jcb.202109100>`_) and applied here to identify
+changes in morphology over hours of imaging and during macrophage-cancer cell interactions.
 
+The pipeline calculates 12 global morphological shape feature for classification:
+volume, surface area, solidity, sphericity, longest length, extend, aspect ratio, roughness,
+volume sphericity, radius sphericity, ratio sphericity, and circumscribed sphere area ratio.
 
+These feature span a space which is reduced through PCA analysis to two dimensions for visualization.
 
+To run the script, the data should be in the following format:
 
+.. code-block:: none
 
+    .
+    |-- TimeSeries
+    |   |-- t00000
+    |   |   |-- Cell1
+    |   |   |   |--segmentedImage.tif
+    |   |   |-- Cell2
+    |   |   |   |--segmentedImage.tif
+            ...
+    |   |-- t00001
+    |   |   |-- Cell1
+    |   |   |   |--segmentedImage.tif
+    |   |   |-- Cell2
+    |   |   |   |--segmentedImage.tif
+            ...
+
+Running the Matlab code
+=======================
+
+If you run the Matlab,....
+
+Matlab compiled version
+=======================
+
+If you do not have access to Matlab, we provide a compiled version of the code as ".exe" file.
+To run it, please double click on the compiled version and follow the installation instructions.
+In the installation process also a `Matlab runtime <https://www.mathworks.com/products/compiler/matlab-runtime.html>`_
+environment is installed to run the code. After installation, the compile code is ready to run.
+When prompted, please provide the path to the folder with all the timepoint paths (e.g. TimeSeries folder above).
 
 Test data for cell shape feature analysis
 =========================================
 
-TODO
+Test data is available for the cell shape feature analysis on Synapse in the folder
+Code_Example_Datasets/Exemplary_ShapeFeatureAnalysis:
+
+LINK
+
+It contains a folder to a collection of cells from two timepoints.

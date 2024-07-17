@@ -9,7 +9,8 @@ in three dimensions into a consistent 3D segmentation.
 .. note::
     As the data in our paper was relying on an early
     version of u-Segment3D, we would like to guide the user to the latest version of
-    the software https://github.com/DanuserLab/u-segment3D for future use and tutorials.
+    the software https://github.com/DanuserLab/u-segment3D for future use and `tutorials
+    <https://github.com/DanuserLab/u-segment3D/tree/master/tutorials>`_.
 
 A preprint is available here that describes in detail the technological and computational
 innovations in this novel segmentation approach:

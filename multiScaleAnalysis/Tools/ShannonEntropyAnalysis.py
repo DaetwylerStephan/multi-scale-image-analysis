@@ -1,5 +1,5 @@
 """
-Sript to analyze the Shannon entropy over an entire image series.
+Script to analyze the Shannon entropy over an entire image series.
 """
 
 import numpy as np
@@ -14,9 +14,9 @@ import pandas as pd
 def fast_normalized_dct_shannon_entropy(input_image, frequencycutoff):
     """
     Calculates the normalized DCT Shannon entropy of an image.
-    Function from:  https://github.com/TheDeanLab/navigate/tree/develop/src/navigate/model/analysis
+    Function from https://github.com/TheDeanLab/navigate/tree/develop/src/navigate/model/analysis
 
-    :param input_image : np.ndarray
+    :param input_image: np.ndarray
     :param frequencycutoff: determines which percentage of all frequencies are contributing to the entropy
         (rationale: you don't want to include noise/high frequencies in the image metric)
     :return: entropy value

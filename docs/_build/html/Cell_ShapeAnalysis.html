@@ -64,6 +64,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="HighRes_Segmentation.html">High-resolution segmentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Cell Shape Feature Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-matlab-code">Running the Matlab code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matlab-compiled-version">Matlab compiled version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-data-for-cell-shape-feature-analysis">Test data for cell shape feature analysis</a></li>
 </ul>
 </li>
@@ -104,10 +106,50 @@
              
   <section id="cell-shape-feature-analysis">
 <h1>Cell Shape Feature Analysis<a class="headerlink" href="#cell-shape-feature-analysis" title="Link to this heading"></a></h1>
-<p>TODO</p>
+<p>Cell shape feature analysis performs classification of global morphological cell shape
+features for cell classification. This analysis pipeline was first pioneered and described
+in our paper “In vivo 3D profiling of site-specific human cancer cell morphotypes in zebrafish”
+(<a class="reference external" href="https://doi.org/10.1083/jcb.202109100">Link to paper</a>) and applied here to identify
+changes in morphology over hours of imaging and during macrophage-cancer cell interactions.</p>
+<p>The pipeline calculates 12 global morphological shape feature for classification:
+volume, surface area, solidity, sphericity, longest length, extend, aspect ratio, roughness,
+volume sphericity, radius sphericity, ratio sphericity, and circumscribed sphere area ratio.</p>
+<p>These feature span a space which is reduced through PCA analysis to two dimensions for visualization.</p>
+<p>To run the script, the data should be in the following format:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.
+|-- TimeSeries
+|   |-- t00000
+|   |   |-- Cell1
+|   |   |   |--segmentedImage.tif
+|   |   |-- Cell2
+|   |   |   |--segmentedImage.tif
+        ...
+|   |-- t00001
+|   |   |-- Cell1
+|   |   |   |--segmentedImage.tif
+|   |   |-- Cell2
+|   |   |   |--segmentedImage.tif
+        ...
+</pre></div>
+</div>
+<section id="running-the-matlab-code">
+<h2>Running the Matlab code<a class="headerlink" href="#running-the-matlab-code" title="Link to this heading"></a></h2>
+<p>If you run the Matlab,….</p>
+</section>
+<section id="matlab-compiled-version">
+<h2>Matlab compiled version<a class="headerlink" href="#matlab-compiled-version" title="Link to this heading"></a></h2>
+<p>If you do not have access to Matlab, we provide a compiled version of the code as “.exe” file.
+To run it, please double click on the compiled version and follow the installation instructions.
+In the installation process also a <a class="reference external" href="https://www.mathworks.com/products/compiler/matlab-runtime.html">Matlab runtime</a>
+environment is installed to run the code. After installation, the compile code is ready to run.
+When prompted, please provide the path to the folder with all the timepoint paths (e.g. TimeSeries folder above).</p>
+</section>
 <section id="test-data-for-cell-shape-feature-analysis">
 <h2>Test data for cell shape feature analysis<a class="headerlink" href="#test-data-for-cell-shape-feature-analysis" title="Link to this heading"></a></h2>
-<p>TODO</p>
+<p>Test data is available for the cell shape feature analysis on Synapse in the folder
+Code_Example_Datasets/Exemplary_ShapeFeatureAnalysis:</p>
+<p>LINK</p>
+<p>It contains a folder to a collection of cells from two timepoints.</p>
 </section>
 </section>
 

@@ -62,6 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#zebrafish-volume-approximation">Zebrafish volume approximation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hopkins-statistics-calculation">Hopkins statistics calculation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#matlab-compiled-version">Matlab compiled version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-data-for-cell-shape-feature-analysis">Test data for cell shape feature analysis</a></li>
 </ul>
 </li>
 </ul>
@@ -129,11 +130,32 @@ projections of the 3D stacks) are saved..</p>
 </section>
 <section id="hopkins-statistics-calculation">
 <h2>Hopkins statistics calculation<a class="headerlink" href="#hopkins-statistics-calculation" title="Link to this heading"></a></h2>
-<p>Next, a Matlab script enables calculation of the Hopkins statistic:</p>
+<p>Next, a Matlab script enables calculation of the Hopkins statistic. It requires a
+list of position of real macrophage positions in an Excel file (t0000.xlsx) and
+an image with a binary mask for the volume to simulate random positions (fishvolume_t00000.tif).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.
+|-- TimeSeries
+|   |-- t00000
+|   |   |-- fishvolume_t00000.tif
+|   |   |-- t00000.xlsx
+        ...
+</pre></div>
+</div>
+<p>To modify the Matlab script, ….</p>
 </section>
 <section id="matlab-compiled-version">
 <h2>Matlab compiled version<a class="headerlink" href="#matlab-compiled-version" title="Link to this heading"></a></h2>
-<p>If you do not have access to Matlab, we provide a compiled version of the code:</p>
+<p>If you do not have access to Matlab, we provide a compiled version of the code as “.exe” file.
+To run it, please double click on the compiled version and follow the installation instructions.
+In the installation process also a <a class="reference external" href="https://www.mathworks.com/products/compiler/matlab-runtime.html">Matlab runtime</a>
+environment is installed to run the code. After installation, the compile code is ready to run.</p>
+</section>
+<section id="test-data-for-cell-shape-feature-analysis">
+<h2>Test data for cell shape feature analysis<a class="headerlink" href="#test-data-for-cell-shape-feature-analysis" title="Link to this heading"></a></h2>
+<p>Test data is available for the cell shape feature analysis on Synapse in the folder
+Code_Example_Datasets/Exemplary_ShapeFeatureAnalysis:</p>
+<p>LINK</p>
+<p>It contains a folder to a collection of cells from two timepoints.</p>
 </section>
 </section>
 

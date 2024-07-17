@@ -65,6 +65,7 @@
 <li class="toctree-l1"><a class="reference internal" href="HighRes_Segmentation.html">High-resolution segmentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Cell_ShapeAnalysis.html">Cell Shape Feature Analysis</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Cell Curvature Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#matlab-compiled-version">Matlab compiled version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-data-for-cell-curvature-analysis">Test data for cell curvature analysis</a></li>
 </ul>
 </li>
@@ -104,10 +105,25 @@
              
   <section id="cell-curvature-analysis">
 <h1>Cell Curvature Analysis<a class="headerlink" href="#cell-curvature-analysis" title="Link to this heading"></a></h1>
-<p>TODO</p>
+<p>Cell curvature is an important morphological feature of cell shape and involved
+in organizing cell signaling (e.g. through <a class="reference external" href="https://www.pnas.org/doi/full/10.1073/pnas.2208253120">Septin localization</a>.</p>
+<p>To measure and visualize cell curvature, we developed custom Matlab code
+that takes a binary cell segmentation mask and generates a collada (.dae) file.
+The collada file format can be easily imported into Chimera
+for Visualization: <a class="reference external" href="https://www.cgl.ucsf.edu/chimera/">https://www.cgl.ucsf.edu/chimera/</a>.</p>
+<section id="matlab-compiled-version">
+<h2>Matlab compiled version<a class="headerlink" href="#matlab-compiled-version" title="Link to this heading"></a></h2>
+<p>If you do not have access to Matlab, we provide a compiled version of the code as “.exe” file.
+To run it, please double click on the compiled version and follow the installation instructions.
+In the installation process also a <a class="reference external" href="https://www.mathworks.com/products/compiler/matlab-runtime.html">Matlab runtime</a>
+environment is installed to run the code. After installation, the compile code is ready to run.</p>
+</section>
 <section id="test-data-for-cell-curvature-analysis">
 <h2>Test data for cell curvature analysis<a class="headerlink" href="#test-data-for-cell-curvature-analysis" title="Link to this heading"></a></h2>
-<p>TODO</p>
+<p>Test data is available for the cell shape feature analysis on Synapse in the folder
+Code_Example_Datasets/Exemplary_CurvatureAnalysis:</p>
+<p>LINK</p>
+<p>It contains a segmented cells to visualize.</p>
 </section>
 </section>
 
