@@ -133,7 +133,7 @@
 <a class="viewcode-back" href="../../../multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_stitched_lowres.image_visualizer_stitched.load_visualize_images">[docs]</a>
     <span class="k">def</span> <span class="nf">load_visualize_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vis_param</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Load images from folder and render them according visualization parameters specified.</span>
+<span class="sd">        Load images from folder and render them according Visualization parameters specified.</span>
 
 <span class="sd">        :param vis_param: Python dictionary of visulization paramters, e.g. vis_param[&#39;camera_angle1&#39;]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -252,7 +252,7 @@
     <span class="p">)</span>
 
     <span class="n">imagevisu</span> <span class="o">=</span> <span class="n">image_visualizer_stitched</span><span class="p">()</span>
-    <span class="n">rawdatafolder_parent</span> <span class="o">=</span> <span class="s1">&#39;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/visualization/&#39;</span>
+    <span class="n">rawdatafolder_parent</span> <span class="o">=</span> <span class="s1">&#39;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/Visualization/&#39;</span>
     <span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rawdatafolder_parent</span><span class="p">,</span> <span class="s2">&quot;rawdata&quot;</span><span class="p">)</span>
     <span class="c1"># segmented data</span>
     <span class="n">imagevisu</span><span class="o">.</span><span class="n">segmentationfolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rawdatafolder_parent</span><span class="p">,</span> <span class="s2">&quot;lowres_segmentation_labelimages&quot;</span><span class="p">)</span>

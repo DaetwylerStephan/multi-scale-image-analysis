@@ -268,20 +268,22 @@ into a list of PSF values.</p>
 </section>
 <section id="module-multiScaleAnalysis.Tools.ShannonEntropyAnalysis">
 <span id="multiscaleanalysis-tools-shannonentropyanalysis-module"></span><h2>multiScaleAnalysis.Tools.ShannonEntropyAnalysis module<a class="headerlink" href="#module-multiScaleAnalysis.Tools.ShannonEntropyAnalysis" title="Link to this heading"></a></h2>
-<p>Sript to analyze the Shannon entropy over an entire image series.</p>
+<p>Script to analyze the Shannon entropy over an entire image series.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="multiScaleAnalysis.Tools.ShannonEntropyAnalysis.fast_normalized_dct_shannon_entropy">
 <span class="sig-prename descclassname"><span class="pre">multiScaleAnalysis.Tools.ShannonEntropyAnalysis.</span></span><span class="sig-name descname"><span class="pre">fast_normalized_dct_shannon_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequencycutoff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/multiScaleAnalysis/Tools/ShannonEntropyAnalysis.html#fast_normalized_dct_shannon_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiScaleAnalysis.Tools.ShannonEntropyAnalysis.fast_normalized_dct_shannon_entropy" title="Link to this definition"></a></dt>
 <dd><p>Calculates the normalized DCT Shannon entropy of an image.
-Function from:  <a class="reference external" href="https://github.com/TheDeanLab/navigate/tree/develop/src/navigate/model/analysis">https://github.com/TheDeanLab/navigate/tree/develop/src/navigate/model/analysis</a></p>
-<p>:param input_image : np.ndarray
-:param frequencycutoff: determines which percentage of all frequencies are contributing to the entropy</p>
-<blockquote>
-<div><p>(rationale: you don’t want to include noise/high frequencies in the image metric)</p>
-</div></blockquote>
+Function from <a class="reference external" href="https://github.com/TheDeanLab/navigate/tree/develop/src/navigate/model/analysis">https://github.com/TheDeanLab/navigate/tree/develop/src/navigate/model/analysis</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>entropy value</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_image</strong> – np.ndarray</p></li>
+<li><p><strong>frequencycutoff</strong> – determines which percentage of all frequencies are contributing to the entropy
+(rationale: you don’t want to include noise/high frequencies in the image metric)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>entropy value</p>
 </dd>
 </dl>
 </dd></dl>

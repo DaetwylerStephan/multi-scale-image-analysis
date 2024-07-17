@@ -98,7 +98,7 @@
              
   <h1>Source code for multiScaleAnalysis.Tools.ShannonEntropyAnalysis</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Sript to analyze the Shannon entropy over an entire image series.</span>
+<span class="sd">Script to analyze the Shannon entropy over an entire image series.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -115,9 +115,9 @@
 <span class="k">def</span> <span class="nf">fast_normalized_dct_shannon_entropy</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">frequencycutoff</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates the normalized DCT Shannon entropy of an image.</span>
-<span class="sd">    Function from:  https://github.com/TheDeanLab/navigate/tree/develop/src/navigate/model/analysis</span>
+<span class="sd">    Function from https://github.com/TheDeanLab/navigate/tree/develop/src/navigate/model/analysis</span>
 
-<span class="sd">    :param input_image : np.ndarray</span>
+<span class="sd">    :param input_image: np.ndarray</span>
 <span class="sd">    :param frequencycutoff: determines which percentage of all frequencies are contributing to the entropy</span>
 <span class="sd">        (rationale: you don&#39;t want to include noise/high frequencies in the image metric)</span>
 <span class="sd">    :return: entropy value</span>
