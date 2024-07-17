@@ -36,7 +36,8 @@ To run the script, the data should be in the following format:
 Running the Matlab code
 =======================
 
-If you run the Matlab,....
+If you run the Matlab, please first add the Matlab folder Highres_curvature to your active
+`Matlab search path <https://www.mathworks.com/help/matlab/ref/addpath.html>`_. Next,
 
 Matlab compiled version
 =======================

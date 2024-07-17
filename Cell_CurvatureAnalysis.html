@@ -65,6 +65,7 @@
 <li class="toctree-l1"><a class="reference internal" href="HighRes_Segmentation.html">High-resolution segmentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Cell_ShapeAnalysis.html">Cell Shape Feature Analysis</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Cell Curvature Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#matlab-code">Matlab code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#matlab-compiled-version">Matlab compiled version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-data-for-cell-curvature-analysis">Test data for cell curvature analysis</a></li>
 </ul>
@@ -74,7 +75,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Data_visualization.html">Data visualization</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Python references</span></p>
+<p class="caption" role="heading"><span class="caption-text">Python API references</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">multiScaleAnalysis</a></li>
 </ul>
@@ -108,15 +109,37 @@
 <p>Cell curvature is an important morphological feature of cell shape and involved
 in organizing cell signaling (e.g. through <a class="reference external" href="https://www.pnas.org/doi/full/10.1073/pnas.2208253120">Septin localization</a>.</p>
 <p>To measure and visualize cell curvature, we developed custom Matlab code
-that takes a binary cell segmentation mask and generates a collada (.dae) file.
-The collada file format can be easily imported into Chimera
-for Visualization: <a class="reference external" href="https://www.cgl.ucsf.edu/chimera/">https://www.cgl.ucsf.edu/chimera/</a>.</p>
+that takes a binary cell segmentation mask, measures the curvature, and
+generates a collada (.dae) file for visualization.
+The collada file format can be easily imported (opened) in ChimeraX:
+<a class="reference external" href="https://www.cgl.ucsf.edu/chimera/">https://www.cgl.ucsf.edu/chimera/</a>.</p>
+<section id="matlab-code">
+<h2>Matlab code<a class="headerlink" href="#matlab-code" title="Link to this heading"></a></h2>
+<p>If you run the Matlab, please first add the Matlab folder Highres_curvature to your active
+<a class="reference external" href="https://www.mathworks.com/help/matlab/ref/addpath.html">Matlab search path</a>. Next,</p>
+</section>
 <section id="matlab-compiled-version">
 <h2>Matlab compiled version<a class="headerlink" href="#matlab-compiled-version" title="Link to this heading"></a></h2>
 <p>If you do not have access to Matlab, we provide a compiled version of the code as “.exe” file.
 To run it, please double click on the compiled version and follow the installation instructions.
 In the installation process also a <a class="reference external" href="https://www.mathworks.com/products/compiler/matlab-runtime.html">Matlab runtime</a>
-environment is installed to run the code. After installation, the compile code is ready to run.</p>
+environment is installed to run the code (if not already available).
+After installation, the compile code is ready to run. For this, click on MatlabCompiler_measureCurvature.exe to run
+the code and follow the prompts to select a .tif file.</p>
+<p>Output:</p>
+<p>The Matlab file generates an Excel file with all the vertices of the surface mesh (meshSurface.xlsx),
+an Excel file with the mean and Gaussian curvature values (Curvature.xlsx) and the collada file for
+rendering in Chimera (see image below).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.
+|-- curvaturefolder
+|   |-- curvatureExample.tif
+|   |   Results
+|   |   |   |--meshSurface.xlsx
+|   |   |   |--Curvature.xlsx
+|   |   |   |--curvatureExample_curvature.dae
+</pre></div>
+</div>
+<img alt="_images/ChimeraX_renderingofdaefile.png" src="_images/ChimeraX_renderingofdaefile.png" />
 </section>
 <section id="test-data-for-cell-curvature-analysis">
 <h2>Test data for cell curvature analysis<a class="headerlink" href="#test-data-for-cell-curvature-analysis" title="Link to this heading"></a></h2>

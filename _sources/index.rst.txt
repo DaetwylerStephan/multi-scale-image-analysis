@@ -6,8 +6,17 @@
 Self-driving, multi-scale image analysis
 ========================================
 
-**Self-driving, multi-scale image analysis software** is an open-source collection of Python scripts and classes
-to analyse custom multi-scale light-sheet microscope data of low- and high-resolution data.
+**Self-driving, multi-scale image analysis software** is an open-source collection of Python
+and Matlab code to analyse custom multi-scale light-sheet microscope data
+of low- and high-resolution data.
+
+All the codes described here are used in our associated preprint:
+
+https://www.biorxiv.org/content/10.1101/2024.02.28.582579v1
+
+and the Github repository for all the code is here:
+
+https://github.com/DaetwylerStephan/multi-scale-image-analysis/
 
 .. toctree::
    :caption: Getting started and installation
@@ -43,7 +52,7 @@ to analyse custom multi-scale light-sheet microscope data of low- and high-resol
    Data_visualization
 
 .. toctree::
-   :caption: Python references
+   :caption: Python API references
    :maxdepth: 1
 
    modules
@@ -54,4 +63,3 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`

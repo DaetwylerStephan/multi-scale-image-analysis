@@ -53,6 +53,12 @@ To run it, please double click on the compiled version and follow the installati
 In the installation process also a `Matlab runtime <https://www.mathworks.com/products/compiler/matlab-runtime.html>`_
 environment is installed to run the code. After installation, the compile code is ready to run.
 
+For this, click on MatlabCompiler_measureCurvature.exe to run
+the code and follow the prompts to select a .tif and file.
+
+.. image:: images/fileselection.png
+
+
 Test data for cell shape feature analysis
 =========================================
 
