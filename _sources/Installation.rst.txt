@@ -52,3 +52,9 @@ and install the packages:
 
 Now you can start executing the scripts and test them using the testdata provided on Synapse.
 
+Synapse account
+===============
+
+Our data is available on Synapse, the official storage of National Institute of Health, MC2 centers.
+If you are interested in it, please check out:
+https://help.synapse.org/docs/Getting-Started.2055471150.html

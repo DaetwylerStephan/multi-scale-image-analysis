@@ -144,13 +144,38 @@ To run it, please double click on the compiled version and follow the installati
 In the installation process also a <a class="reference external" href="https://www.mathworks.com/products/compiler/matlab-runtime.html">Matlab runtime</a>
 environment is installed to run the code. After installation, the compile code is ready to run.
 When prompted, please provide the path to the folder with all the timepoint paths (e.g. TimeSeries folder above).</p>
+<p>Output:</p>
+<p>The Matlab script will produce several outputs and save them in the data folder as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.
+|-- TimeSeries
+|   |-- Results
+|   |   |-- data_pcSpace.png
+|   |   |-- FeatureSpace_pcSpace.png
+|   |   |-- highResResults_geoTable.xlsx
+|   |   |-- highResResults_pca.xlsx
+|   |   |-- highResResults_pvalue.xlsx
+|   |   |-- PC_contribution.png
+|   |   |-- PvalueMatrix.png
+</pre></div>
+</div>
+<p>The “data_pcSpace.png” contains a plot of the position of all cells in the PCA space. To visualize,
+which components contribute to the principal components, the biplot (FeatureSpace_pcSpace.png)
+is saved as well in the Results folder.</p>
+<p>The analysis of the cell shapes is further saved in tabular format in the highResResults_geoTable.xlsx, where all
+values of the global morphological geometric feature analysis are saved (for each cell). The highResResults_pvalue.xlsx
+then contains the coordinates of each of these cells in the principal component space. The
+highResResults_pvalue.xlsx file then contains the p-value of comparing the shapes of both cell distributions in both
+top folders (timepoints / conditions etc).</p>
+<p>Lastly, the PC_contribution.png file describes the variability in the data explained by each principal
+component and the PvalueMatrix.png highlights how similar both conditions (or timepoints) are.</p>
 </section>
 <section id="test-data-for-cell-shape-feature-analysis">
 <h2>Test data for cell shape feature analysis<a class="headerlink" href="#test-data-for-cell-shape-feature-analysis" title="Link to this heading"></a></h2>
 <p>Test data is available for the cell shape feature analysis on Synapse in the folder
 Code_Example_Datasets/Exemplary_ShapeFeatureAnalysis:</p>
 <p>LINK</p>
-<p>It contains a folder to a collection of cells from two timepoints.</p>
+<p>It contains a folder to a collection of macrophages (cells) from two timepoints in a zebrafish
+xenograft model.</p>
 </section>
 </section>
 
