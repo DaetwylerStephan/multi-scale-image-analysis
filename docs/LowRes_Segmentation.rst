@@ -1,3 +1,5 @@
+.. _lowressegmentation:
+
 ===========================
 Low-resolution segmentation
 ===========================

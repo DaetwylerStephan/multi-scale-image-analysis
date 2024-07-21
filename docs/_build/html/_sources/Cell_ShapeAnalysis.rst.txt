@@ -36,10 +36,18 @@ To run the script, the data should be in the following format:
 Running the Matlab code
 =======================
 
-If you run the Matlab, please first add the Matlab folder Highres_curvature to your active
-`Matlab search path <https://www.mathworks.com/help/matlab/ref/addpath.html>`_. Next,
 
+If you run the Matlab code, first clone the Github repository and set Matlab's path to
+include all the Matlab functions provided by
+the ``Highres_morphologicalFeatures``  package on the GitHub repository,
+using the `Set Path <https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html>`_
+button in Matlab (Home > Environment > Set Path> Add with subfolders).
 
+To run the cell shape feature analysis over the entire experiment, open ``runGlobalFeatureAnalysis_US2O.m``,
+which is the main run script that analyzes the cell shape features by typing edit runGlobalFeatureAnalysis_US2O in
+in Matlab's command window. Then revise the "imageDirectory" for loading data and "saveDirectory"
+for saving results. Save the changes and run the function by typing runGlobalFeatureAnalysis_US2O
+in Matlab's command window.
 
 
 Matlab compiled version
@@ -83,7 +91,6 @@ Lastly, the PC_contribution.png file describes the variability in the data expla
 component and the PvalueMatrix.png highlights how similar both conditions (or timepoints) are.
 
 
-
 Test data for cell shape feature analysis
 =========================================
 
@@ -92,4 +99,5 @@ Code_Example_Datasets/Exemplary_ShapeFeatureAnalysis:
 
 LINK
 
-It contains a folder to a collection of cells from two timepoints.
+It contains a folder to a collection of macrophages (cells) from two timepoints in a zebrafish
+xenograft model.

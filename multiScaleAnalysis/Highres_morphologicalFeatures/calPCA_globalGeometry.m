@@ -15,7 +15,7 @@ biplot(coeff(:,1:2),'Scores',score(:,1:2),'VarLabels',featType);
 %plot the contribution histogram
     figure;
     plot(score(:,1),score(:,2),'.')
-title('Global gemotry feature in principal component space')
+title('Global geometrical features in principal component space')
 xlabel('Component 1')
 ylabel('Component 2')
 

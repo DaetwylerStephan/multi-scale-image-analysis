@@ -109,18 +109,19 @@
 <h1>Hopkins Statistics Analysis<a class="headerlink" href="#hopkins-statistics-analysis" title="Link to this heading"></a></h1>
 <p>To analyze the distribution of macrophages over time in an entire zebrafish larvae,
 we applied the <a class="reference external" href="https://journal.r-project.org/articles/RJ-2022-055/">Hopkins statistics</a>.
-A high value of the Hopkins statistics H indicates indicates that the underlying data shows a high cluster tendency, e.g. H&gt;0.75
+A high value of the Hopkins statistics H indicates that the underlying data shows a high cluster tendency, e.g., H&gt;0.75
 indicates a cluster tendency at the 90% confidence level.</p>
 <section id="zebrafish-volume-approximation">
 <h2>Zebrafish volume approximation<a class="headerlink" href="#zebrafish-volume-approximation" title="Link to this heading"></a></h2>
 <p>The Hopkins statistics requires the simulation of random points. To do this, we obtained
-the 3D zebrafish volume V as a space for possible locations of macrophages to
-compare the observed spatial distribution (real positions) against randomly
-generated distributions (random positions).</p>
-<p>To run the ImageJ macro, drag and drop the generate_fish_outline_forSegmentation_percentile.ijm
+an approximation of the 3D zebrafish volume as a space for possible locations of macrophages.
+With these positions, we could compare the real observed spatial distribution (real positions)
+against randomly generated distributions (random positions).</p>
+<p>To obtain the zebrafish volume, we wrote an ImageJ macro. To run it, drag and drop the
+<code class="docutils literal notranslate"><span class="pre">generate_fish_outline_forSegmentation_percentile.ijm</span></code>
 file into Fiji and modify the imagename, parentfolder (where all timepoints are saved),
 savefolder (where to save the 3D stacks with the volume) and savefolder_max (where the maximum intensity
-projections of the 3D stacks) are saved..</p>
+projections of the 3D stacks for quick visualization) are saved.</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">imagename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1_CH594_000000.tif&quot;</span>
 <span class="n">parentfolder</span><span class="o">=</span><span class="w"> </span><span class="s">&quot;~/fish1&quot;</span>
 <span class="n">savefolder</span><span class="o">=</span><span class="w"> </span><span class="s">&quot;~/fish_volume&quot;</span>
@@ -131,17 +132,28 @@ projections of the 3D stacks) are saved..</p>
 <section id="hopkins-statistics-calculation">
 <h2>Hopkins statistics calculation<a class="headerlink" href="#hopkins-statistics-calculation" title="Link to this heading"></a></h2>
 <p>Next, a Matlab script enables calculation of the Hopkins statistic. It requires a
-list of position of real macrophage positions in an Excel file (t0000.xlsx) and
-an image with a binary mask for the volume to simulate random positions (fishvolume_t00000.tif).</p>
+list of position of real macrophage positions in an Excel file (macrophagePositionFile_t00000.xlsx) from the
+<a class="reference internal" href="LowRes_Segmentation.html#lowressegmentation"><span class="std std-ref">low-resolution segmentation</span></a>. and
+an image with a binary mask for the volume wherein random positions are simulated
+(fishvolume_t00000.tif).</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.
 |-- TimeSeries
 |   |-- t00000
 |   |   |-- fishvolume_t00000.tif
-|   |   |-- t00000.xlsx
+|   |   |-- macrophagePositionFile_t00000.xlsx
         ...
 </pre></div>
 </div>
-<p>To modify the Matlab script, ….</p>
+<p>If you run the Matlab code, first set Matlab’s path to include all the Matlab functions provided by
+the <code class="docutils literal notranslate"><span class="pre">HopkinsStatistics_Lowres</span></code>  package on the GitHub repository,
+using the <a class="reference external" href="https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html">Set Path</a>
+button in Matlab (Home &gt; Environment &gt; Set Path&gt; Add with subfolders).</p>
+<p>To run the Hopkins Statistics, open <code class="docutils literal notranslate"><span class="pre">runLowResAnalysis_US2O.m</span></code>, the script that analyzes
+the cell clustering in a defined (fish) volume over the entire experiment,
+by typing edit runLowResAnalysis_US2O in Matlab’s command window.
+Then revise the “imageDirectory” for loading data and “saveDirectory”
+for saving results. Save the changes and run the function by typing runLowResAnalysis_US2O
+in Matlab’s command window.</p>
 </section>
 <section id="matlab-compiled-version">
 <h2>Matlab compiled version<a class="headerlink" href="#matlab-compiled-version" title="Link to this heading"></a></h2>
@@ -152,13 +164,16 @@ environment is installed to run the code. After installation, the compile code i
 <p>For this, click on MatlabCompiler_measureCurvature.exe to run
 the code and follow the prompts to select a .tif and file.</p>
 <img alt="_images/fileselection.png" src="_images/fileselection.png" />
+<p>As an output, an Excel file (lowResResults.xlsx) is generated with all the results of the random permutations (n=350) of positions
+used to calculate the Hopkins statistics.</p>
 </section>
 <section id="test-data-for-cell-shape-feature-analysis">
 <h2>Test data for cell shape feature analysis<a class="headerlink" href="#test-data-for-cell-shape-feature-analysis" title="Link to this heading"></a></h2>
-<p>Test data is available for the cell shape feature analysis on Synapse in the folder
-Code_Example_Datasets/Exemplary_ShapeFeatureAnalysis:</p>
+<p>Test data is available for the Hopkins statistics analysis on Synapse in the folder
+Code_Example_Datasets/Exemplary_HopkinsDataset:</p>
 <p>LINK</p>
-<p>It contains a folder to a collection of cells from two timepoints.</p>
+<p>It contains a folder to a single timepoint containing the positions of macrophages
+in a zebrafish xenograft model and the approximation to the fish volume.</p>
 </section>
 </section>
 
