@@ -115,8 +115,17 @@ The collada file format can be easily imported (opened) in ChimeraX:
 <a class="reference external" href="https://www.cgl.ucsf.edu/chimera/">https://www.cgl.ucsf.edu/chimera/</a>.</p>
 <section id="matlab-code">
 <h2>Matlab code<a class="headerlink" href="#matlab-code" title="Link to this heading"></a></h2>
-<p>If you run the Matlab, please first add the Matlab folder Highres_curvature to your active
-<a class="reference external" href="https://www.mathworks.com/help/matlab/ref/addpath.html">Matlab search path</a>. Next,</p>
+<p>If you run the Matlab code, first clone this Github repository and set Matlab’s path to
+include all the Matlab functions provided by
+the <code class="docutils literal notranslate"><span class="pre">Highres_curvature</span></code> package on the GitHub repository,
+using the <a class="reference external" href="https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html">Set Path</a>
+button in Matlab (Home &gt; Environment &gt; Set Path&gt; Add with subfolders).</p>
+<p>To run the cell curvature analysis of a cell, open <code class="docutils literal notranslate"><span class="pre">runMeasureCurvature.m</span></code>,
+which is the main run script to extract the cell curvature and generate
+a Collada file for visualization by typing “edit runMeasureCurvature” in
+in Matlab’s command window. Then revise the “imageDirectory” for loading data and “saveDirectory”
+for saving results. Save the changes and run the function by typing “runMeasureCurvature”
+in Matlab’s command window.</p>
 </section>
 <section id="matlab-compiled-version">
 <h2>Matlab compiled version<a class="headerlink" href="#matlab-compiled-version" title="Link to this heading"></a></h2>

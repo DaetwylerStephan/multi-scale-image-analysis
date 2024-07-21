@@ -114,7 +114,9 @@ changes in morphology over hours of imaging and during macrophage-cancer cell in
 <p>The pipeline calculates 12 global morphological shape feature for classification:
 volume, surface area, solidity, sphericity, longest length, extend, aspect ratio, roughness,
 volume sphericity, radius sphericity, ratio sphericity, and circumscribed sphere area ratio.</p>
-<p>These feature span a space which is reduced through PCA analysis to two dimensions for visualization.</p>
+<p>These feature span a space which is reduced through PCA analysis to two dimensions for
+analysis (how similar are two cell populations, e.g. at different conditions or time)
+and visualization.</p>
 <p>To run the script, the data should be in the following format:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.
 |-- TimeSeries
@@ -134,15 +136,23 @@ volume sphericity, radius sphericity, ratio sphericity, and circumscribed sphere
 </div>
 <section id="running-the-matlab-code">
 <h2>Running the Matlab code<a class="headerlink" href="#running-the-matlab-code" title="Link to this heading"></a></h2>
-<p>If you run the Matlab, please first add the Matlab folder Highres_curvature to your active
-<a class="reference external" href="https://www.mathworks.com/help/matlab/ref/addpath.html">Matlab search path</a>. Next,</p>
+<p>If you run the Matlab code, first clone the Github repository and set Matlab’s path to
+include all the Matlab functions provided by
+the <code class="docutils literal notranslate"><span class="pre">Highres_morphologicalFeatures</span></code>  package on the GitHub repository,
+using the <a class="reference external" href="https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html">Set Path</a>
+button in Matlab (Home &gt; Environment &gt; Set Path&gt; Add with subfolders).</p>
+<p>To run the cell shape feature analysis over the entire experiment, open <code class="docutils literal notranslate"><span class="pre">runGlobalFeatureAnalysis_US2O.m</span></code>,
+which is the main run script that analyzes the cell shape features by typing edit runGlobalFeatureAnalysis_US2O in
+in Matlab’s command window. Then revise the “imageDirectory” for loading data and “saveDirectory”
+for saving results. Save the changes and run the function by typing runGlobalFeatureAnalysis_US2O
+in Matlab’s command window.</p>
 </section>
 <section id="matlab-compiled-version">
 <h2>Matlab compiled version<a class="headerlink" href="#matlab-compiled-version" title="Link to this heading"></a></h2>
 <p>If you do not have access to Matlab, we provide a compiled version of the code as “.exe” file.
 To run it, please double click on the compiled version and follow the installation instructions.
 In the installation process also a <a class="reference external" href="https://www.mathworks.com/products/compiler/matlab-runtime.html">Matlab runtime</a>
-environment is installed to run the code. After installation, the compile code is ready to run.
+environment is installed to run the code. After installation, the compiled code is ready to run.
 When prompted, please provide the path to the folder with all the timepoint paths (e.g. TimeSeries folder above).</p>
 <p>Output:</p>
 <p>The Matlab script will produce several outputs and save them in the data folder as follows:</p>

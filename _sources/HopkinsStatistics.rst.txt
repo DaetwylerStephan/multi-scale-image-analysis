@@ -32,7 +32,7 @@ Hopkins statistics calculation
 ==============================
 
 Next, a Matlab script enables calculation of the Hopkins statistic. It requires a
-list of position of real macrophage positions in an Excel file (t0000.xlsx) from the
+list of position of real macrophage positions in an Excel file (macrophagePositionFile_t00000.xlsx) from the
 :ref:`low-resolution segmentation <lowressegmentation>`. and
 an image with a binary mask for the volume wherein random positions are simulated
 (fishvolume_t00000.tif).
@@ -43,13 +43,21 @@ an image with a binary mask for the volume wherein random positions are simulate
     |-- TimeSeries
     |   |-- t00000
     |   |   |-- fishvolume_t00000.tif
-    |   |   |-- t00000.xlsx
+    |   |   |-- macrophagePositionFile_t00000.xlsx
             ...
 
-If you run the Matlab, please first add the Matlab folder Highres_curvature to your active
-`Matlab search path <https://www.mathworks.com/help/matlab/ref/addpath.html>`_. Next,
 
+If you run the Matlab code, first set Matlab's path to include all the Matlab functions provided by
+the ``HopkinsStatistics_Lowres``  package on the GitHub repository,
+using the `Set Path <https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html>`_
+button in Matlab (Home > Environment > Set Path> Add with subfolders).
 
+To run the Hopkins Statistics, open ``runLowResAnalysis_US2O.m``, the script that analyzes
+the cell clustering in a defined (fish) volume over the entire experiment,
+by typing edit runLowResAnalysis_US2O in Matlab's command window.
+Then revise the "imageDirectory" for loading data and "saveDirectory"
+for saving results. Save the changes and run the function by typing runLowResAnalysis_US2O
+in Matlab's command window.
 
 Matlab compiled version
 =======================
