@@ -20,7 +20,7 @@ Next, create a folder and go to this folder. Clone this repository to your local
 
 .. code-block:: console
 
-    (base) C:\Users\Username\Code> $ git clone https://github.com/
+    (base) C:\Users\Username\Code> $ git clone https://github.com/DaetwylerStephan/multi-scale-image-analysis.git
 
 
 Software installation

@@ -12,7 +12,9 @@ The pipeline calculates 12 global morphological shape feature for classification
 volume, surface area, solidity, sphericity, longest length, extend, aspect ratio, roughness,
 volume sphericity, radius sphericity, ratio sphericity, and circumscribed sphere area ratio.
 
-These feature span a space which is reduced through PCA analysis to two dimensions for visualization.
+These feature span a space which is reduced through PCA analysis to two dimensions for
+analysis (how similar are two cell populations, e.g. at different conditions or time)
+and visualization.
 
 To run the script, the data should be in the following format:
 
@@ -56,7 +58,7 @@ Matlab compiled version
 If you do not have access to Matlab, we provide a compiled version of the code as ".exe" file.
 To run it, please double click on the compiled version and follow the installation instructions.
 In the installation process also a `Matlab runtime <https://www.mathworks.com/products/compiler/matlab-runtime.html>`_
-environment is installed to run the code. After installation, the compile code is ready to run.
+environment is installed to run the code. After installation, the compiled code is ready to run.
 When prompted, please provide the path to the folder with all the timepoint paths (e.g. TimeSeries folder above).
 
 
