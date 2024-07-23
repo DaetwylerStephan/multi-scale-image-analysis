@@ -78,10 +78,11 @@ used to calculate the Hopkins statistics.
 Test data for cell shape feature analysis
 =========================================
 
-Test data is available for the Hopkins statistics analysis on Synapse in the folder
-Code_Example_Datasets/Exemplary_HopkinsDataset:
+Test data is available for the Hopkins statistics analysis in the folder
+Exemplary_HopkinsDataset:
 
-LINK
+:on Synapse: https://doi.org/10.7303/syn61795850
+:or Zenodo: https://doi.org/10.5281/zenodo.12791724
 
 It contains a folder to a single timepoint containing the positions of macrophages
 in a zebrafish xenograft model and the approximation to the fish volume.

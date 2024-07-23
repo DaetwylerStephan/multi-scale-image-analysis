@@ -112,10 +112,12 @@ Note 2: We downsampled the rawimages to provide more efficient computation to fi
 Test data for low-resolution visualization
 ==========================================
 
-Test data is available for the low-resolution visualization on Synapse in the folder Exemplary_VisualizationDataset.
-LINK
+Test data is available for the low-resolution visualization in the folder Exemplary_VisualizationDataset.
 
-The data in the folder is structured as:
+on Synapse https://doi.org/10.7303/syn61795850
+or Zenodo: https://doi.org/10.5281/zenodo.12791724
+
+It contains data in the folder structured as:
 
 :low_resolution_rawdata: The raw data to visualize (macrophage and vessels)
 :low_resolutionsegmentation: The low-resolution segmentation to visualize
@@ -128,6 +130,7 @@ Visualization of high-resolution data
 High-resolution data can be visualized similarly as low-resolution data. Here, we describe
 in more detail the visualization of high-resolution rawdata of cancer spheroids in a collagen matrix
 from SUM159 breast cancer cells labelled with two colors 1:1 (Lifeact-GFP and the Lifeact-mCherry).
+The python file for this script is in :meth:`visualize_with_napariHighRes_spheroids.py`.
 
 First, specify the path to the raw data (imagevisu.rawdatafolder), the folder to save the rendering results
 (imagevisu.visualizedfolder), the region to visualize (imagevisu.region).
@@ -180,8 +183,13 @@ segmented macrophages.
 Test data for high-resolution visualization
 ===========================================
 
-Test data is available for the high-resolution visualization on Synapse in the folder Exemplary_VisualizationDataset.
-LINK
+Test data is available for the high-resolution visualization in the folder
+Exemplary_VisualizationDataset.
+
+:on Synapse: https://doi.org/10.7303/syn61795850
+:or Zenodo: https://doi.org/10.5281/zenodo.12791724
+
+It contains:
 
 :high_resolution_rawdata: The raw data to visualize (two spheroid channels)
 :high_resolution_visualization_results: The final visualization results.

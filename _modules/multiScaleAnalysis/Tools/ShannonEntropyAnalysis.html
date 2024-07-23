@@ -149,11 +149,13 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 
-    <span class="n">parentfolder</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/ShannonEntropyExample/timeseries&quot;</span>
-    <span class="n">result_xlsxfile</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/ShannonEntropyExample/ShannonEntropyValues.xlsx&quot;</span>
+    <span class="n">parentfolder</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_ShannonEntropy/&quot;</span>
+
+    <span class="n">parentfoldertimeseries</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parentfolder</span><span class="p">,</span> <span class="s2">&quot;timeseries&quot;</span><span class="p">)</span>
+    <span class="n">result_xlsxfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parentfolder</span><span class="p">,</span> <span class="s2">&quot;ShannonEntropyValues.xlsx&quot;</span><span class="p">)</span>
 
     <span class="c1">#get all timepoints from folder</span>
-    <span class="n">dir_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">parentfolder</span><span class="p">)</span>
+    <span class="n">dir_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">parentfoldertimeseries</span><span class="p">)</span>
     <span class="n">timepointlist</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">dir_list</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">):</span>
@@ -163,7 +165,7 @@
     <span class="c1"># iterate over folder</span>
     <span class="n">DCT_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">timepointlist</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">timepointlist</span><span class="p">)):</span>
-        <span class="n">image</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parentfolder</span><span class="p">,</span> <span class="n">timepointlist</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parentfoldertimeseries</span><span class="p">,</span> <span class="n">timepointlist</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
         <span class="n">DCT_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fast_normalized_dct_shannon_entropy</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">3</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="c1">#plot result</span>

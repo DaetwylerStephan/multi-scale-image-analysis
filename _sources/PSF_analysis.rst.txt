@@ -1,3 +1,5 @@
+.. _PSFanalysis:
+
 ============
 PSF analysis
 ============
@@ -70,7 +72,8 @@ https://imagejdocu.list.lu/plugin/analysis/metroloj/start
 Testdata set for PSF characterization
 =====================================
 
-A test data set is available on Synapse to calculate the PSF values of an example bead sample from the
+A test data set is available to calculate the PSF values of an example bead sample from the
 high-resolution axially-swept light-sheet acquisition.
 
-Synapse link: LINK
+:on Synapse: https://doi.org/10.7303/syn61795850
+:or Zenodo: https://doi.org/10.5281/zenodo.12791724
