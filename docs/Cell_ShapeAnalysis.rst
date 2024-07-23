@@ -100,8 +100,8 @@ Test data for cell shape feature analysis
 Test data is available for the cell shape feature analysis in the folder
 Code_Example_Datasets/Exemplary_ShapeFeatureAnalysis:
 
-on Synapse https://doi.org/10.7303/syn61795850
-or Zenodo: https://doi.org/10.5281/zenodo.12791724
+:on Synapse: https://doi.org/10.7303/syn61795850
+:or Zenodo: https://doi.org/10.5281/zenodo.12791724
 
 It contains a folder to a collection of macrophages (cells) from two timepoints in a zebrafish
 xenograft model.

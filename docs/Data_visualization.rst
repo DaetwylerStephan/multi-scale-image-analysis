@@ -186,10 +186,11 @@ Test data for high-resolution visualization
 Test data is available for the high-resolution visualization in the folder
 Exemplary_VisualizationDataset.
 
-on Synapse https://doi.org/10.7303/syn61795850
-or Zenodo: https://doi.org/10.5281/zenodo.12791724
+:on Synapse: https://doi.org/10.7303/syn61795850
+:or Zenodo: https://doi.org/10.5281/zenodo.12791724
 
 It contains:
+
 :high_resolution_rawdata: The raw data to visualize (two spheroid channels)
 :high_resolution_visualization_results: The final visualization results.
 

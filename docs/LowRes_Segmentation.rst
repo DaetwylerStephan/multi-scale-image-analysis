@@ -63,6 +63,6 @@ Test data for low-resolution visualization
 
 Test data is available for the low-resolution visualization  in the folder Exemplary_Segmentation/low_resolution.
 
-on Synapse https://doi.org/10.7303/syn61795850
-or Zenodo: https://doi.org/10.5281/zenodo.12791724
+:on Synapse: https://doi.org/10.7303/syn61795850
+:or Zenodo: https://doi.org/10.5281/zenodo.12791724
 

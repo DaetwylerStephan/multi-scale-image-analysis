@@ -37,5 +37,5 @@ Testdata set for PSF characterization
 Test data is available for the calculating the Shannon Entropy of bead images
 in the folder Exemplary_ShannonEntropy/timeseries.
 
-on Synapse https://doi.org/10.7303/syn61795850
-or Zenodo: https://doi.org/10.5281/zenodo.12791724
+:on Synapse: https://doi.org/10.7303/syn61795850
+:or Zenodo: https://doi.org/10.5281/zenodo.12791724

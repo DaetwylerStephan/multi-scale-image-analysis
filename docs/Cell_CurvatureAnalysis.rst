@@ -64,8 +64,8 @@ Test data for cell curvature analysis
 Test data is available for the cell shape feature analysis in the folder
 Code_Example_Datasets/Exemplary_CurvatureAnalysis:
 
-on Synapse https://doi.org/10.7303/syn61795850
-or Zenodo: https://doi.org/10.5281/zenodo.12791724
+:on Synapse: https://doi.org/10.7303/syn61795850
+:or Zenodo: https://doi.org/10.5281/zenodo.12791724
 
 It contains a segmented cells to visualize.
 

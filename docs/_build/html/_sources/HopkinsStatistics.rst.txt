@@ -81,8 +81,8 @@ Test data for cell shape feature analysis
 Test data is available for the Hopkins statistics analysis in the folder
 Exemplary_HopkinsDataset:
 
-on Synapse https://doi.org/10.7303/syn61795850
-or Zenodo: https://doi.org/10.5281/zenodo.12791724
+:on Synapse: https://doi.org/10.7303/syn61795850
+:or Zenodo: https://doi.org/10.5281/zenodo.12791724
 
 It contains a folder to a single timepoint containing the positions of macrophages
 in a zebrafish xenograft model and the approximation to the fish volume.

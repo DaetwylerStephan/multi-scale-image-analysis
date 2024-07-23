@@ -99,9 +99,8 @@ imaged with the low-resolution light-sheet modality.
 
 To download the dataset, please download the folder Exemplary_StitchingDataset:
 
-on Synapse https://doi.org/10.7303/syn61795850
-or Zenodo: https://doi.org/10.5281/zenodo.12791724
-
+:on Synapse: https://doi.org/10.7303/syn61795850
+:or Zenodo: https://doi.org/10.5281/zenodo.12791724
 
 Alternatives
 ============
