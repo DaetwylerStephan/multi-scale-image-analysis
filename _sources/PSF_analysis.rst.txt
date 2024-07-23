@@ -9,7 +9,8 @@ PSF analysis
 Running the Python script
 =========================
 
-To run the PSF script, first set the file paths to the image stack and where to save the results.
+To run the PSF script, first set the file paths to where the data to analyse is saved and where you
+want to save the results of the data processing.
 The imagefilepath is the file containing the image stack with the beads (raw image). The output of the script
 produces an Excel file with all identified beads and their PSF values (imagefilepath_Excelfile), a summary
 statement with the median PSF values in a text file (imagefilepath_textfile), a plot of the PSF values

@@ -8,11 +8,11 @@ in our paper "In vivo 3D profiling of site-specific human cancer cell morphotype
 (`Link to paper <https://doi.org/10.1083/jcb.202109100>`_) and applied here to identify
 changes in morphology over hours of imaging and during macrophage-cancer cell interactions.
 
-The pipeline calculates 12 global morphological shape feature for classification:
+The pipeline calculates 12 global morphological shape features for classification:
 volume, surface area, solidity, sphericity, longest length, extend, aspect ratio, roughness,
 volume sphericity, radius sphericity, ratio sphericity, and circumscribed sphere area ratio.
 
-These feature span a space which is reduced through PCA analysis to two dimensions for
+These features span a space which is reduced through PCA analysis to two dimensions for
 analysis (how similar are two cell populations, e.g. at different conditions or time)
 and visualization.
 

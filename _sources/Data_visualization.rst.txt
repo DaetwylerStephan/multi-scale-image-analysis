@@ -10,7 +10,7 @@ Generate a custom colormap for labels
 =====================================
 
 To visualize the segmented data with a dedicated colormap from Fiji (Rainbow Smooth.lut), we
-designed our own Fiji/ImageJ macro to save the format in the appropriate format for Napari.
+designed our own Fiji/ImageJ macro to save the data in the appropriate format for Napari.
 
 To install the Rainbow Smooth.lut, go to File>Import>Lut.. and select the Rainbow Smooth.lut from
 the folder.
