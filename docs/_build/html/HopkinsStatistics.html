@@ -114,7 +114,7 @@ indicates a cluster tendency at the 90% confidence level.</p>
 <section id="zebrafish-volume-approximation">
 <h2>Zebrafish volume approximation<a class="headerlink" href="#zebrafish-volume-approximation" title="Link to this heading"></a></h2>
 <p>The Hopkins statistics requires the simulation of random points. To do this, we obtained
-an approximation of the 3D zebrafish volume as a space for possible locations of macrophages.
+an approximation of the 3D zebrafish volume as a space for possible locations of cells.
 With these positions, we could compare the real observed spatial distribution (real positions)
 against randomly generated distributions (random positions).</p>
 <p>To obtain the zebrafish volume, we wrote an ImageJ macro. To run it, drag and drop the
@@ -132,8 +132,8 @@ projections of the 3D stacks for quick visualization) are saved.</p>
 <section id="hopkins-statistics-calculation-with-matlab">
 <h2>Hopkins statistics calculation with Matlab<a class="headerlink" href="#hopkins-statistics-calculation-with-matlab" title="Link to this heading"></a></h2>
 <p>Next, a Matlab script enables calculation of the Hopkins statistic. It requires a
-list of position of real macrophage positions in an Excel file (macrophagePositionFile_t00000.xlsx) from the
-<a class="reference internal" href="LowRes_Segmentation.html#lowressegmentation"><span class="std std-ref">low-resolution segmentation</span></a>. and
+list of position of real cell positions in an Excel file (macrophagePositionFile_t00000.xlsx) from the
+<a class="reference internal" href="LowRes_Segmentation.html#lowressegmentation"><span class="std std-ref">low-resolution segmentation</span></a> and
 an image with a binary mask for the volume wherein random positions are simulated
 (fishvolume_t00000.tif).</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.

@@ -7,7 +7,7 @@ Low-resolution segmentation
 To quickly segment the low-resolution data, we leverage GPU-accelerated
 `Pyclesperanto_prototype <https://github.com/clEsperanto/pyclesperanto_prototype>`_.
 Conveniently, a Napari plugin called `napari-pyclesperanto-assistant <https://clesperanto.github.io/napari_pyclesperanto_assistant>`_ is
-available to optimize the segmentation pipeline.
+available to optimize the segmentation pipeline and the used parameters.
 
 Setting up segmentation
 =======================

@@ -245,8 +245,8 @@ if __name__ == '__main__':
         areaarray[i] = np.round(props[i].area).astype("int")
 
     #plot histogram of area values to make an informed guess about which bead areas are acceptable
-    plt.hist(areaarray, density=True, bins=30, range=[0, 500])  # density=False would make counts
-    plt.show()
+    # plt.hist(areaarray, density=True, bins=30, range=[0, 500])  # density=False would make counts
+    # plt.show()
 
     #get filtered list
     centroidlist_filtered = filter_centroidpositions(centroidlist, areaarray, image.shape, axial_dist=axial_dist,lateral_dist=lateral_dist, areacutoff=areacutoff)

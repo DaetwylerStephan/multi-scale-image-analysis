@@ -3,7 +3,7 @@ Cell Curvature Analysis
 =======================
 
 Cell curvature is an important morphological feature of cell shape and involved
-in organizing cell signaling (e.g. through `Septin localization <https://www.pnas.org/doi/full/10.1073/pnas.2208253120>`_.
+in organizing cell signaling (e.g. through `Septin localization <https://www.pnas.org/doi/full/10.1073/pnas.2208253120>`_).
 
 To measure and visualize cell curvature, we developed custom Matlab code
 that takes a binary cell segmentation mask, measures the curvature, and

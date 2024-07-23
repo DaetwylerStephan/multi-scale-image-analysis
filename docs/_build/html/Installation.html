@@ -53,6 +53,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#software-installation">Software installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-and-editing-functions-with-pycharm">Running and editing functions with PyCharm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-data-location">Test data location</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
 </ul>
 </li>
 </ul>
@@ -110,7 +111,7 @@
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
-<p>The analysis code relies on GPU analysis. Therefore, a graphics card with Nvidia
+<p>The analysis code relies on processing on a GPU. Therefore, a graphics card with Nvidia
 drivers is required for running the code. We tested the code on Linux and Windows.</p>
 </section>
 <section id="get-ready">
@@ -145,7 +146,8 @@ and install the packages:</p>
 <span class="gp gp-VirtualEnv">(imageanalysis_env)</span> <span class="go">MyComputer ~/multiScaleAnalysis $ pip install .</span>
 </pre></div>
 </div>
-<p>Now you can start executing the scripts and test them using the testdata provided on Synapse.</p>
+<p>Now you can start executing the scripts and test them using the testdata provided on Synapse or
+Zenodo (see below).</p>
 </section>
 <section id="running-and-editing-functions-with-pycharm">
 <h2>Running and editing functions with PyCharm<a class="headerlink" href="#running-and-editing-functions-with-pycharm" title="Link to this heading"></a></h2>
@@ -160,10 +162,11 @@ your recently established Conda environment.</p>
 <img alt="_images/add_environment2.png" src="_images/add_environment2.png" />
 <p>Now the Terminal is ready for input:</p>
 <img alt="_images/open_commandPrompt.png" src="_images/open_commandPrompt.png" />
-<p>And we can change the file path in the script to the location of the downloaded test datasets,
-e.g. in the script to analyse <a class="reference internal" href="PSF_analysis.html#psfanalysis"><span class="std std-ref">PSF values</span></a>.
-To run the script, we need to go to the folder
-with the python function and enter “python PSF_measurements.py”.</p>
+<p>Before running the script, we need to indicate where the data to process is saved. Please check
+out the different sections for different scripts. For example, in the script to run
+<a class="reference internal" href="PSF_analysis.html#psfanalysis"><span class="std std-ref">PSF analysis</span></a>, modify the parentfolder filepath.</p>
+<p>To run the script, we need to go to the folder
+with the python function and enter “python PSF_measurements.py”:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(imageanalysis_env)</span> <span class="go">MyComputer ~/multiScaleAnalysis $ cd Tools</span>
 <span class="gp gp-VirtualEnv">(imageanalysis_env)</span> <span class="go">MyComputer ~/multiScaleAnalysis $ python PSF_measurements.py</span>
 </pre></div>
@@ -190,6 +193,36 @@ the official storage of National Institute of Health, MC2 centers:</p>
 </dl>
 <p>If you are interested in it, please check out:
 <a class="reference external" href="https://help.synapse.org/docs/Getting-Started.2055471150.html">https://help.synapse.org/docs/Getting-Started.2055471150.html</a></p>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<p>If you run the code at an institution with a firewall, you may need to change the proxy
+settings to enable <code class="docutils literal notranslate"><span class="pre">pip</span></code> and <code class="docutils literal notranslate"><span class="pre">conda</span></code> to download files.</p>
+<p>To do so, change your system environment variables (Windows). You obtain the port number (1234)
+and proxy address (<a class="reference external" href="http://proxy.your_university.edu">http://proxy.your_university.edu</a>) from your system administrators.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Variable = HTTP_PROXY; Value = <a class="reference external" href="http://proxy.your_university.edu:1234">http://proxy.your_university.edu:1234</a></p></li>
+<li><p>Variable = HTTPS_PROXY; Value = <a class="reference external" href="https://proxy.your_university.edu:1234">https://proxy.your_university.edu:1234</a></p></li>
+</ul>
+</div></blockquote>
+<p>If you continue to have issues then change the value of Variable HTTPS_PROXY to
+<a class="reference external" href="http://proxy.your_university.edu:1234">http://proxy.your_university.edu:1234</a></p>
+<p>If this does not resolve your download/proxy issues, also update the configuration
+files for conda and pip to include the proxy settings. For Windows, the paths are saved at:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">conda</span></code> configuration file can be found at C:\Users\UserProfile\.condarc</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">pip</span></code> configuration file can be found at C:\Users\UserProfile\pip\pip.ini</p></li>
+</ul>
+</div></blockquote>
+<p>See also this <a class="reference external" href="https://stackoverflow.com/questions/36729023/how-to-make-anaconda-work-behind-http-proxy-not-https">Stackoverflow</a>
+discussion.</p>
+<p>Alternatively, set the proxy from Anaconda Prompt as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">https_proxy=http://username:password&#64;proxy.your_university.edu:1234</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">http_proxy=http://username:password&#64;proxy.your_university.edu:1234</span></code></p></li>
+</ul>
 </section>
 </section>
 

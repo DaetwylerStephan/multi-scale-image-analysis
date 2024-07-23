@@ -5,7 +5,7 @@ Getting started
 Requirements
 ============
 
-The analysis code relies on GPU analysis. Therefore, a graphics card with Nvidia
+The analysis code relies on processing on a GPU. Therefore, a graphics card with Nvidia
 drivers is required for running the code. We tested the code on Linux and Windows.
 
 Get ready
@@ -59,7 +59,8 @@ and install the packages:
    (imageanalysis_env) MyComputer ~/multiScaleAnalysis $ pip install .
 
 
-Now you can start executing the scripts and test them using the testdata provided on Synapse.
+Now you can start executing the scripts and test them using the testdata provided on Synapse or
+Zenodo (see below).
 
 
 Running and editing functions with PyCharm
@@ -85,10 +86,12 @@ Now the Terminal is ready for input:
 
 .. image:: images/open_commandPrompt.png
 
-And we can change the file path in the script to the location of the downloaded test datasets,
-e.g. in the script to analyse :ref:`PSF values <PSFanalysis>`.
+Before running the script, we need to indicate where the data to process is saved. Please check
+out the different sections for different scripts. For example, in the script to run
+:ref:`PSF analysis <PSFanalysis>`, modify the parentfolder filepath.
+
 To run the script, we need to go to the folder
-with the python function and enter "python PSF_measurements.py".
+with the python function and enter "python PSF_measurements.py":
 
 .. code-block:: console
 
@@ -115,3 +118,34 @@ the official storage of National Institute of Health, MC2 centers:
 
 If you are interested in it, please check out:
 https://help.synapse.org/docs/Getting-Started.2055471150.html
+
+
+Troubleshooting
+===============
+
+If you run the code at an institution with a firewall, you may need to change the proxy
+settings to enable ``pip`` and ``conda`` to download files.
+
+To do so, change your system environment variables (Windows). You obtain the port number (1234)
+and proxy address (http://proxy.your_university.edu) from your system administrators.
+
+    * Variable = HTTP_PROXY; Value = http://proxy.your_university.edu:1234
+    * Variable = HTTPS_PROXY; Value = https://proxy.your_university.edu:1234
+
+If you continue to have issues then change the value of Variable HTTPS_PROXY to
+http://proxy.your_university.edu:1234
+
+If this does not resolve your download/proxy issues, also update the configuration
+files for conda and pip to include the proxy settings. For Windows, the paths are saved at:
+
+    * The ``conda`` configuration file can be found at C:\\Users\\UserProfile\\.condarc
+    * The ``pip`` configuration file can be found at C:\\Users\\UserProfile\\pip\\pip.ini
+
+See also this `Stackoverflow <https://stackoverflow.com/questions/36729023/how-to-make-anaconda-work-behind-http-proxy-not-https>`_
+discussion.
+
+
+Alternatively, set the proxy from Anaconda Prompt as follows:
+
+*  ``set https_proxy=http://username:password@proxy.your_university.edu:1234``
+*  ``set http_proxy=http://username:password@proxy.your_university.edu:1234``

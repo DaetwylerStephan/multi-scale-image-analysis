@@ -16,7 +16,7 @@ Please first specify the folder path with the data to stitch and where you would
 Next, determine a coarse positioning of the tiles using the physical coordinates of the microscope stage position
 or using Fiji to determine the approximate overlay. Moreover, sometimes the fluorescent signal at the
 edge of an image is weaker or absent. To remove this part of the image and also to reduce overall image size,
-specify a cropping parameters.
+specify cropping parameters.
 
 .. code-block:: python
 

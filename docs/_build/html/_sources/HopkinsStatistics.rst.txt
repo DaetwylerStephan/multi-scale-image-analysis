@@ -11,7 +11,7 @@ Zebrafish volume approximation
 ==============================
 
 The Hopkins statistics requires the simulation of random points. To do this, we obtained
-an approximation of the 3D zebrafish volume as a space for possible locations of macrophages.
+an approximation of the 3D zebrafish volume as a space for possible locations of cells.
 With these positions, we could compare the real observed spatial distribution (real positions)
 against randomly generated distributions (random positions).
 
@@ -32,8 +32,8 @@ Hopkins statistics calculation with Matlab
 ==========================================
 
 Next, a Matlab script enables calculation of the Hopkins statistic. It requires a
-list of position of real macrophage positions in an Excel file (macrophagePositionFile_t00000.xlsx) from the
-:ref:`low-resolution segmentation <lowressegmentation>`. and
+list of position of real cell positions in an Excel file (macrophagePositionFile_t00000.xlsx) from the
+:ref:`low-resolution segmentation <lowressegmentation>` and
 an image with a binary mask for the volume wherein random positions are simulated
 (fishvolume_t00000.tif).
 
