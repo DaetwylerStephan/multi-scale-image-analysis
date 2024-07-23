@@ -189,7 +189,7 @@ if __name__ == '__main__':
     segment_class = segment_macrophage_lowres_class()
 
     #parameters-----------------------------------
-    parentfolder = '/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/low_resSegmentation/fish1'
+    parentfolder = "/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_Segmentation/Low_resolution/fish1"
     resultsfolder = parentfolder + "_segmented"
     channellist = ['1_CH488_000000', '1_CH552_000000']
 

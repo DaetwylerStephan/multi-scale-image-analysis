@@ -144,10 +144,10 @@ if __name__ == '__main__':
     )
 
     imagevisu = image_visualizer_stitched()
-    rawdatafolder_parent = '/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/Visualization/'
-    imagevisu.rawdatafolder = os.path.join(rawdatafolder_parent, "rawdata")
+    rawdatafolder_parent = "/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_VisualizationDataset"
+    imagevisu.rawdatafolder = os.path.join(rawdatafolder_parent, "low_resolution_rawdata")
     # segmented data
-    imagevisu.segmentationfolder = os.path.join(rawdatafolder_parent, "lowres_segmentation_labelimages")
+    imagevisu.segmentationfolder = os.path.join(rawdatafolder_parent, "low_resolutionsegmentation_labelimages")
     imagevisu.visualizedfolder = imagevisu.rawdatafolder + "_visualized"
     imagevisu.load_visualize_images(visualization_param)
 

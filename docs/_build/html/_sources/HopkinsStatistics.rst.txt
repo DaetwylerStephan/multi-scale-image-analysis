@@ -28,8 +28,8 @@ projections of the 3D stacks for quick visualization) are saved.
     savefolder= "~/fish_volume"
     savefolder_max= "~/fish_volume_max"
 
-Hopkins statistics calculation
-==============================
+Hopkins statistics calculation with Matlab
+==========================================
 
 Next, a Matlab script enables calculation of the Hopkins statistic. It requires a
 list of position of real macrophage positions in an Excel file (macrophagePositionFile_t00000.xlsx) from the
@@ -52,12 +52,12 @@ the ``HopkinsStatistics_Lowres``  package on the GitHub repository,
 using the `Set Path <https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html>`_
 button in Matlab (Home > Environment > Set Path> Add with subfolders).
 
-To run the Hopkins Statistics, open ``runLowResAnalysis_US2O.m``, the script that analyzes
-the cell clustering in a defined (fish) volume over the entire experiment,
-by typing edit runLowResAnalysis_US2O in Matlab's command window.
-Then revise the "imageDirectory" for loading data and "saveDirectory"
-for saving results. Save the changes and run the function by typing runLowResAnalysis_US2O
-in Matlab's command window.
+To run the Hopkins Statistics, open ``runLowResAnalysis_US2O.m`` by typing "edit runLowResAnalysis_US2O"
+in Matlab's command window. ``runLowResAnalysis_US2O.m`` is the main script to
+analyze cell clustering in a (changing) volume over an entire experiment. In this script,
+revise the "imageDirectory" for loading the data and "saveDirectory"
+for saving the results. Save the changes to the script and run the function
+by typing runLowResAnalysis_US2O in Matlab's command window.
 
 Matlab compiled version
 =======================
@@ -78,10 +78,11 @@ used to calculate the Hopkins statistics.
 Test data for cell shape feature analysis
 =========================================
 
-Test data is available for the Hopkins statistics analysis on Synapse in the folder
-Code_Example_Datasets/Exemplary_HopkinsDataset:
+Test data is available for the Hopkins statistics analysis in the folder
+Exemplary_HopkinsDataset:
 
-LINK
+on Synapse https://doi.org/10.7303/syn61795850
+or Zenodo: https://doi.org/10.5281/zenodo.12791724
 
 It contains a folder to a single timepoint containing the positions of macrophages
 in a zebrafish xenograft model and the approximation to the fish volume.

@@ -44,11 +44,13 @@ def load_image(filename):
 
 if __name__ == '__main__':
 
-    parentfolder = "/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/ShannonEntropyExample/timeseries"
-    result_xlsxfile = "/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/ShannonEntropyExample/ShannonEntropyValues.xlsx"
+    parentfolder = "/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_ShannonEntropy/"
+
+    parentfoldertimeseries = os.path.join(parentfolder, "timeseries")
+    result_xlsxfile = os.path.join(parentfolder, "ShannonEntropyValues.xlsx")
 
     #get all timepoints from folder
-    dir_list = os.listdir(parentfolder)
+    dir_list = os.listdir(parentfoldertimeseries)
     timepointlist = []
     for path in dir_list:
         if path.startswith('t'):
@@ -58,7 +60,7 @@ if __name__ == '__main__':
     # iterate over folder
     DCT_array = np.zeros(len(timepointlist))
     for i in range(0,len(timepointlist)):
-        image = load_image(os.path.join(parentfolder, timepointlist[i]))
+        image = load_image(os.path.join(parentfoldertimeseries, timepointlist[i]))
         DCT_array[i] = fast_normalized_dct_shannon_entropy(image, 3)[0]
 
     #plot result

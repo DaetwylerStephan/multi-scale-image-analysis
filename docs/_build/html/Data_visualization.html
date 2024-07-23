@@ -196,9 +196,10 @@ and the script will open Napari with the images to find the best parameters. For
 </section>
 <section id="test-data-for-low-resolution-visualization">
 <h2>Test data for low-resolution visualization<a class="headerlink" href="#test-data-for-low-resolution-visualization" title="Link to this heading"></a></h2>
-<p>Test data is available for the low-resolution visualization on Synapse in the folder Exemplary_VisualizationDataset.
-LINK</p>
-<p>The data in the folder is structured as:</p>
+<p>Test data is available for the low-resolution visualization in the folder Exemplary_VisualizationDataset.</p>
+<p>on Synapse <a class="reference external" href="https://doi.org/10.7303/syn61795850">https://doi.org/10.7303/syn61795850</a>
+or Zenodo: <a class="reference external" href="https://doi.org/10.5281/zenodo.12791724">https://doi.org/10.5281/zenodo.12791724</a></p>
+<p>It contains data in the folder structured as:</p>
 <dl class="field-list simple">
 <dt class="field-odd">low_resolution_rawdata<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The raw data to visualize (macrophage and vessels)</p>
@@ -218,7 +219,8 @@ LINK</p>
 <h2>Visualization of high-resolution data<a class="headerlink" href="#visualization-of-high-resolution-data" title="Link to this heading"></a></h2>
 <p>High-resolution data can be visualized similarly as low-resolution data. Here, we describe
 in more detail the visualization of high-resolution rawdata of cancer spheroids in a collagen matrix
-from SUM159 breast cancer cells labelled with two colors 1:1 (Lifeact-GFP and the Lifeact-mCherry).</p>
+from SUM159 breast cancer cells labelled with two colors 1:1 (Lifeact-GFP and the Lifeact-mCherry).
+The python file for this script is in <code class="xref py py-meth docutils literal notranslate"><span class="pre">visualize_with_napariHighRes_spheroids.py()</span></code>.</p>
 <p>First, specify the path to the raw data (imagevisu.rawdatafolder), the folder to save the rendering results
 (imagevisu.visualizedfolder), the region to visualize (imagevisu.region).</p>
 <p>Moreover, if you already have established the visualization parameters, choose establish_param=0. If not,
@@ -262,16 +264,13 @@ segmented macrophages.</p>
 </section>
 <section id="test-data-for-high-resolution-visualization">
 <h2>Test data for high-resolution visualization<a class="headerlink" href="#test-data-for-high-resolution-visualization" title="Link to this heading"></a></h2>
-<p>Test data is available for the high-resolution visualization on Synapse in the folder Exemplary_VisualizationDataset.
-LINK</p>
-<dl class="field-list simple">
-<dt class="field-odd">high_resolution_rawdata<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The raw data to visualize (two spheroid channels)</p>
-</dd>
-<dt class="field-even">high_resolution_visualization_results<span class="colon">:</span></dt>
-<dd class="field-even"><p>The final visualization results.</p>
-</dd>
-</dl>
+<p>Test data is available for the high-resolution visualization in the folder
+Exemplary_VisualizationDataset.</p>
+<p>on Synapse <a class="reference external" href="https://doi.org/10.7303/syn61795850">https://doi.org/10.7303/syn61795850</a>
+or Zenodo: <a class="reference external" href="https://doi.org/10.5281/zenodo.12791724">https://doi.org/10.5281/zenodo.12791724</a></p>
+<p>It contains:
+:high_resolution_rawdata: The raw data to visualize (two spheroid channels)
+:high_resolution_visualization_results: The final visualization results.</p>
 </section>
 </section>
 

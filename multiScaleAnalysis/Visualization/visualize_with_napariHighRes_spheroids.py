@@ -140,7 +140,8 @@ if __name__ == '__main__':
         imagename_magenta="1_CH594_000000.tif"
     )
     imagevisu = image_visualizer()
-    imagevisu.rawdatafolder = '/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/visualization_highres'
+    imagevisu.rawdatafolder = "/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_VisualizationDataset/high_resolution_rawdata"
+
     experimentfolder_result = imagevisu.rawdatafolder + "_highres_visualized_test"
     imagevisu.visualizedfolder = os.path.join(experimentfolder_result, 'visualized')
     imagevisu.region = 'high_stack_002'

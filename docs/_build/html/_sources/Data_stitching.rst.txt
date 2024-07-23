@@ -97,8 +97,10 @@ vaculature, *Tg(kdrl:rasCherry)*, consisting of
 one timepoint (t00000) and three regions (low_stack000, low_stack001, low_stack002)
 imaged with the low-resolution light-sheet modality.
 
-To download the dataset, please follow the link to Synapse:
-LINK
+To download the dataset, please download the folder Exemplary_StitchingDataset:
+
+on Synapse https://doi.org/10.7303/syn61795850
+or Zenodo: https://doi.org/10.5281/zenodo.12791724
 
 
 Alternatives

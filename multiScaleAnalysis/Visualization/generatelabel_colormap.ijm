@@ -1,6 +1,6 @@
 
-parentpath = "Z:/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/visualization";
-segmentedfilename = "1_CH488_000000sg"
+parentpath = "Z:/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_VisualizationDataset/low_resolutionsegmentation/";
+segmentedfilename = "1_CH488_000000sg";
 
 for (i = 0; i < 100; i++) {
 

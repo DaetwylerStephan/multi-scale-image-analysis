@@ -20,11 +20,11 @@ the ``Highres_curvature`` package on the GitHub repository,
 using the `Set Path <https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html>`_
 button in Matlab (Home > Environment > Set Path> Add with subfolders).
 
-To run the cell curvature analysis of a cell, open ``runMeasureCurvature.m``,
-which is the main run script to extract the cell curvature and generate
-a Collada file for visualization by typing "edit runMeasureCurvature" in
-in Matlab's command window. Then revise the "imageDirectory" for loading data and "saveDirectory"
-for saving results. Save the changes and run the function by typing "runMeasureCurvature"
+To run the cell curvature analysis of a cell, open ``runMeasureCurvature.m`` by typing
+"edit runMeasureCurvature" in Matlab's command window. ``runMeasureCurvature.m`` is the main
+script to extract the cell curvature and generate a Collada file for visualization.
+In this script, revise the "imageDirectory" for loading the data and "saveDirectory"
+for saving the results. Save the changes and run the function by typing "runMeasureCurvature"
 in Matlab's command window.
 
 
@@ -61,10 +61,11 @@ rendering in Chimera (see image below).
 Test data for cell curvature analysis
 =====================================
 
-Test data is available for the cell shape feature analysis on Synapse in the folder
+Test data is available for the cell shape feature analysis in the folder
 Code_Example_Datasets/Exemplary_CurvatureAnalysis:
 
-LINK
+on Synapse https://doi.org/10.7303/syn61795850
+or Zenodo: https://doi.org/10.5281/zenodo.12791724
 
 It contains a segmented cells to visualize.
 

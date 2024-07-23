@@ -45,10 +45,11 @@ the ``Highres_morphologicalFeatures``  package on the GitHub repository,
 using the `Set Path <https://www.mathworks.com/help/matlab/matlab_env/add-remove-or-reorder-folders-on-the-search-path.html>`_
 button in Matlab (Home > Environment > Set Path> Add with subfolders).
 
-To run the cell shape feature analysis over the entire experiment, open ``runGlobalFeatureAnalysis_US2O.m``,
-which is the main run script that analyzes the cell shape features by typing edit runGlobalFeatureAnalysis_US2O in
-in Matlab's command window. Then revise the "imageDirectory" for loading data and "saveDirectory"
-for saving results. Save the changes and run the function by typing runGlobalFeatureAnalysis_US2O
+To run the cell shape feature analysis, open ``runGlobalFeatureAnalysis_US2O.m`` by typing "edit runGlobalFeatureAnalysis_US2O"
+in Matlab's command window. ``runGlobalFeatureAnalysis_US2O.m`` is the main run script that
+analyzes and compares cell shape features over the entire experiment. In this script, revise
+the "imageDirectory" for loading the data and "saveDirectory"
+for saving the results. Save the changes and run the function by typing runGlobalFeatureAnalysis_US2O
 in Matlab's command window.
 
 
@@ -96,10 +97,11 @@ component and the PvalueMatrix.png highlights how similar both conditions (or ti
 Test data for cell shape feature analysis
 =========================================
 
-Test data is available for the cell shape feature analysis on Synapse in the folder
+Test data is available for the cell shape feature analysis in the folder
 Code_Example_Datasets/Exemplary_ShapeFeatureAnalysis:
 
-LINK
+on Synapse https://doi.org/10.7303/syn61795850
+or Zenodo: https://doi.org/10.5281/zenodo.12791724
 
 It contains a folder to a collection of macrophages (cells) from two timepoints in a zebrafish
 xenograft model.

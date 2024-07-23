@@ -457,8 +457,7 @@ if __name__ == '__main__':
     # =============================================================================
     # Load the images and generate save folder
     # =============================================================================
-
-    experimentfolder_parent = "/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/Stitching"
+    experimentfolder_parent = "/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_StitchingDataset"
     experimentfolder_result = experimentfolder_parent + "_stitched_test"
 
     # =============================================================================

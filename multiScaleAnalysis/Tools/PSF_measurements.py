@@ -207,7 +207,8 @@ def filter_psfvalues(psf_list, highestlateralvalue=1, highestaxialvalue = 2):
 if __name__ == '__main__':
 
     # generate file paths
-    parentfolder = "/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/beads/bead_sampleASLM/"
+    parentfolder = "/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_PSFcharaterization/"
+
     imagefilepath = parentfolder + "1_CH488_000000.tif"  # rawimage name
     imagefilepath_labelled = parentfolder + "1_CH488_000000labelled.tif"  # save image with bead positions
     imagefilepath_plot = parentfolder + "psf_plot2.jpg"  # plot bead profiles along image/stack axis
