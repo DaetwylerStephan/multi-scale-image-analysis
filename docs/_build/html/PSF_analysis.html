@@ -105,6 +105,11 @@
              
   <section id="psf-analysis">
 <span id="psfanalysis"></span><h1>PSF analysis<a class="headerlink" href="#psf-analysis" title="Link to this heading"></a></h1>
+<p>To characterize microscope performance, we developed our own Python
+pipeline to characterize the resolution (point spread function values)
+of fluorescent nano-spheres across an entire image volume.
+Note: The calculation of the PSF follows the recipe of the well-used MetroloJ plugin:
+<a class="reference external" href="https://imagejdocu.list.lu/plugin/analysis/metroloj/start">https://imagejdocu.list.lu/plugin/analysis/metroloj/start</a></p>
 <section id="running-the-python-script">
 <h2>Running the Python script<a class="headerlink" href="#running-the-python-script" title="Link to this heading"></a></h2>
 <p>To run the PSF script, first set the file paths to where the data to analyse is saved and where you
@@ -156,8 +161,6 @@ navigate to the folder and enter:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(imageanalysis_env)</span> <span class="go">~/Tools$  python PSF_measurements.py</span>
 </pre></div>
 </div>
-<p>Note: The calculation of the PSF follows the recipe of the well-used MetroloJ plugin:
-<a class="reference external" href="https://imagejdocu.list.lu/plugin/analysis/metroloj/start">https://imagejdocu.list.lu/plugin/analysis/metroloj/start</a></p>
 </section>
 <section id="testdata-set-for-psf-characterization">
 <h2>Testdata set for PSF characterization<a class="headerlink" href="#testdata-set-for-psf-characterization" title="Link to this heading"></a></h2>

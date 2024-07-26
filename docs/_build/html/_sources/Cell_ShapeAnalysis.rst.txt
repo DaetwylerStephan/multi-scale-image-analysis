@@ -3,7 +3,7 @@ Cell Shape Feature Analysis
 ===========================
 
 Cell shape feature analysis performs classification of global morphological cell shape
-features for cell classification. This analysis pipeline was first pioneered and described
+features for cell classification (Manuscript Figure 3). This analysis pipeline was first pioneered and described
 in our paper "In vivo 3D profiling of site-specific human cancer cell morphotypes in zebrafish"
 (`Link to paper <https://doi.org/10.1083/jcb.202109100>`_) and applied here to identify
 changes in morphology over hours of imaging and during macrophage-cancer cell interactions.
