@@ -3,7 +3,7 @@ Data visualization
 ==================
 
 Here we provide tools to visualize tens to hundreds of timepoints of large light-sheet
-microscopy data in 3D. For this, we leverage the open-source python based Napari software
+microscopy data in 3D (e.g., Supplementary Movies 4, 9, 10). For this, we leverage the open-source python based Napari software
 https://napari.org/stable/.
 
 Generate a custom colormap for labels

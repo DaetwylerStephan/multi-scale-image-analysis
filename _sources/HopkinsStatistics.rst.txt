@@ -3,7 +3,8 @@ Hopkins Statistics Analysis
 ===========================
 
 To analyze the distribution of macrophages over time in an entire zebrafish larvae,
-we applied the `Hopkins statistics <https://journal.r-project.org/articles/RJ-2022-055/>`_.
+we applied the `Hopkins statistics <https://journal.r-project.org/articles/RJ-2022-055/>`_
+(Manuscript Figure 3).
 A high value of the Hopkins statistics H indicates that the underlying data shows a high cluster tendency, e.g., H>0.75
 indicates a cluster tendency at the 90% confidence level.
 

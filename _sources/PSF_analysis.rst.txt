@@ -4,7 +4,11 @@
 PSF analysis
 ============
 
-
+To characterize microscope performance, we developed our own Python
+pipeline to characterize the resolution (point spread function values)
+of fluorescent nano-spheres across an entire image volume.
+Note: The calculation of the PSF follows the recipe of the well-used MetroloJ plugin:
+https://imagejdocu.list.lu/plugin/analysis/metroloj/start
 
 Running the Python script
 =========================
@@ -66,9 +70,6 @@ navigate to the folder and enter:
 
    (imageanalysis_env) ~/Tools$  python PSF_measurements.py
 
-
-Note: The calculation of the PSF follows the recipe of the well-used MetroloJ plugin:
-https://imagejdocu.list.lu/plugin/analysis/metroloj/start
 
 Testdata set for PSF characterization
 =====================================

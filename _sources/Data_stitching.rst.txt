@@ -2,6 +2,10 @@
 Data stitching
 ==============
 
+Typically, we acquired three low-resolution volumes to over the entire zebrafish larval volume.
+To combine all three volumes to one single volume and crop it to the volume that contains data,
+we developed our own stitching pipeline.
+
 Our stitching pipeline
 ======================
 

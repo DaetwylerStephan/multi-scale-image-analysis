@@ -2,6 +2,11 @@
 Shannon Entropy Analysis
 ========================
 
+
+To characterize microscope performance, we calculate the Shannon Entropy
+across a time series of maximum intensity projections. Here, we describe our
+script to perform this analysis.
+
 Running the Python script
 =========================
 

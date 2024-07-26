@@ -20,7 +20,7 @@ Our pipeline
 ------------
 
 The here provided code, however, helps the reader to understand the step-by-step scripts
-run to obtain the segmentation described in our manuscript:
+run to obtain the segmentation described in our manuscript (Extended Figure 5):
 
 :meth:`multiScaleAnalysis.SegmentationHighres.ConnectedComponent_MacrophageSegmentation`.
 First, we pre-processed the data with (optional) registration using PyStackReg, background
