@@ -5,7 +5,7 @@ This repository contains the software to analyze data from a self-driving, multi
 A preprint about this work is available:
 https://www.biorxiv.org/content/10.1101/2024.02.28.582579v1
 
-and detailed documentation is available here: 
+and detailed documentation with instructions on how to run the code is available here: 
 https://daetwylerstephan.github.io/multi-scale-image-analysis/
 
 including links to testdata sets and parameters.
@@ -32,3 +32,15 @@ Contains code to stitch 3D data using translation based on the stage positions u
 
 ### Visualization
 Contains code to visualize time-lapse data using ImageJ (generatelabel_colormap.ijm) and Napari (low- and high-res data).
+
+
+### System 
+
+This code has been tested on Red Hat Enterprise Linux Server 7.9 (64 bit) with
+a Intel Xeon(R) CPU E5-2680 v4@ 2.4GHz x 56 and a Tesla P100 (2X) GPU graphics card.
+
+For software specific dependencies, please check out the requirement.txt file.
+
+No specialized hardware is required to run this code. 
+
+Installation and running the scripts typically takes few minutes. 
