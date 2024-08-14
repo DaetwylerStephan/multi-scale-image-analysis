@@ -48,6 +48,7 @@ if __name__ == '__main__':
 
     parentfoldertimeseries = os.path.join(parentfolder, "timeseries")
     result_xlsxfile = os.path.join(parentfolder, "ShannonEntropyValues.xlsx")
+    result_figure = os.path.join(parentfolder, "ShannonEntropyPlot.jpg")
 
     #get all timepoints from folder
     dir_list = os.listdir(parentfoldertimeseries)
@@ -65,6 +66,7 @@ if __name__ == '__main__':
 
     #plot result
     plt.plot(range(0,len(timepointlist)), DCT_array)
+    plt.savefig(result_figure)
     plt.show()
 
     ## save to xlsx file

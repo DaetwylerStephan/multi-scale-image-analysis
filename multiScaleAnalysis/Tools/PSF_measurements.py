@@ -267,38 +267,93 @@ if __name__ == '__main__':
     print(np.nanmedian(psf_values_filtered[:,4]))
     print(np.nanmedian(psf_values_filtered[:,5]))
 
-    #plot values
-    fig, axs = plt.subplots(2,3, figsize=(30, 15))
-    axs[0, 0].scatter(psf_values_filtered[:,1], psf_values_filtered[:,3])
-    axs[0, 0].set_xlabel('(position x)')
-    axs[0, 0].set_ylabel('(lateral resolution x)')
-    axs[0, 1].scatter(psf_values_filtered[:, 1], psf_values_filtered[:, 4])
-    axs[0, 1].set_xlabel('(position x)')
-    axs[0, 1].set_ylabel('(lateral resolution y)')
-    axs[0, 2].scatter(psf_values_filtered[:,1], psf_values_filtered[:,5])
-    axs[0, 2].set_xlabel('(position x)')
-    axs[0, 2].set_ylabel('(axial resolution )')
-
-    axs[1, 0].scatter(psf_values_filtered[:, 2], psf_values_filtered[:, 3])
-    axs[1, 0].set_xlabel('(position y)')
-    axs[1, 0].set_ylabel('(lateral resolution x)')
-    axs[1, 1].scatter(psf_values_filtered[:, 2], psf_values_filtered[:, 4])
-    axs[1, 1].set_xlabel('(position y)')
-    axs[1, 1].set_ylabel('(lateral resolution y)')
-    axs[1, 2].scatter(psf_values_filtered[:, 2], psf_values_filtered[:, 5])
-    axs[1, 2].set_xlabel('(position y)')
-    axs[1, 2].set_ylabel('(axial resolution )')
-    fig.savefig(imagefilepath_plot)
-
-    if showbeadplot ==True:
-        plt.show()
-
-    #save values as Excel file
+    # save values as Excel file
     df = pd.DataFrame(psf_values_filtered)
     df.to_excel(imagefilepath_Excelfile, index=False)
+    print("saved Excel file")
 
+    # sort the arrays for rolling average
+    df_xaxis = df.sort_values(by=[1])
+    df_yaxis = df.sort_values(by=[2])
+
+
+    def get_average_range(array=df_xaxis, whichpsfvalue=3, whichimagedim=1, range=100, maxvalue=3000):
+        """
+        Function to calculate the average of PSF values over a determined range
+
+        :param array: which array to use
+        :param whichpsfvalue: which PSF value (column) of the array to analyze
+        :param whichimagedim: which image dimension of the image to look at (x, y, or z)
+        :param range: range over which to sum beads
+        :param maxvalue: what is the largest value to plot
+        """
+        steparray = np.linspace(0, maxvalue - range, int((maxvalue) / range))
+        result = np.zeros(len(steparray))
+        iter = 0
+        for i in steparray:
+            result[iter] = np.nanmedian(
+                array[whichpsfvalue][np.logical_and(df_xaxis[whichimagedim] < i + range, df_xaxis[whichimagedim] > i)])
+            iter = iter + 1
+
+        steparrayresult = steparray + range / 2
+        return steparrayresult, result
+
+
+    rolling_mean_xaxis_pixel, rolling_mean_xaxis_lat1 = get_average_range(array=df_xaxis, whichpsfvalue=3,
+                                                                          whichimagedim=1, range=100, maxvalue=2100)
+    rolling_mean_xaxis_pixel, rolling_mean_xaxis_lat2 = get_average_range(array=df_xaxis, whichpsfvalue=4,
+                                                                          whichimagedim=1, range=100, maxvalue=2100)
+    rolling_mean_xaxis_pixel, rolling_mean_xaxis_axial = get_average_range(array=df_xaxis, whichpsfvalue=5,
+                                                                           whichimagedim=1, range=100, maxvalue=2100)
+
+    rolling_mean_yaxis_pixel, rolling_mean_yaxis_lat1 = get_average_range(array=df_yaxis, whichpsfvalue=3,
+                                                                          whichimagedim=2, range=100, maxvalue=2100)
+    rolling_mean_yaxis_pixel, rolling_mean_yaxis_lat2 = get_average_range(array=df_yaxis, whichpsfvalue=4,
+                                                                          whichimagedim=2, range=100, maxvalue=2100)
+    rolling_mean_yaxis_pixel, rolling_mean_yaxis_axial = get_average_range(array=df_yaxis, whichpsfvalue=5,
+                                                                           whichimagedim=2, range=100, maxvalue=2100)
+
+    scale = 0.117
+    # plot values
+    fig, axs = plt.subplots(2, 3, figsize=(30, 15))
+    axs[0, 0].scatter((scale * psf_values_filtered[:, 1]), psf_values_filtered[:, 3])
+    axs[0, 0].set_xlabel('(position x)')
+    axs[0, 0].set_ylabel('(lateral resolution x)')
+    axs[0, 0].plot(scale * rolling_mean_xaxis_pixel, rolling_mean_xaxis_lat1, 'b-', lw=3)
+
+    axs[0, 1].scatter(scale * psf_values_filtered[:, 1], psf_values_filtered[:, 4])
+    axs[0, 1].plot(scale * rolling_mean_xaxis_pixel, rolling_mean_xaxis_lat2, 'b-', lw=3)
+    axs[0, 1].set_xlabel('(position x)')
+    axs[0, 1].set_ylabel('(lateral resolution y)')
+
+    axs[0, 2].scatter(scale * psf_values_filtered[:, 1], psf_values_filtered[:, 5])
+    axs[0, 2].set_xlabel('(position x)')
+    axs[0, 2].set_ylabel('(axial resolution )')
+    axs[0, 2].plot(scale * rolling_mean_xaxis_pixel, rolling_mean_xaxis_axial, 'b-', lw=3)
+
+    axs[1, 0].scatter(scale * psf_values_filtered[:, 2], psf_values_filtered[:, 3])
+    axs[1, 0].set_xlabel('(position y)')
+    axs[1, 0].set_ylabel('(lateral resolution x)')
+    axs[1, 0].plot(scale * rolling_mean_yaxis_pixel, rolling_mean_yaxis_lat1, 'b-', lw=3)
+
+    axs[1, 1].scatter(scale * psf_values_filtered[:, 2], psf_values_filtered[:, 4])
+    axs[1, 1].set_xlabel('(position y)')
+    axs[1, 1].set_ylabel('(lateral resolution y)')
+    axs[1, 1].plot(scale * rolling_mean_yaxis_pixel, rolling_mean_yaxis_lat2, 'b-', lw=3)
+
+    axs[1, 2].scatter(scale * psf_values_filtered[:, 2], psf_values_filtered[:, 5])
+    axs[1, 2].set_xlabel('(position y)')
+    axs[1, 2].set_ylabel('(axial resolution )')
+    axs[1, 2].plot(scale * rolling_mean_yaxis_pixel, rolling_mean_yaxis_axial, 'b-', lw=3)
+
+    fig.savefig(imagefilepath_plot)
+
+    if showbeadplot == True:
+        plt.show()
+
+    # save values to text file
     f = open(imagefilepath_textfile, "a")
-    f.write("x: " + str(np.nanmedian(psf_values_filtered[:, 3])))
+    f.write('\n' + "x: " + str(np.nanmedian(psf_values_filtered[:, 3])))
     f.write(" y: " + str(np.nanmedian(psf_values_filtered[:, 4])))
     f.write(" z: " + str(np.nanmedian(psf_values_filtered[:, 5])))
     f.write(" number of beads: " + str(len(psf_values_filtered)))

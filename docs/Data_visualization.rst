@@ -110,8 +110,8 @@ and the script will open Napari with the images to find the best parameters. For
 Note 2: We downsampled the rawimages to provide more efficient computation to fit the label image.
 
 In addition to the here described script, we also provide scripts used to
-visualize spheroids in low-resolution data (visualize_with_napariLowRes_spheroids.py, visualize_with_napariLowRes_nuclei.py,
-).
+visualize low-resolution data in Supplementary Movies 2, 4 and 6 (visualize_with_napariLowRes_spheroids.py, visualize_with_napariLowRes_nuclei.py,
+visualize_with_napariLowRes_MDAMB231.py).
 
 Test data for low-resolution visualization
 ==========================================
