@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>multiScaleAnalysis.Stitching.multiScale_stitching &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Self-driving, multi-scale image analysis
+              <img src="../../../_static/multi_scale_analysis_logo.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started and installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation.html">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Microscope characterization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../PSF_analysis.html">PSF analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ShannonEntropyAnalysis.html">Shannon Entropy Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Low-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Data_stitching.html">Data stitching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LowRes_Segmentation.html">Low-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../HopkinsStatistics.html">Hopkins Statistics Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">High-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../HighRes_Segmentation.html">High-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Cell_ShapeAnalysis.html">Cell Shape Feature Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Cell_CurvatureAnalysis.html">Cell Curvature Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data visualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Data_visualization.html">Data visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API references</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">multiScaleAnalysis</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Self-driving, multi-scale image analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">multiScaleAnalysis.Stitching.multiScale_stitching</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for multiScaleAnalysis.Stitching.multiScale_stitching</h1><div class="highlight"><pre>
+<span></span>
+
+<span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imwrite</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">scipy.ndimage</span> <span class="k">as</span> <span class="nn">ndimage</span>
+
+
+<div class="viewcode-block" id="image_stitcher">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher">[docs]</a>
+<span class="k">class</span> <span class="nc">image_stitcher</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class stitches images from the low-resolution data acquisiton of the self-driving, multi-scale microscope.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="image_stitcher.__init__">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize stitcher</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_x</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_y</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correctionfactor</span> <span class="o">=</span> <span class="mi">1</span><span class="c1">#make border regions a bit more bright if &gt;1.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reference_displacement_x</span> <span class="o">=</span><span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reference_displacement_y</span><span class="o">=</span><span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="image_stitcher.load_image">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.load_image">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pathlist</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load the images specified by the path list and populate the self.rawimages array.</span>
+
+<span class="sd">        :param pathlist: Array of image paths to open</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">imagepath_name</span> <span class="ow">in</span> <span class="n">pathlist</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">imread</span><span class="p">(</span><span class="n">imagepath_name</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;image loaded&quot;</span> <span class="o">+</span> <span class="n">imagepath_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="image_stitcher.make_maxprojections">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.make_maxprojections">[docs]</a>
+    <span class="k">def</span> <span class="nf">make_maxprojections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make maximum projections of the images in the self.rawimages array and save them in the self.maxprojections array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="image_stitcher.optimize_overlap">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.optimize_overlap">[docs]</a>
+    <span class="k">def</span> <span class="nf">optimize_overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit_search</span><span class="o">=</span><span class="p">[],</span> <span class="n">extendfactor</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimizes the provided overlap, based on the maximum projections.</span>
+
+<span class="sd">        :param limit_search: Constrain the search around the center of a predefined position, e.g. what maximum displacement is expected</span>
+<span class="sd">        :param extendfactor: Determines how large the overlap region is on which you calculate the overlap.</span>
+<span class="sd">        :return: The optimized translation values (translation_values_x, translation_values_y).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#check if maxprojections have been made</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">make_maxprojections</span><span class="p">()</span>
+
+        <span class="n">translation_values_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">translation_values_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">imageshape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">cut_y</span> <span class="o">=</span> <span class="n">translation_values_y</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">translation_values_y</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span>
+            <span class="c1"># calculate overlap between image i and i+1</span>
+
+            <span class="c1"># obtain overlap region image i</span>
+            <span class="n">overlaplength_y</span> <span class="o">=</span> <span class="n">imageshape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">cut_y</span>
+
+            <span class="n">image_first</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">image_second</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="c1">#determine relative x shift</span>
+            <span class="n">shift_x</span> <span class="o">=</span> <span class="n">translation_values_x</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">translation_values_x</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">shift_x</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">start_image1_crop</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">shift_x</span><span class="p">)</span>
+                <span class="n">start_image2_crop</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">end_image1_crop</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift_x</span><span class="p">))</span>
+                <span class="n">end_image2_crop</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">shift_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">start_image1_crop</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">start_image2_crop</span> <span class="o">=</span> <span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">shift_x</span><span class="p">)</span>
+                <span class="n">end_image1_crop</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift_x</span><span class="p">))</span>
+                <span class="n">end_image2_crop</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="o">-</span><span class="n">shift_x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+
+            <span class="n">crop_image_first</span> <span class="o">=</span> <span class="n">image_first</span><span class="p">[</span><span class="n">start_image1_crop</span><span class="p">:</span><span class="n">end_image1_crop</span><span class="p">,</span> <span class="p">(</span><span class="n">cut_y</span> <span class="o">-</span> <span class="n">extendfactor</span><span class="p">):</span><span class="n">imageshape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">crop_image_second</span> <span class="o">=</span> <span class="n">image_second</span><span class="p">[</span><span class="n">start_image2_crop</span><span class="p">:</span><span class="n">end_image2_crop</span><span class="p">,</span> <span class="mi">100</span><span class="p">:(</span><span class="n">overlaplength_y</span> <span class="o">-</span> <span class="n">extendfactor</span><span class="p">)]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="c1">#imwrite(os.path.join(experimentfolder_result, &quot;im_g1.tif&quot;), crop_image_first)</span>
+            <span class="c1">#imwrite(os.path.join(experimentfolder_result, &quot;im_ga2.tif&quot;), crop_image_second)</span>
+
+            <span class="n">im1_gaussian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">crop_image_first</span><span class="p">,</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">crop_image_first</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+            <span class="n">im2_gaussian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">crop_image_second</span><span class="p">,</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">crop_image_second</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+
+            <span class="c1"># calculate the correlation image; note the flipping of one of the images</span>
+            <span class="n">fft_image</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">fftconvolve</span><span class="p">(</span><span class="n">im1_gaussian</span><span class="p">,</span> <span class="n">im2_gaussian</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">limit_search</span><span class="p">:</span>
+                <span class="n">c_rows</span><span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fft_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">c_columns</span><span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fft_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+                <span class="n">fft_imagelimited</span> <span class="o">=</span> <span class="n">fft_image</span><span class="p">[</span><span class="n">c_rows</span> <span class="o">-</span> <span class="n">limit_search</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">c_rows</span><span class="o">+</span><span class="n">limit_search</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c_columns</span><span class="o">-</span><span class="n">limit_search</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">c_columns</span><span class="o">+</span><span class="n">limit_search</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">fft_imagelimited</span><span class="p">),</span> <span class="n">fft_imagelimited</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+                <span class="n">corr_x</span> <span class="o">=</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">c_rows</span> <span class="o">-</span> <span class="n">limit_search</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">corr_y</span> <span class="o">=</span> <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">c_columns</span><span class="o">-</span><span class="n">limit_search</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">fft_image</span><span class="p">),</span> <span class="n">fft_image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                <span class="n">corr_x</span> <span class="o">=</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">corr_y</span> <span class="o">=</span> <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1">#print(str(corr_x) + &quot;, &quot; + str(corr_y))</span>
+            <span class="c1">#print(&quot;currentiter &quot; + str(iter) + &quot;: &quot; +  str((end_image1_crop - start_image1_crop)/ 2) + &quot; and &quot; + str(extendfactor + overlaplength_y / 2))</span>
+            <span class="c1"># imwrite(os.path.join(experimentfolder_result, &quot;im_gaussian1.tif&quot;), im1_gaussian)</span>
+
+            <span class="c1"># imwrite(os.path.join(experimentfolder_result, &quot;im_gaussian2.tif&quot;), im2_gaussian)</span>
+            <span class="n">correctionfactor_y</span> <span class="o">=</span> <span class="n">corr_y</span> <span class="o">-</span> <span class="n">extendfactor</span> <span class="o">-</span> <span class="n">overlaplength_y</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">translation_values_y</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">translation_values_y</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">correctionfactor_y</span><span class="p">)</span>
+
+            <span class="n">correctionfactor_x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">corr_x</span> <span class="o">-</span> <span class="p">(</span><span class="n">end_image1_crop</span> <span class="o">-</span> <span class="n">start_image1_crop</span><span class="p">)</span><span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+            <span class="c1">#compare x shift to previous shift to get an absolute displacement</span>
+            <span class="k">if</span> <span class="nb">iter</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">translation_values_x</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">translation_values_x</span><span class="p">[</span><span class="nb">iter</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span> <span class="n">correctionfactor_x</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">translation_values_x</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">translation_values_x</span><span class="p">[</span><span class="nb">iter</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">correctionfactor_x</span><span class="p">)</span>
+
+        <span class="c1">##normalize x shift, so that minimal value is zero</span>
+        <span class="n">translation_values_x</span> <span class="o">=</span> <span class="n">translation_values_x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">translation_values_x</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">translation_values_x</span><span class="p">,</span> <span class="n">translation_values_y</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="image_stitcher.perform_2D_maximum_fusion">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.perform_2D_maximum_fusion">[docs]</a>
+    <span class="k">def</span> <span class="nf">perform_2D_maximum_fusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imagearrays</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform image fusion by selecting the maximum intensity of both images.</span>
+
+<span class="sd">        :param imagearrays: list of images to fuse, translation based on self.calculated_displacement</span>
+<span class="sd">        :return: fused maximum projection image of imagearrays</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">imagelength_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">)</span> <span class="o">+</span> <span class="n">imagearrays</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">imagearrays</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">imagelength_x</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">)):</span>
+            <span class="n">current_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">imagelength_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">current_x</span><span class="p">,</span> <span class="n">imagelength_x</span><span class="p">)</span>
+
+        <span class="n">maximum_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">imagelength_x</span><span class="p">,</span> <span class="n">imagelength_y</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint16&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">imagearrays</span><span class="p">)):</span>
+            <span class="n">imagetopad</span> <span class="o">=</span> <span class="n">imagearrays</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">startposition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span>
+            <span class="n">endposition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span> <span class="o">+</span> <span class="n">imagetopad</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">startposition_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span>
+            <span class="n">endposition_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span> <span class="o">+</span> <span class="n">imagetopad</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">paddedimage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">imagetopad</span><span class="p">,</span> <span class="p">((</span><span class="n">startposition_x</span><span class="p">,</span> <span class="n">imagelength_x</span><span class="o">-</span><span class="n">endposition_x</span><span class="p">),</span> <span class="p">(</span><span class="n">startposition</span><span class="p">,</span> <span class="n">imagelength_y</span> <span class="o">-</span> <span class="n">endposition</span><span class="p">)),</span> <span class="s1">&#39;constant&#39;</span><span class="p">)</span>
+            <span class="n">maximum_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">maximum_image</span><span class="p">,</span> <span class="n">paddedimage</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">maximum_image</span></div>
+
+
+<div class="viewcode-block" id="image_stitcher.perform_2D_weighted_average_fusion">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.perform_2D_weighted_average_fusion">[docs]</a>
+    <span class="k">def</span> <span class="nf">perform_2D_weighted_average_fusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imagearrays</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform fusion based on a sigmoidal blending curve of both images.</span>
+
+<span class="sd">        :param imagearrays: list of images to fuse</span>
+<span class="sd">        :return: weighted average fused image</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1">#calculate overall image shape</span>
+        <span class="n">imagelength_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">)</span> <span class="o">+</span> <span class="n">imagearrays</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">imagearrays</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">imagelength_x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">)):</span>
+            <span class="n">current_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">imagelength_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">current_x</span><span class="p">,</span> <span class="n">imagelength_x</span><span class="p">)</span>
+
+        <span class="c1">####calculate and apply weights</span>
+        <span class="n">weightedimages</span> <span class="o">=</span> <span class="n">imagearrays</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">weightedimages</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>  <span class="c1"># go over overlap regions</span>
+
+            <span class="c1"># calculate overlap region parameters</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">weightedimages</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span>
+            <span class="n">nextimage</span> <span class="o">=</span> <span class="n">weightedimages</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">endposition_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span> <span class="o">+</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">startposition_next_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">overlapsize_y</span> <span class="o">=</span> <span class="n">endposition_y</span> <span class="o">-</span> <span class="n">startposition_next_y</span>
+
+            <span class="c1"># define sigmoidal blending curves</span>
+            <span class="n">n1sigmoidrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">overlapsize_y</span><span class="p">)</span> <span class="c1">#use linspace not arrange here</span>
+            <span class="n">n1sigmoid</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">n1sigmoidrange</span><span class="p">))</span>
+            <span class="n">inverse_1sigmoid</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">n1sigmoid</span>
+
+            <span class="c1">#apply correction factor</span>
+            <span class="n">n1sigmoid</span> <span class="o">=</span> <span class="n">n1sigmoid</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">correctionfactor</span>
+            <span class="n">inverse_1sigmoid</span> <span class="o">=</span> <span class="n">inverse_1sigmoid</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">correctionfactor</span>
+
+            <span class="c1"># make sigmoidal arrays</span>
+            <span class="n">n2sigmoid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">n1sigmoid</span><span class="p">,</span> <span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">n2_inversesigmoid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">inverse_1sigmoid</span><span class="p">,</span> <span class="p">(</span><span class="n">nextimage</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+
+            <span class="c1"># make multiplication matrices</span>
+            <span class="n">invariableimagepart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">overlapsize_y</span><span class="p">))</span>
+            <span class="n">imagemultiplicationarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">invariableimagepart</span><span class="p">,</span> <span class="n">n2sigmoid</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">invariable_nextimage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nextimage</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nextimage</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">overlapsize_y</span><span class="p">))</span>
+            <span class="n">nextimagemultiplicationarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">n2_inversesigmoid</span><span class="p">,</span> <span class="n">invariable_nextimage</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">weightedimages</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">weightedimages</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span> <span class="o">*</span> <span class="n">imagemultiplicationarray</span>
+            <span class="n">weightedimages</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">weightedimages</span><span class="p">[</span><span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">nextimagemultiplicationarray</span>
+
+        <span class="c1">#add images together</span>
+        <span class="n">image_weighted_float</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">imagelength_x</span><span class="p">,</span> <span class="n">imagelength_y</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint16&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">weightedimages</span><span class="p">)):</span>  <span class="c1"># addimages</span>
+            <span class="n">startposition_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span>
+            <span class="n">endposition_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span> <span class="o">+</span> <span class="n">weightedimages</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">startposition_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span>
+            <span class="n">endposition_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span> <span class="o">+</span> <span class="n">weightedimages</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">paddedimage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">weightedimages</span><span class="p">[</span><span class="nb">iter</span><span class="p">],</span> <span class="p">((</span><span class="n">startposition_x</span><span class="p">,</span> <span class="n">imagelength_x</span><span class="o">-</span><span class="n">endposition_x</span><span class="p">),</span> <span class="p">(</span><span class="n">startposition_y</span><span class="p">,</span> <span class="n">imagelength_y</span> <span class="o">-</span> <span class="n">endposition_y</span><span class="p">)),</span> <span class="s1">&#39;constant&#39;</span><span class="p">)</span>
+            <span class="n">image_weighted_float</span> <span class="o">=</span> <span class="n">image_weighted_float</span> <span class="o">+</span> <span class="n">paddedimage</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="n">image_weighted</span> <span class="o">=</span> <span class="n">image_weighted_float</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint16&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">image_weighted</span></div>
+
+
+<div class="viewcode-block" id="image_stitcher.perform_3D_fusion">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.perform_3D_fusion">[docs]</a>
+    <span class="k">def</span> <span class="nf">perform_3D_fusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;weighted&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform plane-by-plane wise fusion on 3D stack.</span>
+
+<span class="sd">        :param mode: select mode of image fusion (maximum or weighted)</span>
+<span class="sd">        :return: fused_image. 3D image fused stack.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># calculate overall image shape</span>
+        <span class="n">imagelength_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">imagelength_x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">)):</span>
+            <span class="n">current_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">imagelength_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">current_x</span><span class="p">,</span> <span class="n">imagelength_x</span><span class="p">)</span>
+        <span class="n">nb_planes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">fused_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nb_planes</span><span class="p">,</span> <span class="n">imagelength_x</span><span class="p">,</span> <span class="n">imagelength_y</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint16&#39;</span><span class="p">)</span>
+
+        <span class="c1">#stitch plane by plane</span>
+        <span class="k">for</span> <span class="n">i_plane</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_planes</span><span class="p">):</span>
+            <span class="n">imagearray</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">i_image</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span><span class="p">)):</span>
+                <span class="n">imagearray</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span><span class="p">[</span><span class="n">i_image</span><span class="p">][</span><span class="n">i_plane</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span>
+
+            <span class="k">if</span> <span class="n">mode</span><span class="o">==</span><span class="s2">&quot;weighted&quot;</span><span class="p">:</span>
+                <span class="n">fused_image</span><span class="p">[</span><span class="n">i_plane</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perform_2D_weighted_average_fusion</span><span class="p">(</span><span class="n">imagearray</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fused_image</span><span class="p">[</span><span class="n">i_plane</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perform_2D_maximum_fusion</span><span class="p">(</span><span class="n">imagearray</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fused_image</span></div>
+
+
+<div class="viewcode-block" id="image_stitcher.crop_images">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.crop_images">[docs]</a>
+    <span class="k">def</span> <span class="nf">crop_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">image_crops_x</span><span class="p">,</span> <span class="n">image_crops_y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove/crop parts of the images and update self.rawimage array with cropped images. This is function is helpful, e.g. to cut</span>
+<span class="sd">        away parts of the image that were not properly illuminated.</span>
+
+<span class="sd">        :param image_crops_x: For every image specify cropping in x direction [startpoint, endpoint], e.g. [[396, 396 + 3300], [208, 208 + 3236], [200, 200 + 3052]]</span>
+<span class="sd">        :param image_crops_y: For every image specify cropping in y direction [startpoint, endpoint], e.g. [[396, 396 + 3300], [208, 208 + 3236], [200, 200 + 3052]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rawimages</span><span class="p">[</span><span class="nb">iter</span><span class="p">][:,(</span><span class="n">image_crops_x</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">0</span><span class="p">]):(</span><span class="n">image_crops_x</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">1</span><span class="p">]),(</span><span class="n">image_crops_y</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">0</span><span class="p">]):(</span><span class="n">image_crops_y</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">1</span><span class="p">])]</span></div>
+
+
+<div class="viewcode-block" id="image_stitcher.stitching_workflow">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.stitching_workflow">[docs]</a>
+    <span class="k">def</span> <span class="nf">stitching_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                           <span class="n">imagelist</span><span class="p">,</span>
+                           <span class="n">image_crops_x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">image_crops_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">optimizeAlignment</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                           <span class="n">limit_search</span><span class="o">=</span><span class="p">[],</span>
+                           <span class="n">clipped</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                           <span class="n">use_reference</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process one set of filepaths, load images, (optionally) crop them, (optionally) improve alignment, fuse data and</span>
+<span class="sd">        (optionally) clip data.</span>
+
+<span class="sd">        :param imagelist: Filepaths of images to stitch</span>
+<span class="sd">        :param image_crops_x: (Optional) crop images before Stitching</span>
+<span class="sd">        :param image_crops_y: (Optional) crop images before Stitching</span>
+<span class="sd">        :param optimizeAlignment: (Optional) run optimization of alignment for stack (1 = yes, 0 = no)</span>
+<span class="sd">        :param limit_search: (Optional) if you want to limit the search to a region around a pre-aligned setting</span>
+<span class="sd">        :param clipped: (Optional) clip stack so that no zero value pixels are in the image (1 = yes, 0 = no)</span>
+<span class="sd">        :param use_reference: (Optional) use a reference set at the beginning for Stitching so that parameters don&#39;t drift outside expected values</span>
+<span class="sd">        :return: Fused image of files in imagelist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1">#initialize expected displacement.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_displacement_x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_displacement_y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1">#load images and crop if desired</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_image</span><span class="p">(</span><span class="n">imagelist</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">image_crops_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">crop_images</span><span class="p">(</span><span class="n">image_crops_x</span><span class="p">,</span> <span class="n">image_crops_y</span><span class="p">)</span>
+
+        <span class="c1">#make max projection for Stitching</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_maxprojections</span><span class="p">()</span>
+
+        <span class="c1">#optimize alignments</span>
+        <span class="k">if</span> <span class="n">optimizeAlignment</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;calculate optimized alignment&quot;</span><span class="p">)</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimize_overlap</span><span class="p">(</span><span class="n">limit_search</span><span class="o">=</span><span class="n">limit_search</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="o">==</span><span class="p">[]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;load expected displacement as parameters for Stitching&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_x</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_y</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;calculated displacement y &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;calculated displacement x &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">))</span>
+
+        <span class="n">fused_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perform_3D_fusion</span><span class="p">()</span>
+
+        <span class="c1">#clip to part with only data (remove 0 pixels at border</span>
+        <span class="k">if</span> <span class="n">clipped</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">lengthlist</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">)):</span>
+                <span class="n">lengthlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxprojections</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">crop_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lengthlist</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;image clipped&quot;</span><span class="p">)</span>
+            <span class="n">fused_image2</span> <span class="o">=</span> <span class="n">fused_image</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">i_stitch</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">):</span><span class="n">crop_end</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;not cropped&quot;</span><span class="p">)</span>
+            <span class="n">fused_image2</span> <span class="o">=</span> <span class="n">fused_image</span>
+
+        <span class="c1">#set shift back to reference values</span>
+        <span class="k">if</span> <span class="n">use_reference</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_displacement_x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_displacement_y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">fused_image2</span></div>
+
+
+<div class="viewcode-block" id="image_stitcher.iterate_overfolder">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.iterate_overfolder">[docs]</a>
+    <span class="k">def</span> <span class="nf">iterate_overfolder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                           <span class="n">experimentfolder_parent</span><span class="p">,</span>
+                           <span class="n">experimentfolder_result</span><span class="p">,</span>
+                           <span class="n">channelnames</span><span class="p">,</span>
+                           <span class="n">region</span><span class="p">,</span>
+                           <span class="n">sample</span><span class="p">,</span>
+                           <span class="n">image_crops_y</span><span class="p">,</span>
+                           <span class="n">image_crops_x</span><span class="p">,</span>
+                           <span class="n">displacement_x</span><span class="p">,</span>
+                           <span class="n">displacement_y</span><span class="p">,</span>
+                           <span class="n">optimize_alignment</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                           <span class="n">limit_search</span><span class="o">=</span><span class="p">[],</span>
+                           <span class="n">use_reference</span><span class="o">=</span><span class="mi">0</span>
+                           <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate over the output of the low-resolution imaging of the multi-scale microscope to stitch all the data based on an initial guess of the translational shift (from the stage positions).</span>
+
+<span class="sd">        :param experimentfolder_parent: Folder where all timepoints are in</span>
+<span class="sd">        :param experimentfolder_result: Folder to save the result of Stitching</span>
+<span class="sd">        :param channelnames: List of channels to stitch</span>
+<span class="sd">        :param region: List of regions, e.g. &quot;low_stack000&quot;</span>
+<span class="sd">        :param sample: Which fish/sample are you Stitching, e.g. &quot;fish3&quot;</span>
+<span class="sd">        :param image_crops_y: Cropping parameters so that empty regions/at border can be removed, e.g. [[396, 396 + 3336], [308, 308 + 3336], [212, 212 + 3052]]</span>
+<span class="sd">        :param image_crops_x: Cropping parameters so that empty regions/at border can be removed, e.g. [[200, 2200], [200, 2200], [200, 2200]]</span>
+<span class="sd">        :param displacement_x: Approximate displacement in x</span>
+<span class="sd">        :param displacement_y: Approximate displacement in y</span>
+<span class="sd">        :param optimize_alignment: (Optional) do you want to optimize the alignment per timepoint or apply the same parameters to whole timelapse</span>
+<span class="sd">        :param limit_search: (Optional) do you want to restrict the finding of optimal Stitching to a small overlap window? if yes, give a range: [100, 15]</span>
+<span class="sd">        :param use_reference: Use a reference for individual timepoints</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">textfilepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="n">sample</span> <span class="o">+</span> <span class="s2">&quot;_textfile.txt&quot;</span><span class="p">)</span>
+        <span class="n">writecrops</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1">#writecrops on first iteration.</span>
+
+        <span class="c1"># set starting parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_x</span> <span class="o">=</span> <span class="n">displacement_x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expecteddisplacement_y</span> <span class="o">=</span> <span class="n">displacement_y</span>
+
+        <span class="c1"># get all timepoints of folder</span>
+        <span class="n">dir_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">experimentfolder_parent</span><span class="p">)</span>
+        <span class="n">timepointlist</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">dir_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">):</span>
+                <span class="n">timepointlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">timepointlist</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">timepointlist</span><span class="p">)</span>
+
+        <span class="c1">#iterate over timepointlist</span>
+        <span class="k">for</span> <span class="n">i_time</span> <span class="ow">in</span> <span class="n">timepointlist</span><span class="p">:</span>
+
+           <span class="c1">#if i_time &lt; &#39;t00016&#39;:</span>
+           <span class="c1">#     print(&quot;skip&quot;)</span>
+           <span class="c1">#     continue</span>
+
+            <span class="n">experimentfolder_timepoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_parent</span><span class="p">,</span> <span class="n">i_time</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">imagechannelname</span> <span class="ow">in</span> <span class="n">channelnames</span><span class="p">:</span>
+                <span class="n">imagelist</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_timepoint</span><span class="p">,</span> <span class="n">region</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">imagechannelname</span> <span class="o">+</span> <span class="s2">&quot;.tif&quot;</span><span class="p">),</span>
+                             <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_timepoint</span><span class="p">,</span> <span class="n">region</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">imagechannelname</span> <span class="o">+</span> <span class="s2">&quot;.tif&quot;</span><span class="p">),</span>
+                             <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_timepoint</span><span class="p">,</span> <span class="n">region</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">imagechannelname</span> <span class="o">+</span> <span class="s2">&quot;.tif&quot;</span><span class="p">)]</span>
+
+                <span class="c1">#check if you want to optimize alignment at all, if yes, which channel you want to optimize</span>
+                <span class="c1"># (e.g. cancer cells have almost no signal and any alignment there is faulty</span>
+                <span class="n">optimize_channelalignment</span> <span class="o">=</span> <span class="n">optimize_alignment</span>
+                <span class="k">if</span> <span class="n">optimize_alignment</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="c1">#only align vascular channel / one channel so that other channels get same Stitching parameters</span>
+                    <span class="k">if</span> <span class="n">imagechannelname</span><span class="o">==</span><span class="s2">&quot;1_CH594_000000&quot;</span><span class="p">:</span>
+                        <span class="n">optimize_channelalignment</span> <span class="o">=</span><span class="mi">1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">optimize_channelalignment</span> <span class="o">=</span><span class="mi">0</span>
+
+
+                <span class="n">fused_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stitching_workflow</span><span class="p">(</span><span class="n">imagelist</span><span class="p">,</span>
+                                                      <span class="n">image_crops_x</span><span class="p">,</span>
+                                                      <span class="n">image_crops_y</span><span class="p">,</span>
+                                                      <span class="n">optimizeAlignment</span><span class="o">=</span><span class="n">optimize_channelalignment</span><span class="p">,</span>
+                                                      <span class="n">limit_search</span><span class="o">=</span><span class="n">limit_search</span><span class="p">,</span>
+                                                      <span class="n">use_reference</span><span class="o">=</span><span class="n">use_reference</span><span class="p">)</span>
+
+                <span class="n">savefolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="n">i_time</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">savefolder</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">savefolder</span><span class="p">)</span>
+
+                <span class="n">save_file3D</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savefolder</span><span class="p">,</span> <span class="n">imagechannelname</span> <span class="o">+</span> <span class="s2">&quot;.tif&quot;</span><span class="p">)</span>
+                <span class="n">imwrite</span><span class="p">(</span><span class="n">save_file3D</span><span class="p">,</span> <span class="n">fused_image</span><span class="p">)</span>
+
+                <span class="c1">#make max projection for result verification</span>
+                <span class="n">maximage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">fused_image</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">maximageside</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">fused_image</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">savefolder_max</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="n">sample</span> <span class="o">+</span> <span class="s2">&quot;_max&quot;</span><span class="p">,</span> <span class="n">imagechannelname</span><span class="p">)</span>
+                <span class="n">savefolder_max_side</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="n">sample</span> <span class="o">+</span> <span class="s2">&quot;_max_side&quot;</span><span class="p">,</span> <span class="n">imagechannelname</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">savefolder_max</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">savefolder_max</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">savefolder_max_side</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">savefolder_max_side</span><span class="p">)</span>
+
+                <span class="n">save_file_max</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savefolder_max</span><span class="p">,</span> <span class="n">i_time</span> <span class="o">+</span> <span class="s2">&quot;.tif&quot;</span><span class="p">)</span>
+                <span class="n">imwrite</span><span class="p">(</span><span class="n">save_file_max</span><span class="p">,</span> <span class="n">maximage</span><span class="p">)</span>
+                <span class="n">save_file_max_side</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savefolder_max_side</span><span class="p">,</span> <span class="n">i_time</span> <span class="o">+</span> <span class="s2">&quot;.tif&quot;</span><span class="p">)</span>
+                <span class="n">imwrite</span><span class="p">(</span><span class="n">save_file_max_side</span><span class="p">,</span> <span class="n">maximageside</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">writecrops</span><span class="o">==</span><span class="kc">True</span><span class="p">:</span>
+                    <span class="n">file1</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">textfilepath</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+                    <span class="n">file1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;image_crops_x: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_crops_x</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">file1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;image_crops_y: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image_crops_y</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">writecrops</span><span class="o">=</span> <span class="kc">False</span>
+
+                <span class="n">file1</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">textfilepath</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
+                <span class="n">file1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">i_time</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; displacement y: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculated_displacement_y</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">file1</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</div>
+
+
+
+<span class="c1"># Press the green button in the gutter to run the script.</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="c1"># =============================================================================</span>
+    <span class="c1"># initialization of class</span>
+    <span class="c1"># =============================================================================</span>
+    <span class="n">i_stitch</span> <span class="o">=</span> <span class="n">image_stitcher</span><span class="p">()</span>
+
+    <span class="c1"># =============================================================================</span>
+    <span class="c1"># Load the images and generate save folder</span>
+    <span class="c1"># =============================================================================</span>
+    <span class="n">experimentfolder_parent</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_StitchingDataset&quot;</span>
+    <span class="n">experimentfolder_result</span> <span class="o">=</span> <span class="n">experimentfolder_parent</span> <span class="o">+</span> <span class="s2">&quot;_stitched_test&quot;</span>
+
+    <span class="c1"># =============================================================================</span>
+    <span class="c1"># run parameters for Stitching on all timepoints</span>
+    <span class="c1"># =============================================================================</span>
+
+    <span class="n">region</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;low_stack000&quot;</span><span class="p">,</span> <span class="s2">&quot;low_stack001&quot;</span><span class="p">,</span> <span class="s2">&quot;low_stack002&quot;</span><span class="p">]</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="s2">&quot;fish1&quot;</span>
+    <span class="n">channelnames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1_CH594_000000&quot;</span><span class="p">]</span>
+
+    <span class="c1">#provide values for croppping.</span>
+    <span class="n">image_crops_y</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">640</span><span class="p">,</span> <span class="mi">640</span> <span class="o">+</span> <span class="mi">3276</span><span class="p">],</span> <span class="p">[</span><span class="mi">556</span><span class="p">,</span> <span class="mi">456</span> <span class="o">+</span> <span class="mi">3408</span><span class="p">],</span> <span class="p">[</span><span class="mi">452</span><span class="p">,</span> <span class="mi">452</span> <span class="o">+</span> <span class="mi">3796</span><span class="p">]]</span>
+    <span class="n">image_crops_x</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">2500</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">2500</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">2500</span><span class="p">]]</span>
+
+    <span class="c1">#provide expected displacement in (cropped) images.</span>
+    <span class="n">i_stitch</span><span class="o">.</span><span class="n">reference_displacement_x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">i_stitch</span><span class="o">.</span><span class="n">reference_displacement_y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2500</span><span class="p">,</span> <span class="mi">4962</span><span class="p">]</span>
+
+
+    <span class="n">i_stitch</span><span class="o">.</span><span class="n">iterate_overfolder</span><span class="p">(</span><span class="n">experimentfolder_parent</span><span class="p">,</span>
+                                <span class="n">experimentfolder_result</span><span class="p">,</span>
+                                <span class="n">channelnames</span><span class="p">,</span>
+                                <span class="n">region</span><span class="p">,</span>
+                                <span class="n">sample</span><span class="p">,</span>
+                                <span class="n">image_crops_y</span><span class="p">,</span>
+                                <span class="n">image_crops_x</span><span class="p">,</span>
+                                <span class="n">i_stitch</span><span class="o">.</span><span class="n">expecteddisplacement_x</span><span class="p">,</span>
+                                <span class="n">i_stitch</span><span class="o">.</span><span class="n">expecteddisplacement_y</span><span class="p">,</span>
+                                <span class="n">optimize_alignment</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                <span class="n">limit_search</span><span class="o">=</span><span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">80</span><span class="p">],</span>
+                                <span class="n">use_reference</span><span class="o">=</span><span class="mi">1</span>
+                                <span class="p">)</span>
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Daetwyler Stephan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

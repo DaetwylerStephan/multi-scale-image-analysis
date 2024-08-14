@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data stitching &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Low-resolution segmentation" href="LowRes_Segmentation.html" />
+    <link rel="prev" title="Shannon Entropy Analysis" href="ShannonEntropyAnalysis.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Self-driving, multi-scale image analysis
+              <img src="_static/multi_scale_analysis_logo.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started and installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Microscope characterization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PSF_analysis.html">PSF analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ShannonEntropyAnalysis.html">Shannon Entropy Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Low-resolution analysis</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data stitching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#our-stitching-pipeline">Our stitching pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#options">Options:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#output">Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-dataset">Test dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alternatives">Alternatives</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="LowRes_Segmentation.html">Low-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HopkinsStatistics.html">Hopkins Statistics Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">High-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="HighRes_Segmentation.html">High-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cell_ShapeAnalysis.html">Cell Shape Feature Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cell_CurvatureAnalysis.html">Cell Curvature Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data visualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Data_visualization.html">Data visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API references</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">multiScaleAnalysis</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Self-driving, multi-scale image analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Data stitching</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Data_stitching.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-stitching">
+<h1>Data stitching<a class="headerlink" href="#data-stitching" title="Link to this heading"></a></h1>
+<p>Typically, we acquired three low-resolution volumes to over the entire zebrafish larval volume.
+To combine all three volumes to one single volume and crop it to the volume that contains data,
+we developed our own stitching pipeline.</p>
+<section id="our-stitching-pipeline">
+<h2>Our stitching pipeline<a class="headerlink" href="#our-stitching-pipeline" title="Link to this heading"></a></h2>
+<p>Please first specify the folder path with the data to stitch and where you would like to save the new data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">experimentfolder_parent</span> <span class="o">=</span> <span class="s2">&quot;~/test_dataset/stitching&quot;</span> <span class="p">(</span><span class="n">your</span> <span class="n">path</span><span class="p">)</span>
+<span class="n">experimentfolder_result</span> <span class="o">=</span> <span class="n">experimentfolder_parent</span> <span class="o">+</span> <span class="s2">&quot;_stitched_test&quot;</span>
+</pre></div>
+</div>
+<p>Next, determine a coarse positioning of the tiles using the physical coordinates of the microscope stage position
+or using Fiji to determine the approximate overlay. Moreover, sometimes the fluorescent signal at the
+edge of an image is weaker or absent. To remove this part of the image and also to reduce overall image size,
+specify cropping parameters.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#provide values for cropping.</span>
+<span class="n">image_crops_y</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">640</span><span class="p">,</span> <span class="mi">640</span> <span class="o">+</span> <span class="mi">3276</span><span class="p">],</span> <span class="p">[</span><span class="mi">556</span><span class="p">,</span> <span class="mi">456</span> <span class="o">+</span> <span class="mi">3408</span><span class="p">],</span> <span class="p">[</span><span class="mi">452</span><span class="p">,</span> <span class="mi">452</span> <span class="o">+</span> <span class="mi">3796</span><span class="p">]]</span>
+<span class="n">image_crops_x</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">2500</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">2500</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">2500</span><span class="p">]]</span>
+
+<span class="c1">#provide expected displacement in (cropped) images.</span>
+<span class="n">i_stitch</span><span class="o">.</span><span class="n">reference_displacement_x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">i_stitch</span><span class="o">.</span><span class="n">reference_displacement_y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2500</span><span class="p">,</span> <span class="mi">4962</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Next, <code class="xref py py-meth docutils literal notranslate"><span class="pre">multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.iterate_overfolder()</span></code>
+iterates over all folders of the experiment folder with the following structure:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.
+|-- experimentfolder_parent
+|   |-- t00000
+|   |   |-- low_stack000
+|   |   |   |--1_CH594_000000.tif
+|   |-- low_stack001
+|   |   |   |--1_CH594_000000.tif
+|   |-- low_stack002
+|   |   |   |--1_CH594_000000.tif
+</pre></div>
+</div>
+<p>specified at the beginning of the script:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">region</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;low_stack000&quot;</span><span class="p">,</span> <span class="s2">&quot;low_stack001&quot;</span><span class="p">,</span> <span class="s2">&quot;low_stack002&quot;</span><span class="p">]</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="s2">&quot;fish1&quot;</span>
+<span class="n">channelnames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1_CH594_000000&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The stitching class <code class="xref py py-meth docutils literal notranslate"><span class="pre">multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher()</span></code> then
+calculates the maximum intensity projections of each tile to reduce the computational workload.
+Afterwards,  Fast Fourier transform-based cross-correlations on the overlapping sections of the background subtracted maximum intensity projections are calculated to obtain the translational shift between tiles as the highest value of all cross-correlations.
+Lastly, the individual tiles are fused using a sigmoidal blending function. Alternatively, also fusion with maximum intensity projections is available.</p>
+<section id="options">
+<h3>Options:<a class="headerlink" href="#options" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Use_reference: The expected values for the whole time-lapse stitching might drift over time. If use_reference is set to 0,
+always start at each timepoint with the shift of timepoint-1. If use_reference is set to 1, resets the shift at every
+timepoint to the initially provided value.</p></li>
+<li><p>limit_search: Provide a narrow search window to tune for the best overlap of the stitching process.</p></li>
+<li><p>optimize_alignment: If set to 1, optimize the shift values at every timepoint, e.g. if there is sample movement.</p></li>
+</ul>
+</section>
+</section>
+<section id="output">
+<h2>Output<a class="headerlink" href="#output" title="Link to this heading"></a></h2>
+<p>The output of the pipeline then produces the following folders and files:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.
+|-- experimentfolder_parent_stitched
+|   |-- fish1
+|   |   |-- t00000
+|   |   |   |--1_CH594_000000.tif
+|   |-- fish1_max
+|   |   |   |--1_CH594_000000
+|   |   |   |  |--t00000.tif
+|   |-- fish1_max_side
+|   |   |   |--1_CH594_000000
+|   |   |   |  |--t00000.tif
+</pre></div>
+</div>
+<p>Here, “fish1” is the sample (as defined above) and the stitched 3D stacks are saved in the “fish1” folder. The maximum intensity projection
+of the stitched 3D data set are saved in the “fish1_max” folder and the side view (xz) maximum intensity projections for quick data visualization.</p>
+</section>
+<section id="test-dataset">
+<h2>Test dataset<a class="headerlink" href="#test-dataset" title="Link to this heading"></a></h2>
+<p>To test the stitching code, we provide a test data set of an entire zebrafish embryo with labelled
+vaculature, <em>Tg(kdrl:rasCherry)</em>, consisting of
+one timepoint (t00000) and three regions (low_stack000, low_stack001, low_stack002)
+imaged with the low-resolution light-sheet modality.</p>
+<p>To download the dataset, please download the folder Exemplary_StitchingDataset:</p>
+<dl class="field-list simple">
+<dt class="field-odd">on Synapse<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://doi.org/10.7303/syn61795850">https://doi.org/10.7303/syn61795850</a></p>
+</dd>
+<dt class="field-even">or Zenodo<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://doi.org/10.5281/zenodo.12791724">https://doi.org/10.5281/zenodo.12791724</a></p>
+</dd>
+</dl>
+</section>
+<section id="alternatives">
+<h2>Alternatives<a class="headerlink" href="#alternatives" title="Link to this heading"></a></h2>
+<p>A well tested and established open-source alternative for stitching is BigStitcher:
+<a class="reference external" href="https://imagej.net/plugins/bigstitcher/">https://imagej.net/plugins/bigstitcher/</a></p>
+<p>Alternatively, also the PetaKit5D software tools might be helpful:
+<a class="reference external" href="https://github.com/abcucberkeley/PetaKit5D">https://github.com/abcucberkeley/PetaKit5D</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ShannonEntropyAnalysis.html" class="btn btn-neutral float-left" title="Shannon Entropy Analysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="LowRes_Segmentation.html" class="btn btn-neutral float-right" title="Low-resolution segmentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Daetwyler Stephan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Self-driving, multi-scale image analysis
+              <img src="../../../_static/multi_scale_analysis_logo.jpg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started and installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation.html">Getting started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Microscope characterization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../PSF_analysis.html">PSF analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ShannonEntropyAnalysis.html">Shannon Entropy Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Low-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Data_stitching.html">Data stitching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../LowRes_Segmentation.html">Low-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../HopkinsStatistics.html">Hopkins Statistics Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">High-resolution analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../HighRes_Segmentation.html">High-resolution segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Cell_ShapeAnalysis.html">Cell Shape Feature Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Cell_CurvatureAnalysis.html">Cell Curvature Analysis</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Data visualization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Data_visualization.html">Data visualization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python API references</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">multiScaleAnalysis</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Self-driving, multi-scale image analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">skimage.io</span> <span class="k">as</span> <span class="nn">skio</span>
+<span class="kn">import</span> <span class="nn">skimage.exposure</span> <span class="k">as</span> <span class="nn">skexposure</span>
+<span class="kn">import</span> <span class="nn">scipy.ndimage</span> <span class="k">as</span> <span class="nn">ndimage</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">tiler</span> <span class="kn">import</span> <span class="n">Tiler</span><span class="p">,</span> <span class="n">Merger</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">scipy.io</span> <span class="k">as</span> <span class="nn">spio</span>
+<span class="kn">import</span> <span class="nn">skimage.measure</span> <span class="k">as</span> <span class="nn">skmeasure</span>
+<span class="kn">import</span> <span class="nn">skimage.morphology</span> <span class="k">as</span> <span class="nn">skmorph</span>
+<span class="kn">import</span> <span class="nn">skimage.restoration</span> <span class="k">as</span> <span class="nn">skrestoration</span>
+<span class="kn">import</span> <span class="nn">skimage.color</span> <span class="k">as</span> <span class="nn">skcolor</span>
+<span class="kn">import</span> <span class="nn">skimage.segmentation</span> <span class="k">as</span> <span class="nn">sksegmentation</span>
+<span class="kn">from</span> <span class="nn">pystackreg</span> <span class="kn">import</span> <span class="n">StackReg</span>
+
+
+<div class="viewcode-block" id="generate2Dsegmentations">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation.generate2Dsegmentations">[docs]</a>
+<span class="k">def</span> <span class="nf">generate2Dsegmentations</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">im_cancer</span><span class="p">,</span> <span class="n">savedeconvfilepath</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate and save preprocessed/deconvolved data and cell pose segmentation masks</span>
+
+<span class="sd">    :param im: image of macrophages</span>
+<span class="sd">    :param im_cancer: image of cancer cells</span>
+<span class="sd">    :param im_cancer: folder to save the deconvolved file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># =============================================================================</span>
+    <span class="c1"># Resample to isotropic</span>
+    <span class="c1"># =============================================================================</span>
+
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">zoom</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">lateral_axialratio</span><span class="p">,</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">lateral_axialratio</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">)</span>
+    <span class="n">im_cancer</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">zoom</span><span class="p">(</span><span class="n">im_cancer</span><span class="p">,</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">lateral_axialratio</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">lateral_axialratio</span><span class="p">],</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;reflect&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;resampled images&quot;</span><span class="p">)</span>
+
+    <span class="c1"># =============================================================================</span>
+    <span class="c1">#     Preprocess fully in 3D</span>
+    <span class="c1"># =============================================================================</span>
+
+    <span class="c1"># rescale</span>
+    <span class="c1"># im = im_preprocessing.normalize(im, pmin=2, pmax=99.8, clip=True)</span>
+    <span class="c1"># im_cancer = im_preprocessing.normalize(im_cancer, pmin=2, pmax=99.8, clip=True)</span>
+
+    <span class="c1"># smooth background</span>
+    <span class="n">im_bg</span> <span class="o">=</span> <span class="n">im_preprocessing</span><span class="o">.</span><span class="n">smooth_vol</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ds</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">im_cancer_bg</span> <span class="o">=</span> <span class="n">im_preprocessing</span><span class="o">.</span><span class="n">smooth_vol</span><span class="p">(</span><span class="n">im_cancer</span><span class="p">,</span> <span class="n">ds</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">smooth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="n">im</span> <span class="o">=</span> <span class="n">im_preprocessing</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">im</span> <span class="o">-</span> <span class="n">im_bg</span><span class="p">,</span> <span class="n">pmin</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">pmax</span><span class="o">=</span><span class="mf">99.8</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">im_cancer</span> <span class="o">=</span> <span class="n">im_preprocessing</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">im_cancer</span> <span class="o">-</span> <span class="n">im_cancer_bg</span><span class="p">,</span> <span class="n">pmin</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">pmax</span><span class="o">=</span><span class="mf">99.8</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;normalized&quot;</span><span class="p">)</span>
+    <span class="c1"># deconvolution</span>
+    <span class="n">psf_meSPIM</span> <span class="o">=</span> <span class="n">spio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">psffilepath</span><span class="p">)[</span><span class="s1">&#39;PSF&#39;</span><span class="p">]</span>
+    <span class="n">psf_meSPIM</span> <span class="o">=</span> <span class="n">psf_meSPIM</span> <span class="o">/</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">psf_meSPIM</span><span class="p">)))</span>
+
+    <span class="n">im_deconv</span> <span class="o">=</span> <span class="n">skrestoration</span><span class="o">.</span><span class="n">wiener</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">psf_meSPIM</span><span class="p">,</span>
+                                     <span class="n">balance</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># was doing balance=0.5 # use a smaller balance to retain sharper features.</span>
+    <span class="n">im_deconv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">im_deconv</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">im_deconv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">im_preprocessing</span><span class="o">.</span><span class="n">anisodiff</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">kappa</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ploton</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+         <span class="k">for</span> <span class="n">ss</span> <span class="ow">in</span> <span class="n">im_deconv</span><span class="p">])</span>
+
+    <span class="n">im_cancer_deconv</span> <span class="o">=</span> <span class="n">skrestoration</span><span class="o">.</span><span class="n">wiener</span><span class="p">(</span><span class="n">im_cancer</span><span class="p">,</span> <span class="n">psf_meSPIM</span><span class="p">,</span>
+                                            <span class="n">balance</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># was doing balance=0.5 # use a smaller balance to retain sharper features.</span>
+    <span class="n">im_cancer_deconv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">im_cancer_deconv</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">im_cancer_deconv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">im_preprocessing</span><span class="o">.</span><span class="n">anisodiff</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">kappa</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ploton</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+         <span class="k">for</span> <span class="n">ss</span> <span class="ow">in</span> <span class="n">im_cancer_deconv</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;deconvolved&quot;</span><span class="p">)</span>
+
+    <span class="c1"># demix_videos(vid1, vid2, l1_ratio=0.5)</span>
+    <span class="n">im_unmix</span> <span class="o">=</span> <span class="n">im_preprocessing</span><span class="o">.</span><span class="n">demix_videos</span><span class="p">(</span><span class="n">im_deconv</span><span class="p">,</span> <span class="n">im_cancer_deconv</span><span class="p">,</span> <span class="n">l1_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="c1"># rescale.</span>
+    <span class="n">im_unmix_1</span> <span class="o">=</span> <span class="n">im_preprocessing</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">im_unmix</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">im_unmix_2</span> <span class="o">=</span> <span class="n">im_preprocessing</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">im_unmix</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">clip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">skio</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savedeconvfilepath</span><span class="p">,</span> <span class="n">basename</span> <span class="o">+</span> <span class="s1">&#39;deconv_demix.tif&#39;</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">(</span><span class="mi">65535</span> <span class="o">*</span> <span class="n">im_unmix_1</span><span class="p">))</span>
+
+    <span class="c1"># =============================================================================</span>
+    <span class="c1"># Cellpose segmentation</span>
+    <span class="c1"># =============================================================================</span>
+    <span class="kn">from</span> <span class="nn">cellpose</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">core</span>
+
+    <span class="c1"># set up Cellpose parameters</span>
+    <span class="n">use_GPU</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">use_gpu</span><span class="p">()</span>
+    <span class="n">modelname</span> <span class="o">=</span> <span class="s1">&#39;cyto2&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">modelname</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Cellpose</span><span class="p">(</span><span class="n">model_type</span><span class="o">=</span><span class="n">modelname</span><span class="p">,</span> <span class="n">gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>  <span class="c1"># default is CPU!</span>
+    <span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># angle = &#39;xy&#39;</span>
+    <span class="c1"># angle = &#39;xz&#39;</span>
+    <span class="c1"># angle = &#39;yz&#39;  # seems ok with the smaller image.</span>
+    <span class="n">anglelist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="s1">&#39;xz&#39;</span><span class="p">,</span> <span class="s1">&#39;yz&#39;</span><span class="p">]</span>
+
+    <span class="n">im_unmix_orig</span> <span class="o">=</span> <span class="n">im_unmix_1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">anglelist</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;angle &quot;</span> <span class="o">+</span> <span class="n">angle</span> <span class="o">+</span> <span class="s2">&quot; is segmented&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">angle</span> <span class="o">==</span> <span class="s1">&#39;xy&#39;</span><span class="p">:</span>
+            <span class="n">im_unmix_1</span> <span class="o">=</span> <span class="n">im_unmix_orig</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">angle</span> <span class="o">==</span> <span class="s1">&#39;xz&#39;</span><span class="p">:</span>
+            <span class="n">im_unmix_1</span> <span class="o">=</span> <span class="n">im_unmix_orig</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">angle</span> <span class="o">==</span> <span class="s1">&#39;yz&#39;</span><span class="p">:</span>
+            <span class="n">im_unmix_1</span> <span class="o">=</span> <span class="n">im_unmix_orig</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+
+        <span class="c1"># fig, ax = plt.subplots()</span>
+        <span class="c1"># plt.title(&#39;midslice&#39;)</span>
+        <span class="c1"># plt.imshow(im_unmix_1[im_unmix_1.shape[0] // 2] + 10)</span>
+        <span class="c1"># plt.show()</span>
+
+        <span class="n">all_masks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># this is still quicker!</span>
+        <span class="k">for</span> <span class="n">dd</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">im_unmix_1</span><span class="p">))):</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">im_unmix_1</span><span class="p">[</span><span class="n">dd</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">imgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">img</span><span class="p">]</span>
+
+            <span class="n">masks</span><span class="p">,</span> <span class="n">flows</span><span class="p">,</span> <span class="n">styles</span><span class="p">,</span> <span class="n">diams</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span>  <span class="c1"># if not a list doesn&#39;t run slice by slice !</span>
+                                                     <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>  <span class="c1"># this parameter does nothing.....</span>
+                                                     <span class="n">channels</span><span class="o">=</span><span class="n">channels</span><span class="p">,</span>
+                                                     <span class="n">do_3D</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                     <span class="c1"># diameter=100, # will need to run at multiple scales!.</span>
+                                                     <span class="n">diameter</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>  <span class="c1"># was used for the other views.</span>
+                                                     <span class="n">net_avg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                     <span class="n">model_loaded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                     <span class="n">progress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">all_masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">masks</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="c1"># plt.figure()</span>
+            <span class="c1"># plt.imshow(imgs[0])</span>
+            <span class="c1"># plt.show()</span>
+            <span class="c1">#</span>
+            <span class="c1"># plt.figure()</span>
+            <span class="c1"># plt.imshow(masks[0])</span>
+            <span class="c1"># plt.show()</span>
+
+        <span class="c1"># =============================================================================</span>
+        <span class="c1"># save image</span>
+        <span class="c1"># =============================================================================</span>
+
+        <span class="n">savedict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;masks&#39;</span><span class="p">:</span> <span class="n">all_masks</span><span class="p">,</span> <span class="s1">&#39;angle&#39;</span><span class="p">:</span> <span class="n">angle</span><span class="p">}</span>
+
+        <span class="c1"># save as a numpy?</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">spio</span><span class="o">.</span><span class="n">savemat</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savefolder_file</span><span class="p">,</span> <span class="n">basename</span> <span class="o">+</span> <span class="s1">&#39;_cellpose_</span><span class="si">%s</span><span class="s1">.mat&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">angle</span><span class="p">)),</span>
+                         <span class="n">savedict</span><span class="p">,</span> <span class="n">do_compression</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;saving success&quot;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+
+            <span class="kn">import</span> <span class="nn">pickle</span>
+
+            <span class="n">savepicklefile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savefolder_file</span><span class="p">,</span> <span class="n">basename</span> <span class="o">+</span> <span class="s1">&#39;_cellpose_</span><span class="si">%s</span><span class="s1">.pickle&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">angle</span><span class="p">))</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">savepicklefile</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+                <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">savedict</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>  <span class="c1"># , protocol=pickle.HIGHEST_PROTOCOL)</span></div>
+
+
+
+<div class="viewcode-block" id="generate_binaryimage">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation.generate_binaryimage">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_binaryimage</span><span class="p">(</span><span class="n">im_deconvolved</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate binary image from deconvolved image using otsu tresholding.</span>
+
+<span class="sd">    :param im_deconvolved: a deconvolved image</span>
+<span class="sd">    :return: binary image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">skimage.morphology</span> <span class="k">as</span> <span class="nn">skmorph</span>
+    <span class="kn">import</span> <span class="nn">skimage.filters</span> <span class="k">as</span> <span class="nn">skfilters</span>
+
+    <span class="c1"># =============================================================================</span>
+    <span class="c1"># Combine the deconvolved image with variance filters and obtain a binary segmentation mask!.</span>
+    <span class="c1"># =============================================================================</span>
+
+    <span class="n">dog</span> <span class="o">=</span> <span class="n">im_deconvolved</span> <span class="o">-</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">im_deconvolved</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">im_</span> <span class="o">=</span> <span class="p">(</span><span class="n">im_deconvolved</span> <span class="o">-</span> <span class="n">im_deconvolved</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">im_deconvolved</span><span class="p">));</span>
+    <span class="n">im_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">im_</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">binary_thresh</span> <span class="o">=</span> <span class="n">skfilters</span><span class="o">.</span><span class="n">threshold_otsu</span><span class="p">(</span><span class="n">im_</span><span class="p">)</span>  <span class="c1"># what the best threshold?</span>
+    <span class="n">im_binary</span> <span class="o">=</span> <span class="n">im_</span> <span class="o">&gt;</span> <span class="n">binary_thresh</span>  <span class="c1"># +0.1;</span>
+
+    <span class="n">im_binary</span> <span class="o">=</span> <span class="n">skmorph</span><span class="o">.</span><span class="n">remove_small_objects</span><span class="p">(</span><span class="n">im_binary</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">comb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">im_binary</span> <span class="o">*</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">dog</span> <span class="o">-</span> <span class="n">dog</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dog</span><span class="p">)))</span>
+    <span class="n">im_binary</span> <span class="o">=</span> <span class="n">comb</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+    <span class="n">im_binary</span> <span class="o">=</span> <span class="n">skmorph</span><span class="o">.</span><span class="n">binary_closing</span><span class="p">(</span><span class="n">im_binary</span><span class="p">,</span> <span class="n">skmorph</span><span class="o">.</span><span class="n">ball</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">im_binary</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">binary_fill_holes</span><span class="p">(</span><span class="n">im_binary</span><span class="p">)</span>
+
+    <span class="n">skio</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savefolder_file</span><span class="p">,</span> <span class="n">basename</span> <span class="o">+</span> <span class="s1">&#39;im_binary.tif&#39;</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">(</span><span class="n">im_binary</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;binary mask generated&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">im_binary</span></div>
+
+
+<div class="viewcode-block" id="merge_masks">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation.merge_masks">[docs]</a>
+<span class="k">def</span> <span class="nf">merge_masks</span><span class="p">(</span><span class="n">mask_xy</span><span class="p">,</span> <span class="n">mask_xz</span><span class="p">,</span> <span class="n">mask_yz</span><span class="p">,</span> <span class="n">im_binary</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the gradients fused from 3 orthogonal segmentations</span>
+
+<span class="sd">    :param mask_xy: Cellpose segmentation in xy direction</span>
+<span class="sd">    :param mask_xz: Cellpose segmentation in xz direction</span>
+<span class="sd">    :param mask_yz: Cellpose segmentation in yz direction</span>
+<span class="sd">    :param im_binary: Binary image to constrain the Cellpose-based segmentation</span>
+<span class="sd">    :return: labels gradients for 3D watershed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># im_binary_dtform = ndimage.distance_transform_edt(im_binary)  # this works.</span>
+
+    <span class="c1"># don&#39;t expand the mask.</span>
+    <span class="c1"># mask_xy = grad_filters.expand_masks2D(mask_xy, binary=im_binary, dist_tform=im_binary_dtform)   #### looks like use this binary is hm....</span>
+    <span class="c1"># mask_xz = grad_filters.expand_masks2D(mask_xz, binary=im_binary.transpose(1,0,2), dist_tform=im_binary_dtform.transpose(1,0,2))</span>
+    <span class="c1"># mask_yz = grad_filters.expand_masks2D(mask_yz, binary=im_binary.transpose(2,1,0), dist_tform=im_binary_dtform.transpose(2,1,0))</span>
+
+    <span class="c1"># mask_xy</span>
+    <span class="n">guide_image_xy</span> <span class="o">=</span> <span class="n">grad_flows</span><span class="o">.</span><span class="n">distance_transform_labels_fast</span><span class="p">(</span><span class="n">mask_xy</span><span class="p">)</span>
+    <span class="n">mask_xy_gradient</span> <span class="o">=</span> <span class="n">grad_flows</span><span class="o">.</span><span class="n">distance_centroid_tform_flow_labels2D_parallel</span><span class="p">(</span><span class="n">mask_xy</span><span class="p">,</span>
+                                                                                 <span class="n">dtform_method</span><span class="o">=</span><span class="s1">&#39;cellpose_improve&#39;</span><span class="p">,</span>
+                                                                                 <span class="n">guide_image</span><span class="o">=</span><span class="n">guide_image_xy</span><span class="p">,</span>
+                                                                                 <span class="n">fixed_point_percentile</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+                                                                                 <span class="n">n_processes</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+                                                                                 <span class="n">power_dist</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">mask_xy_gradient</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">mask_xy_gradient</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">mask_xy_gradient</span> <span class="o">=</span> <span class="n">mask_xy_gradient</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">mask_xy_gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mask_xy_gradient</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">mask_xy_gradient</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">mask_xy_gradient</span> <span class="o">=</span> <span class="n">mask_xy_gradient</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># we must flip the channels!.</span>
+
+    <span class="c1">#mask_xz</span>
+    <span class="n">guide_image_xz</span> <span class="o">=</span> <span class="n">grad_flows</span><span class="o">.</span><span class="n">distance_transform_labels_fast</span><span class="p">(</span><span class="n">mask_xz</span><span class="p">)</span>
+    <span class="n">mask_xz_gradient</span> <span class="o">=</span> <span class="n">grad_flows</span><span class="o">.</span><span class="n">distance_centroid_tform_flow_labels2D_parallel</span><span class="p">(</span><span class="n">mask_xz</span><span class="p">,</span>
+                                                                                 <span class="n">dtform_method</span><span class="o">=</span><span class="s1">&#39;cellpose_improve&#39;</span><span class="p">,</span>
+                                                                                 <span class="n">guide_image</span><span class="o">=</span><span class="n">guide_image_xz</span><span class="p">,</span>
+                                                                                 <span class="n">fixed_point_percentile</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+                                                                                 <span class="n">n_processes</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+                                                                                 <span class="n">power_dist</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">mask_xz_gradient</span> <span class="o">=</span> <span class="n">mask_xz_gradient</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">mask_xz_gradient</span> <span class="o">=</span> <span class="n">mask_xz_gradient</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">mask_xz_gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mask_xz_gradient</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">mask_xz_gradient</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">mask_xz_gradient</span> <span class="o">=</span> <span class="n">mask_xz_gradient</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># we must flip the channels!.</span>
+
+    <span class="c1">#mask_yz</span>
+    <span class="n">guide_image_yz</span> <span class="o">=</span> <span class="n">grad_flows</span><span class="o">.</span><span class="n">distance_transform_labels_fast</span><span class="p">(</span><span class="n">mask_yz</span><span class="p">)</span>
+    <span class="n">mask_yz_gradient</span> <span class="o">=</span> <span class="n">grad_flows</span><span class="o">.</span><span class="n">distance_centroid_tform_flow_labels2D_parallel</span><span class="p">(</span><span class="n">mask_yz</span><span class="p">,</span>
+                                                                                 <span class="n">dtform_method</span><span class="o">=</span><span class="s1">&#39;cellpose_improve&#39;</span><span class="p">,</span>
+                                                                                 <span class="n">guide_image</span><span class="o">=</span><span class="n">guide_image_yz</span><span class="p">,</span>
+                                                                                 <span class="n">fixed_point_percentile</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+                                                                                 <span class="n">n_processes</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+                                                                                 <span class="n">power_dist</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">mask_yz_gradient</span> <span class="o">=</span> <span class="n">mask_yz_gradient</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">mask_yz_gradient</span> <span class="o">=</span> <span class="n">mask_yz_gradient</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="c1">#mask_yz_gradient = mask_yz_gradient.transpose(3, 1, 2, 0)</span>
+    <span class="n">mask_yz_gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mask_yz_gradient</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">mask_yz_gradient</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">mask_yz_gradient</span> <span class="o">=</span> <span class="n">mask_yz_gradient</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># we must flip the channels!.</span>
+
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">grad_filters</span><span class="o">.</span><span class="n">var_combine</span><span class="p">([</span><span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">mask_xy_gradient</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                                   <span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">mask_xz_gradient</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)],</span>
+                                  <span class="n">ksize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                  <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">grad_filters</span><span class="o">.</span><span class="n">var_combine</span><span class="p">([</span><span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">mask_xy_gradient</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                                   <span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">mask_yz_gradient</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)],</span>
+                                  <span class="n">ksize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                  <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">grad_filters</span><span class="o">.</span><span class="n">var_combine</span><span class="p">([</span><span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">mask_xz_gradient</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                                   <span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">mask_yz_gradient</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)],</span>
+                                  <span class="n">ksize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                  <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="c1"># # does this change vs</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">dz</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+    <span class="n">labels_gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">dz</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+                                       <span class="n">dy</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+                                       <span class="n">dx</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># do a little filtering.</span>
+    <span class="c1"># labels_gradients = np.array([ndimage.gaussian_filter(labels_gradients[:,ch], sigma=1) for ch in np.arange(labels_gradients.shape[1])]) # should only be 3 channels.</span>
+    <span class="n">labels_gradients</span> <span class="o">=</span> <span class="n">labels_gradients</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">labels_gradients</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="c1"># this normalizes!</span>
+    <span class="n">labels_gradients</span> <span class="o">=</span> <span class="n">labels_gradients</span> <span class="o">/</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">labels_gradients</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-20</span><span class="p">)</span>  <span class="c1"># this is good. !</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">labels_gradients</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>  <span class="c1"># verify this is unit magnitude!!!</span>
+
+    <span class="c1"># =============================================================================</span>
+    <span class="c1">#     reshaping for input to grad watershed!.</span>
+    <span class="c1"># =============================================================================</span>
+    <span class="c1"># this corrects for the shape to be inputted!. holy cow.</span>
+    <span class="n">labels_gradients</span> <span class="o">=</span> <span class="n">labels_gradients</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">labels_gradients</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="c1"># plt.figure()</span>
+    <span class="c1"># plt.imshow(labels_gradients[0, ..., 1])</span>
+    <span class="c1"># plt.show()</span>
+    <span class="c1"># wtf?</span>
+    <span class="c1"># labels_gradients[im_binary==0] = 0 # setting all gradients outside mask to  be 0 ....</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">labels_gradients</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">labels_gradients</span></div>
+
+
+
+<div class="viewcode-block" id="register_stack">
+<a class="viewcode-back" href="../../../multiScaleAnalysis.SegmentationHighres.html#multiScaleAnalysis.SegmentationHighres.Cellpose_based_MacrophageSegmentation.register_stack">[docs]</a>
+<span class="k">def</span> <span class="nf">register_stack</span><span class="p">(</span><span class="n">imagestack</span><span class="p">,</span> <span class="n">applymedian</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">reference_flag</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Register the stack to account for drift that occurs.</span>
+
+<span class="sd">    :param imagestack: stack to register</span>
+<span class="sd">    :param applymedian: apply value to zero elements if non zero</span>
+<span class="sd">    :param reference_flag: how should stackreg register stack</span>
+<span class="sd">    :return: registered stack</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># calculate median value</span>
+    <span class="k">if</span> <span class="n">applymedian</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">applymedian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">imagestack</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;calculated median: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">applymedian</span><span class="p">))</span>
+
+    <span class="c1"># register each frame to the previous (already registered) one</span>
+    <span class="c1"># this is what the original StackReg ImageJ plugin uses</span>
+    <span class="n">sr</span> <span class="o">=</span> <span class="n">StackReg</span><span class="p">(</span><span class="n">StackReg</span><span class="o">.</span><span class="n">TRANSLATION</span><span class="p">)</span>
+    <span class="n">out_previous</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">register_transform_stack</span><span class="p">(</span><span class="n">imagestack</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="n">reference_flag</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;stack registered: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">out_previous</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+
+    <span class="c1"># Assign the median to the zero elements</span>
+    <span class="n">out_previous</span><span class="p">[</span><span class="n">out_previous</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">applymedian</span>
+
+    <span class="k">return</span> <span class="n">out_previous</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># =============================================================================</span>
+    <span class="c1"># initializations</span>
+    <span class="c1"># =============================================================================</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;parameters&quot;&quot;&quot;</span>
+    <span class="n">lateral_axialratio</span> <span class="o">=</span> <span class="mf">3.42</span> <span class="c1">#for (down-)sampling image to isotropic voxels, e.g. 3.42 for axial spacing of 0.4 um and 0.117 nm lateral; or 2.56 for 0.3</span>
+    <span class="n">debug</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">region</span> <span class="o">=</span> <span class="s2">&quot;high_stack_001&quot;</span>
+    <span class="n">alignstackbefore</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">#do you want to align/register stack before segmentation? (use pystackreg)</span>
+
+    <span class="n">experimentfolder</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/xenograft_experiments/U2OS_WT/20220729_Daetwyler_U2OS/Experiment0001&quot;</span>
+    <span class="n">experimentfolder_result</span> <span class="o">=</span> <span class="n">experimentfolder</span> <span class="o">+</span> <span class="s2">&quot;_highresSeg&quot;</span>
+    <span class="c1"># PSF file path</span>
+    <span class="n">psffilepath</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/psf/meSPIM_PSF_kernel.mat&quot;</span>
+
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;init Image-preprocessing class&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">SegmentationHighres.preprocessing_class</span> <span class="kn">import</span> <span class="n">ImagePreprocessing</span> <span class="k">as</span> <span class="n">im_preprocess</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">preprocessing_class</span> <span class="kn">import</span> <span class="n">ImagePreprocessing</span> <span class="k">as</span> <span class="n">im_preprocess</span>
+    <span class="n">im_preprocessing</span> <span class="o">=</span> <span class="n">im_preprocess</span><span class="p">()</span>
+
+    <span class="c1"># =============================================================================</span>
+    <span class="c1"># Load the images and generate save folder</span>
+    <span class="c1"># =============================================================================</span>
+
+    <span class="c1"># get all timepoints of folder</span>
+    <span class="n">dir_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">experimentfolder</span><span class="p">)</span>
+    <span class="n">timepointlist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">dir_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">):</span>
+            <span class="n">timepointlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">timepointlist</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">timepointlist</span><span class="p">)</span>
+
+    <span class="c1"># in case of debugging, only run timepoint zero</span>
+    <span class="k">if</span> <span class="n">debug</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">timepointlist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t00021&#39;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i_time</span> <span class="ow">in</span> <span class="n">timepointlist</span><span class="p">:</span>
+
+        <span class="c1"># if i_time &gt; &#39;t00017&#39;:</span>
+        <span class="c1">#     continue  # continue here</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">i_time</span><span class="p">)</span>
+
+        <span class="c1"># construct filepaths</span>
+        <span class="n">imagefilepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder</span><span class="p">,</span> <span class="n">i_time</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span><span class="s1">&#39;1_CH488_000000.tif&#39;</span><span class="p">)</span>
+        <span class="n">file_cancer</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder</span><span class="p">,</span> <span class="n">i_time</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="s1">&#39;1_CH552_000000.tif&#39;</span><span class="p">)</span>
+        <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">imagefilepath</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.tif&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">imagefilepath</span><span class="p">)</span>
+
+        <span class="n">savefolder_deconvolution</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="s2">&quot;deconvolution&quot;</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">i_time</span><span class="p">)</span>
+        <span class="n">savefolder_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="s2">&quot;result_segmentation&quot;</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">i_time</span><span class="p">)</span>
+
+        <span class="c1">#make folders</span>
+        <span class="n">im_preprocessing</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">savefolder_deconvolution</span><span class="p">)</span>
+        <span class="n">im_preprocessing</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">savefolder_file</span><span class="p">)</span>
+
+
+        <span class="n">im</span> <span class="o">=</span> <span class="n">skio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">imagefilepath</span><span class="p">)</span>
+        <span class="n">im_cancer</span> <span class="o">=</span> <span class="n">skio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">file_cancer</span><span class="p">)</span>
+
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loaded images&quot;</span><span class="p">)</span>
+
+        <span class="c1"># =============================================================================</span>
+        <span class="c1"># 3D register stacks if there was a lot of movement / jitters</span>
+        <span class="c1"># =============================================================================</span>
+
+        <span class="k">if</span> <span class="n">alignstackbefore</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;register stack plane by plane&quot;</span><span class="p">)</span>
+
+
+
+
+        <span class="c1"># =============================================================================</span>
+        <span class="c1"># Generate and save 2D segmentations with Cellpose</span>
+        <span class="c1"># =============================================================================</span>
+
+        <span class="n">generate2Dsegmentations</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">im_cancer</span><span class="p">,</span> <span class="n">savefolder_deconvolution</span><span class="p">)</span>
+
+        <span class="c1"># =============================================================================</span>
+        <span class="c1"># now merge the different segmentations</span>
+        <span class="c1"># =============================================================================</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">multiScaleAnalysis.SegmentationHighres.gradient_watershed.filters</span> <span class="k">as</span> <span class="nn">grad_filters</span>
+            <span class="kn">import</span> <span class="nn">multiScaleAnalysis.SegmentationHighres.gradient_watershed.watershed</span> <span class="k">as</span> <span class="nn">grad_watershed</span>
+            <span class="kn">import</span> <span class="nn">multiScaleAnalysis.SegmentationHighres.gradient_watershed.flows</span> <span class="k">as</span> <span class="nn">grad_flows</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">gradient_watershed.filters</span> <span class="k">as</span> <span class="nn">grad_filters</span>
+            <span class="kn">import</span> <span class="nn">gradient_watershed.watershed</span> <span class="k">as</span> <span class="nn">grad_watershed</span>
+            <span class="kn">import</span> <span class="nn">gradient_watershed.flows</span> <span class="k">as</span> <span class="nn">grad_flows</span>
+
+
+        <span class="kn">import</span> <span class="nn">glob</span>
+        <span class="c1">#read the segmentation</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savefolder_file</span><span class="p">,</span><span class="s2">&quot;*.mat&quot;</span><span class="p">))</span>
+        <span class="n">mask_xy</span> <span class="o">=</span> <span class="n">spio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="s1">&#39;masks&#39;</span><span class="p">];</span> <span class="n">mask_xy</span> <span class="o">=</span> <span class="n">grad_filters</span><span class="o">.</span><span class="n">relabel_slices</span><span class="p">(</span><span class="n">mask_xy</span><span class="p">);</span> <span class="n">mask_xy</span> <span class="o">=</span> <span class="n">grad_filters</span><span class="o">.</span><span class="n">filter_segmentations_axis</span><span class="p">(</span><span class="n">mask_xy</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">mask_xz</span> <span class="o">=</span> <span class="n">spio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="s1">&#39;masks&#39;</span><span class="p">];</span> <span class="n">mask_xz</span> <span class="o">=</span> <span class="n">grad_filters</span><span class="o">.</span><span class="n">relabel_slices</span><span class="p">(</span><span class="n">mask_xz</span><span class="p">);</span> <span class="n">mask_xz</span> <span class="o">=</span> <span class="n">grad_filters</span><span class="o">.</span><span class="n">filter_segmentations_axis</span><span class="p">(</span><span class="n">mask_xz</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">mask_yz</span> <span class="o">=</span> <span class="n">spio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">2</span><span class="p">])[</span><span class="s1">&#39;masks&#39;</span><span class="p">];</span> <span class="n">mask_yz</span> <span class="o">=</span> <span class="n">grad_filters</span><span class="o">.</span><span class="n">relabel_slices</span><span class="p">(</span><span class="n">mask_yz</span><span class="p">);</span> <span class="n">mask_yz</span> <span class="o">=</span> <span class="n">grad_filters</span><span class="o">.</span><span class="n">filter_segmentations_axis</span><span class="p">(</span><span class="n">mask_yz</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;masks loaded&quot;</span><span class="p">)</span>
+
+        <span class="c1"># plt.figure()</span>
+        <span class="c1"># plt.imshow(mask_xy[35])</span>
+        <span class="c1"># plt.show()</span>
+
+        <span class="c1"># read the deconvolved raws!</span>
+        <span class="n">rawfiles</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savefolder_deconvolution</span><span class="p">,</span><span class="s2">&quot;*.tif&quot;</span><span class="p">))</span>
+        <span class="n">im_deconvolved</span> <span class="o">=</span> <span class="n">skio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">rawfiles</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loaded deconvolved images&quot;</span><span class="p">)</span>
+
+        <span class="c1"># =============================================================================</span>
+        <span class="c1"># generate binary image</span>
+        <span class="c1"># =============================================================================</span>
+
+        <span class="n">im_binary</span> <span class="o">=</span> <span class="n">generate_binaryimage</span><span class="p">(</span><span class="n">im_deconvolved</span><span class="p">)</span>
+
+        <span class="c1"># =============================================================================</span>
+        <span class="c1"># generate the gradients from the Cellpose segmentation to identify cell identities</span>
+        <span class="c1"># =============================================================================</span>
+
+        <span class="n">labels_gradients</span> <span class="o">=</span> <span class="n">merge_masks</span><span class="p">(</span><span class="n">mask_xy</span><span class="p">,</span> <span class="n">mask_xz</span><span class="p">,</span> <span class="n">mask_yz</span><span class="p">,</span> <span class="n">im_binary</span><span class="p">)</span>
+
+        <span class="c1"># =============================================================================</span>
+        <span class="c1"># perform watershed segmentation within the binary segmentation</span>
+        <span class="c1"># =============================================================================</span>
+
+        <span class="n">labels_3D_watershed</span><span class="p">,</span> <span class="n">cell_seg_connected</span><span class="p">,</span> <span class="n">tracks</span><span class="p">,</span> <span class="n">votes_grid_acc</span> <span class="o">=</span> <span class="n">grad_watershed</span><span class="o">.</span><span class="n">gradient_watershed3D_binary</span><span class="p">(</span>
+            <span class="n">im_binary</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">gradient_img</span><span class="o">=</span><span class="n">labels_gradients</span><span class="p">,</span>
+            <span class="n">divergence_rescale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="c1"># i don&#39;t think this was defined correct helps.... ----&gt; this actually seems to help by putting random fiducials...... (not actually stable..)</span>
+            <span class="n">smooth_sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># use a larger for weird shapes!.</span>
+            <span class="n">smooth_gradient</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># this has no effect except divergence_rescale=True</span>
+            <span class="n">delta</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>  <span class="c1"># kept at 1 for 1px hop.</span>
+            <span class="n">n_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>  <span class="c1"># evolve more - the limit isn&#39;t very stable (median seems to be more stable. )</span>
+            <span class="n">eps</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span>
+            <span class="n">min_area</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">thresh_factor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">mask</span><span class="o">=</span><span class="n">im_binary</span><span class="p">,</span>
+            <span class="n">debug_viz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># 50 seems not enough for 3D... as it is very connected.</span>
+
+        <span class="c1"># remove small labels</span>
+        <span class="n">labels_3D_watershed</span> <span class="o">=</span> <span class="n">labels_3D_watershed</span> <span class="o">*</span> <span class="n">im_binary</span>
+        <span class="n">labels_3D_watershed</span> <span class="o">=</span> <span class="n">grad_filters</span><span class="o">.</span><span class="n">remove_small_labels</span><span class="p">(</span><span class="n">labels_3D_watershed</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># this removed ?</span>
+
+        <span class="c1"># remove planar segmentations that are artifacts of 2D.</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels_3D_watershed</span><span class="p">))</span>
+
+        <span class="n">labels_3D_watershed_color</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="mi">255</span> <span class="o">*</span> <span class="n">skcolor</span><span class="o">.</span><span class="n">label2rgb</span><span class="p">(</span><span class="n">labels_3D_watershed</span><span class="p">,</span>
+                                                                     <span class="n">colors</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s1">&#39;hls&#39;</span><span class="p">,</span> <span class="n">n_colors</span><span class="o">=</span><span class="mi">16</span><span class="p">),</span>
+                                                                     <span class="n">bg_label</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+        <span class="c1"># bg_color=(1,1,1))) # this was put as white..... ? # that shudn&#39;t save well.</span>
+
+        <span class="n">skio</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savefolder_file</span><span class="p">,</span>
+                                 <span class="s1">&#39;labels_xy-integrated_gradients-RGB-correct_noexpand.tif&#39;</span><span class="p">),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">labels_3D_watershed_color</span><span class="p">))</span>
+        <span class="n">skio</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">savefolder_file</span><span class="p">,</span>
+                                 <span class="s1">&#39;labels_xy-integrated_gradients-correct_noexpand.tif&#39;</span><span class="p">),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">(</span><span class="n">labels_3D_watershed</span><span class="p">))</span>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Daetwyler Stephan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
