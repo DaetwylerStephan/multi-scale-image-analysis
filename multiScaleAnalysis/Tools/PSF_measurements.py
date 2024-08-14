@@ -226,6 +226,8 @@ if __name__ == '__main__':
     cutoff_axialPSFvalue = 2
     showbeadplot = True
 
+    averageplotstepsize = 100 #value for plotting average of beads (which range to average)
+
     #load image
     image=load_image(imagefilepath)
 
@@ -299,19 +301,22 @@ if __name__ == '__main__':
         return steparrayresult, result
 
 
+    averagemaxvalue_x = image.shape[1]
+    averagemaxvalue_y = image.shape[2]
+
     rolling_mean_xaxis_pixel, rolling_mean_xaxis_lat1 = get_average_range(array=df_xaxis, whichpsfvalue=3,
-                                                                          whichimagedim=1, range=100, maxvalue=2100)
+                                                                          whichimagedim=1, range=averageplotstepsize, maxvalue=averagemaxvalue_x)
     rolling_mean_xaxis_pixel, rolling_mean_xaxis_lat2 = get_average_range(array=df_xaxis, whichpsfvalue=4,
-                                                                          whichimagedim=1, range=100, maxvalue=2100)
+                                                                          whichimagedim=1, range=averageplotstepsize, maxvalue=averagemaxvalue_x)
     rolling_mean_xaxis_pixel, rolling_mean_xaxis_axial = get_average_range(array=df_xaxis, whichpsfvalue=5,
-                                                                           whichimagedim=1, range=100, maxvalue=2100)
+                                                                           whichimagedim=1, range=averageplotstepsize, maxvalue=averagemaxvalue_x)
 
     rolling_mean_yaxis_pixel, rolling_mean_yaxis_lat1 = get_average_range(array=df_yaxis, whichpsfvalue=3,
-                                                                          whichimagedim=2, range=100, maxvalue=2100)
+                                                                          whichimagedim=2, range=averageplotstepsize, maxvalue=averagemaxvalue_y)
     rolling_mean_yaxis_pixel, rolling_mean_yaxis_lat2 = get_average_range(array=df_yaxis, whichpsfvalue=4,
-                                                                          whichimagedim=2, range=100, maxvalue=2100)
+                                                                          whichimagedim=2, range=averageplotstepsize, maxvalue=averagemaxvalue_y)
     rolling_mean_yaxis_pixel, rolling_mean_yaxis_axial = get_average_range(array=df_yaxis, whichpsfvalue=5,
-                                                                           whichimagedim=2, range=100, maxvalue=2100)
+                                                                           whichimagedim=2, range=averageplotstepsize, maxvalue=averagemaxvalue_y)
 
     scale = 0.117
     # plot values
