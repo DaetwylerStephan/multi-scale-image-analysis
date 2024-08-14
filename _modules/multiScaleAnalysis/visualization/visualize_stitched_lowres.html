@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>multiScaleAnalysis.visualization.visualize_stitched_lowres &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+  <title>multiScaleAnalysis.Visualization.visualize_stitched_lowres &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -87,7 +87,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">multiScaleAnalysis.visualization.visualize_stitched_lowres</li>
+      <li class="breadcrumb-item active">multiScaleAnalysis.Visualization.visualize_stitched_lowres</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -96,7 +96,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for multiScaleAnalysis.visualization.visualize_stitched_lowres</h1><div class="highlight"><pre>
+  <h1>Source code for multiScaleAnalysis.Visualization.visualize_stitched_lowres</h1><div class="highlight"><pre>
 <span></span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">napari</span>
@@ -106,14 +106,14 @@
 <span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imwrite</span>
 
 <div class="viewcode-block" id="image_visualizer_stitched">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_stitched_lowres.image_visualizer_stitched">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_stitched_lowres.image_visualizer_stitched">[docs]</a>
 <span class="k">class</span> <span class="nc">image_visualizer_stitched</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">       This class generates visualizations of low-resolution segmentation results.</span>
 <span class="sd">       &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="image_visualizer_stitched.__init__">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_stitched_lowres.image_visualizer_stitched.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_stitched_lowres.image_visualizer_stitched.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize data folders and start Napari</span>
@@ -130,7 +130,7 @@
 
 
 <div class="viewcode-block" id="image_visualizer_stitched.load_visualize_images">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_stitched_lowres.image_visualizer_stitched.load_visualize_images">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_stitched_lowres.image_visualizer_stitched.load_visualize_images">[docs]</a>
     <span class="k">def</span> <span class="nf">load_visualize_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vis_param</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load images from folder and render them according Visualization parameters specified.</span>
@@ -252,10 +252,10 @@
     <span class="p">)</span>
 
     <span class="n">imagevisu</span> <span class="o">=</span> <span class="n">image_visualizer_stitched</span><span class="p">()</span>
-    <span class="n">rawdatafolder_parent</span> <span class="o">=</span> <span class="s1">&#39;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/Visualization/&#39;</span>
-    <span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rawdatafolder_parent</span><span class="p">,</span> <span class="s2">&quot;rawdata&quot;</span><span class="p">)</span>
+    <span class="n">rawdatafolder_parent</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_VisualizationDataset&quot;</span>
+    <span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rawdatafolder_parent</span><span class="p">,</span> <span class="s2">&quot;low_resolution_rawdata&quot;</span><span class="p">)</span>
     <span class="c1"># segmented data</span>
-    <span class="n">imagevisu</span><span class="o">.</span><span class="n">segmentationfolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rawdatafolder_parent</span><span class="p">,</span> <span class="s2">&quot;lowres_segmentation_labelimages&quot;</span><span class="p">)</span>
+    <span class="n">imagevisu</span><span class="o">.</span><span class="n">segmentationfolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rawdatafolder_parent</span><span class="p">,</span> <span class="s2">&quot;low_resolutionsegmentation_labelimages&quot;</span><span class="p">)</span>
     <span class="n">imagevisu</span><span class="o">.</span><span class="n">visualizedfolder</span> <span class="o">=</span> <span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">+</span> <span class="s2">&quot;_visualized&quot;</span>
     <span class="n">imagevisu</span><span class="o">.</span><span class="n">load_visualize_images</span><span class="p">(</span><span class="n">visualization_param</span><span class="p">)</span>
 

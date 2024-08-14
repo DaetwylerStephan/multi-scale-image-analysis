@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>multiScaleAnalysis.stitching.multiScale_stitching &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+  <title>multiScaleAnalysis.Stitching.multiScale_stitching &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -87,7 +87,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">multiScaleAnalysis.stitching.multiScale_stitching</li>
+      <li class="breadcrumb-item active">multiScaleAnalysis.Stitching.multiScale_stitching</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -96,7 +96,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for multiScaleAnalysis.stitching.multiScale_stitching</h1><div class="highlight"><pre>
+  <h1>Source code for multiScaleAnalysis.Stitching.multiScale_stitching</h1><div class="highlight"><pre>
 <span></span>
 
 <span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imwrite</span>
@@ -107,14 +107,14 @@
 
 
 <div class="viewcode-block" id="image_stitcher">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher">[docs]</a>
 <span class="k">class</span> <span class="nc">image_stitcher</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class stitches images from the low-resolution data acquisiton of the self-driving, multi-scale microscope.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="image_stitcher.__init__">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize stitcher</span>
@@ -131,7 +131,7 @@
 
 
 <div class="viewcode-block" id="image_stitcher.load_image">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.load_image">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.load_image">[docs]</a>
     <span class="k">def</span> <span class="nf">load_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pathlist</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load the images specified by the path list and populate the self.rawimages array.</span>
@@ -145,7 +145,7 @@
 
 
 <div class="viewcode-block" id="image_stitcher.make_maxprojections">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.make_maxprojections">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.make_maxprojections">[docs]</a>
     <span class="k">def</span> <span class="nf">make_maxprojections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make maximum projections of the images in the self.rawimages array and save them in the self.maxprojections array.</span>
@@ -156,7 +156,7 @@
 
 
 <div class="viewcode-block" id="image_stitcher.optimize_overlap">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.optimize_overlap">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.optimize_overlap">[docs]</a>
     <span class="k">def</span> <span class="nf">optimize_overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit_search</span><span class="o">=</span><span class="p">[],</span> <span class="n">extendfactor</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Optimizes the provided overlap, based on the maximum projections.</span>
@@ -243,7 +243,7 @@
 
 
 <div class="viewcode-block" id="image_stitcher.perform_2D_maximum_fusion">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_2D_maximum_fusion">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.perform_2D_maximum_fusion">[docs]</a>
     <span class="k">def</span> <span class="nf">perform_2D_maximum_fusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imagearrays</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform image fusion by selecting the maximum intensity of both images.</span>
@@ -274,7 +274,7 @@
 
 
 <div class="viewcode-block" id="image_stitcher.perform_2D_weighted_average_fusion">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_2D_weighted_average_fusion">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.perform_2D_weighted_average_fusion">[docs]</a>
     <span class="k">def</span> <span class="nf">perform_2D_weighted_average_fusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imagearrays</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform fusion based on a sigmoidal blending curve of both images.</span>
@@ -342,7 +342,7 @@
 
 
 <div class="viewcode-block" id="image_stitcher.perform_3D_fusion">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.perform_3D_fusion">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.perform_3D_fusion">[docs]</a>
     <span class="k">def</span> <span class="nf">perform_3D_fusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;weighted&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform plane-by-plane wise fusion on 3D stack.</span>
@@ -376,7 +376,7 @@
 
 
 <div class="viewcode-block" id="image_stitcher.crop_images">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.crop_images">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.crop_images">[docs]</a>
     <span class="k">def</span> <span class="nf">crop_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">image_crops_x</span><span class="p">,</span> <span class="n">image_crops_y</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove/crop parts of the images and update self.rawimage array with cropped images. This is function is helpful, e.g. to cut</span>
@@ -390,7 +390,7 @@
 
 
 <div class="viewcode-block" id="image_stitcher.stitching_workflow">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.stitching_workflow">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.stitching_workflow">[docs]</a>
     <span class="k">def</span> <span class="nf">stitching_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                            <span class="n">imagelist</span><span class="p">,</span>
                            <span class="n">image_crops_x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -462,7 +462,7 @@
 
 
 <div class="viewcode-block" id="image_stitcher.iterate_overfolder">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.iterate_overfolder">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Stitching.html#multiScaleAnalysis.Stitching.multiScale_stitching.image_stitcher.iterate_overfolder">[docs]</a>
     <span class="k">def</span> <span class="nf">iterate_overfolder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                            <span class="n">experimentfolder_parent</span><span class="p">,</span>
                            <span class="n">experimentfolder_result</span><span class="p">,</span>
@@ -589,8 +589,7 @@
     <span class="c1"># =============================================================================</span>
     <span class="c1"># Load the images and generate save folder</span>
     <span class="c1"># =============================================================================</span>
-
-    <span class="n">experimentfolder_parent</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/revision_experiments/test_dataset/Stitching&quot;</span>
+    <span class="n">experimentfolder_parent</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/12791724/Exemplary_StitchingDataset&quot;</span>
     <span class="n">experimentfolder_result</span> <span class="o">=</span> <span class="n">experimentfolder_parent</span> <span class="o">+</span> <span class="s2">&quot;_stitched_test&quot;</span>
 
     <span class="c1"># =============================================================================</span>

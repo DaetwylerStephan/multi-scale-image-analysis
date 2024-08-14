@@ -157,7 +157,7 @@ be loaded to napari to make label the individual segmented cells in different co
 <p>To iterate over a folder of raw images and segmentations, we scripted 3D rendering
 with Napari to obtain consistent renderings at different timepoints with the same parameters.</p>
 <p>An example script for low-resolution visualization is available under visualize_stitched_lowres.py
-<a class="reference internal" href="multiScaleAnalysis.visualization.html#module-multiScaleAnalysis.visualization.visualize_stitched_lowres" title="multiScaleAnalysis.visualization.visualize_stitched_lowres"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multiScaleAnalysis.visualization.visualize_stitched_lowres()</span></code></a></p>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">multiScaleAnalysis.visualization.visualize_stitched_lowres()</span></code></p>
 <p>To run it, provide the data paths to the low-resolution rawdatafolder, the low-resolution segmented data and
 where you want to save the rendered data (imagevisu.visualizedfolder).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rawdatafolder_parent</span><span class="p">,</span> <span class="s2">&quot;rawdata&quot;</span><span class="p">)</span>
@@ -193,6 +193,9 @@ and the quality of the saved rendering (scale_to_save).</p>
 <p>Note 1: If you don’t know what parameters such as contrast limits or angles to use, set the establish_param flag to 1
 and the script will open Napari with the images to find the best parameters. For batch processing, set establish_param=0.</p>
 <p>Note 2: We downsampled the rawimages to provide more efficient computation to fit the label image.</p>
+<p>In addition to the here described script, we also provide scripts used to
+visualize low-resolution data in Supplementary Movies 2, 4 and 6 (visualize_with_napariLowRes_spheroids.py, visualize_with_napariLowRes_nuclei.py,
+visualize_with_napariLowRes_MDAMB231.py).</p>
 </section>
 <section id="test-data-for-low-resolution-visualization">
 <h2>Test data for low-resolution visualization<a class="headerlink" href="#test-data-for-low-resolution-visualization" title="Link to this heading"></a></h2>
