@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>multiScaleAnalysis.Visualization.visualize_with_napariHighRes_MDAMB231_2 &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+  <title>multiScaleAnalysis.Visualization.visualize_with_napariLowRes_spheroids &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -87,7 +87,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">multiScaleAnalysis.Visualization.visualize_with_napariHighRes_MDAMB231_2</li>
+      <li class="breadcrumb-item active">multiScaleAnalysis.Visualization.visualize_with_napariLowRes_spheroids</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -96,7 +96,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for multiScaleAnalysis.Visualization.visualize_with_napariHighRes_MDAMB231_2</h1><div class="highlight"><pre>
+  <h1>Source code for multiScaleAnalysis.Visualization.visualize_with_napariLowRes_spheroids</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">napari</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -105,35 +105,34 @@
 <span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imwrite</span>
 
 <div class="viewcode-block" id="image_visualizer">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_with_napariHighRes_MDAMB231_2.image_visualizer">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_with_napariLowRes_spheroids.image_visualizer">[docs]</a>
 <span class="k">class</span> <span class="nc">image_visualizer</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">       This class generates visualizations of highres segmentation results.</span>
+<span class="sd">       This class generates visualizations of low-resolution rawdata of spheroids.</span>
 <span class="sd">       &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="image_visualizer.__init__">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_with_napariHighRes_MDAMB231_2.image_visualizer.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_with_napariLowRes_spheroids.image_visualizer.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize data folders and start Napari</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="c1"># initialize data folders</span>
+        <span class="n">rawdatafolder_parent</span> <span class="o">=</span> <span class="s2">&quot;folderpath&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">=</span> <span class="s2">&quot;rawdatafolder&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">segmentationfolder</span> <span class="o">=</span> <span class="s2">&quot;segmenteddatafolder&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span> <span class="o">=</span> <span class="s2">&quot;outputfolder&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="s2">&quot;high_stack_001&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">establish_param</span> <span class="o">=</span> <span class="mi">0</span>
-
-
+        <span class="c1"># start napari viewer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span> <span class="o">=</span> <span class="n">napari</span><span class="o">.</span><span class="n">Viewer</span><span class="p">()</span></div>
 
 
 
 <div class="viewcode-block" id="image_visualizer.load_images">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_with_napariHighRes_MDAMB231_2.image_visualizer.load_images">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_with_napariLowRes_spheroids.image_visualizer.load_images">[docs]</a>
     <span class="k">def</span> <span class="nf">load_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vis_param</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load images from folder and render them according Visualization parameters specified.</span>
 
 <span class="sd">        :param vis_param: Python dictionary of visulization paramters, e.g. vis_param[&#39;camera_angle1&#39;]</span>
@@ -152,14 +151,14 @@
             <span class="n">i_time</span><span class="o">=</span><span class="s2">&quot;t00000&quot;</span>
 
         <span class="k">for</span> <span class="n">i_time</span> <span class="ow">in</span> <span class="n">timepointlist</span><span class="p">:</span>
-
+            <span class="nb">print</span><span class="p">(</span><span class="n">i_time</span><span class="p">)</span>
             <span class="c1">#generate filepaths and folders</span>
-            <span class="n">rawimagepath_spheroid_magenta</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawdatafolder</span><span class="p">,</span> <span class="n">i_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="p">,</span> <span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;imagename_magenta&#39;</span><span class="p">])</span>
-            <span class="n">rawimagepath_spheroid_cyan</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawdatafolder</span><span class="p">,</span> <span class="n">i_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="p">,</span> <span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;imagename_cyan&#39;</span><span class="p">])</span>
+            <span class="n">rawimagepath_spheroid_magenta</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawdatafolder</span><span class="p">,</span> <span class="n">i_time</span><span class="p">,</span> <span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;imagename_magenta&#39;</span><span class="p">])</span>
+            <span class="n">rawimagepath_spheroid_cyan</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rawdatafolder</span><span class="p">,</span> <span class="n">i_time</span><span class="p">,</span> <span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;imagename_cyan&#39;</span><span class="p">])</span>
 
-            <span class="n">visualization_folder1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="p">,</span> <span class="s2">&quot;angle_1a&quot;</span><span class="p">)</span>
-            <span class="n">visualization_folder2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="p">,</span> <span class="s2">&quot;angle_2a&quot;</span><span class="p">)</span>
-            <span class="n">visualization_folder3</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region</span><span class="p">,</span> <span class="s2">&quot;angle_2a_frame&quot;</span><span class="p">)</span>
+            <span class="n">visualization_folder1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span><span class="p">,</span>  <span class="s2">&quot;angle_1a&quot;</span><span class="p">)</span>
+            <span class="n">visualization_folder2</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span><span class="p">,</span>  <span class="s2">&quot;angle_2a&quot;</span><span class="p">)</span>
+            <span class="n">visualization_folder3</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">visualizedfolder</span><span class="p">,</span> <span class="s2">&quot;angle_2a_frame&quot;</span><span class="p">)</span>
 
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">visualization_folder1</span><span class="p">)</span>
@@ -179,13 +178,17 @@
             <span class="n">visualized_file3</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">visualization_folder3</span><span class="p">,</span> <span class="n">i_time</span> <span class="o">+</span> <span class="s2">&quot;.tif&quot;</span><span class="p">)</span>
 
             <span class="c1">#open images</span>
-            <span class="n">image_magenta</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">rawimagepath_spheroid_magenta</span><span class="p">)</span>
-            <span class="n">image_cyan</span><span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">rawimagepath_spheroid_cyan</span><span class="p">)</span>
+            <span class="n">image_magentabig</span> <span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">rawimagepath_spheroid_magenta</span><span class="p">)</span>
+            <span class="n">image_cyanbig</span><span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="n">rawimagepath_spheroid_cyan</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">image_magentabig</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
+            <span class="c1"># downsample huge low-resolution raw images to same size as label images (which are isotropic in voxel size)</span>
+            <span class="n">image_magenta</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image_magentabig</span><span class="p">,</span> <span class="n">output_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">666</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">image_cyan</span> <span class="o">=</span> <span class="n">skimage</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image_cyanbig</span><span class="p">,</span> <span class="n">output_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">666</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
             <span class="c1">#add images as layers</span>
             <span class="n">image_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">image_magenta</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;raw_gamma_magenta&#39;</span><span class="p">],</span> <span class="n">contrast_limits</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;raw_contrast_limits_magenta&#39;</span><span class="p">],</span> <span class="n">colormap</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;magenta_colormap&#39;</span><span class="p">])</span>
-            <span class="n">cancer_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">image_cyan</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;raw_gamma_cyan&#39;</span><span class="p">],</span> <span class="n">opacity</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;opacity_cyan&#39;</span><span class="p">],</span> <span class="n">contrast_limits</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;raw_contrast_limits_cyan&#39;</span><span class="p">],</span> <span class="n">colormap</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;cyan_colormap&#39;</span><span class="p">])</span>
+            <span class="n">cancer_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">image_cyan</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;raw_gamma_cyan&#39;</span><span class="p">],</span> <span class="n">opacity</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;opacity_cyan&#39;</span><span class="p">],</span> <span class="n">contrast_limits</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;raw_contrast_limits_cyan&#39;</span><span class="p">],</span> <span class="n">colormap</span><span class="o">=</span><span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;cyan_colormap&#39;</span><span class="p">],</span> <span class="n">blending</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">)</span>
 
             <span class="c1">#set rendering to 3D and set camera zoom parameters</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">dims</span><span class="o">.</span><span class="n">ndisplay</span> <span class="o">=</span> <span class="n">vis_param</span><span class="p">[</span><span class="s1">&#39;rendering_dimension&#39;</span><span class="p">]</span>
@@ -231,41 +234,29 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 
     <span class="n">visualization_param</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-        <span class="n">camera_angle1</span><span class="o">=</span><span class="p">(</span><span class="mf">9.00833898096139</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.46583878838201</span><span class="p">,</span> <span class="mf">63.542392104418575</span><span class="p">),</span>
-        <span class="n">camera_angle2</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">6.2050461716664795</span><span class="p">,</span> <span class="mf">25.240752035065167</span><span class="p">,</span> <span class="o">-</span><span class="mf">103.13040370948575</span><span class="p">),</span>
-        <span class="n">camera_zoom</span><span class="o">=</span><span class="mf">0.28</span><span class="p">,</span>
-        <span class="c1">#raw_contrast_limits=(126,482),</span>
-        <span class="n">raw_contrast_limits_magenta</span><span class="o">=</span><span class="p">(</span><span class="mi">78</span><span class="p">,</span> <span class="mi">480</span><span class="p">),</span>
-        <span class="n">raw_contrast_limits_cyan</span><span class="o">=</span><span class="p">(</span><span class="mi">73</span><span class="p">,</span> <span class="mi">1800</span><span class="p">),</span>
-        <span class="c1">#raw_gamma=0.67,</span>
-        <span class="n">raw_gamma_magenta</span><span class="o">=</span><span class="mf">0.60</span><span class="p">,</span>
-        <span class="n">raw_gamma_cyan</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span>
+        <span class="n">camera_angle1</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">90.12192998901911</span><span class="p">,</span> <span class="o">-</span><span class="mf">11.908473792258878</span><span class="p">,</span> <span class="mf">59.457226017303086</span><span class="p">),</span>
+        <span class="n">camera_angle2</span><span class="o">=</span><span class="p">(</span><span class="mf">7.6471045194606635</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.182789486876842</span><span class="p">,</span> <span class="mf">72.3066107960275</span><span class="p">),</span>
+        <span class="n">camera_zoom</span><span class="o">=</span><span class="mf">0.42</span><span class="p">,</span>
+        <span class="n">raw_contrast_limits_magenta</span><span class="o">=</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">2742</span><span class="p">),</span>
+        <span class="n">raw_contrast_limits_cyan</span><span class="o">=</span><span class="p">(</span><span class="mi">335</span><span class="p">,</span> <span class="mi">2944</span><span class="p">),</span>
+        <span class="n">raw_gamma_magenta</span><span class="o">=</span><span class="mf">0.78</span><span class="p">,</span>
+        <span class="n">raw_gamma_cyan</span><span class="o">=</span><span class="mf">0.76</span><span class="p">,</span>
         <span class="n">magenta_colormap</span> <span class="o">=</span><span class="s1">&#39;magenta&#39;</span><span class="p">,</span>
-        <span class="n">cyan_colormap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">,</span>
-        <span class="n">opacity_cyan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">opacity_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">cyan_colormap</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span>
+        <span class="n">opacity_cyan</span><span class="o">=</span><span class="mf">0.64</span><span class="p">,</span>
         <span class="n">rendering_dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">label_blending</span><span class="o">=</span><span class="s1">&#39;translucent_no_depth&#39;</span><span class="p">,</span>
-        <span class="c1"># raw_rescale_factor =[9.210526, 1, 1],</span>
-        <span class="c1"># label_rescale_factor = [9.210526, 1, 1],</span>
-        <span class="n">raw_rescale_factor</span> <span class="o">=</span><span class="p">[</span><span class="mf">2.564</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-        <span class="n">label_rescale_factor</span> <span class="o">=</span><span class="p">[</span><span class="mf">2.564</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-        <span class="c1">#raw_rescale_factor=[1, 1, 1],</span>
-        <span class="c1">#label_rescale_factor=[1, 1, 1],</span>
+        <span class="n">raw_rescale_factor</span> <span class="o">=</span><span class="p">[</span><span class="mf">3.58</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
         <span class="n">establish_param</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">set_label_colormap</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span>
         <span class="n">scale_to_save</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-        <span class="n">display_rawcancersignal</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">imagename_cyan</span><span class="o">=</span><span class="s2">&quot;1_CH488_000000.tif&quot;</span><span class="p">,</span>
         <span class="n">imagename_magenta</span><span class="o">=</span><span class="s2">&quot;1_CH594_000000.tif&quot;</span>
 
     <span class="p">)</span>
     <span class="n">imagevisu</span> <span class="o">=</span> <span class="n">image_visualizer</span><span class="p">()</span>
-    <span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/xenograft_experiments/MDA-MB-231/20230720_control/Experiment0010&quot;</span>
-    <span class="n">experimentfolder_result</span> <span class="o">=</span> <span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">+</span> <span class="s2">&quot;_highres_visualized&quot;</span>
-    <span class="n">imagevisu</span><span class="o">.</span><span class="n">segmentationfolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="s1">&#39;high_stack_001&#39;</span><span class="p">)</span>
+
+    <span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">=</span> <span class="s2">&quot;/archive/bioinformatics/Danuser_lab/Fiolka/Manuscripts/2023-multiscale/rawdata/Spheroid/Low_resolution/&quot;</span>
+    <span class="n">experimentfolder_result</span> <span class="o">=</span> <span class="n">imagevisu</span><span class="o">.</span><span class="n">rawdatafolder</span> <span class="o">+</span> <span class="s2">&quot;_lowres_visualized_rotated&quot;</span>
     <span class="n">imagevisu</span><span class="o">.</span><span class="n">visualizedfolder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">experimentfolder_result</span><span class="p">,</span> <span class="s1">&#39;visualized_frame&#39;</span><span class="p">)</span>
-    <span class="n">imagevisu</span><span class="o">.</span><span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;high_stack_002&#39;</span>
     <span class="n">imagevisu</span><span class="o">.</span><span class="n">establish_param</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">imagevisu</span><span class="o">.</span><span class="n">load_images</span><span class="p">(</span><span class="n">visualization_param</span><span class="p">)</span>
 

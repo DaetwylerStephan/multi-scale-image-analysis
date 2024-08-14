@@ -139,6 +139,7 @@ can be saved (imagefilepath_labelled).</p>
 <span class="n">cutoff_lateralPSFvalue</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">cutoff_axialPSFvalue</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">showbeadplot</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">averageplotstepsize</span> <span class="o">=</span> <span class="mi">100</span>
 </pre></div>
 </div>
 <p>Parameter explanation:
@@ -155,7 +156,9 @@ with the physical sizes of each pixel (e.g. in micrometer) for lateral (pixelval
 axial (pixelvalue_lateral_um) directions. As preparation of bead samples often leads to aggregates,
 a maximally expected value of the PSF (in physical distances) can be chosen to exclude these aggregates
 from the visualization and median calculation (cutoff_lateralPSFvalue, cutoff_axialPSFvalue). To show
-the resulting plot of PSF values along the image directions while running the script, select: showbeadplot = True</p>
+the resulting plot of PSF values along the image directions while running the script, select: showbeadplot = True.
+To plot the change of the average of multiple beads in this plot, set the pixel range over which beads
+are averaged with: averageplotstepsize = 100</p>
 <p>To run the script after changing the parameters, use the terminal with the activated conda environment (see Installation),
 navigate to the folder and enter:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp gp-VirtualEnv">(imageanalysis_env)</span> <span class="go">~/Tools$  python PSF_measurements.py</span>

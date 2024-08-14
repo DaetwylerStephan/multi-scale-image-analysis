@@ -133,7 +133,7 @@ specify cropping parameters.</p>
 <span class="n">i_stitch</span><span class="o">.</span><span class="n">reference_displacement_y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2500</span><span class="p">,</span> <span class="mi">4962</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Next, <a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.iterate_overfolder" title="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.iterate_overfolder"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.iterate_overfolder()</span></code></a>
+<p>Next, <code class="xref py py-meth docutils literal notranslate"><span class="pre">multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher.iterate_overfolder()</span></code>
 iterates over all folders of the experiment folder with the following structure:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.
 |-- experimentfolder_parent
@@ -152,7 +152,7 @@ iterates over all folders of the experiment folder with the following structure:
 <span class="n">channelnames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1_CH594_000000&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>The stitching class <a class="reference internal" href="multiScaleAnalysis.stitching.html#multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher" title="multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher()</span></code></a> then
+<p>The stitching class <code class="xref py py-meth docutils literal notranslate"><span class="pre">multiScaleAnalysis.stitching.multiScale_stitching.image_stitcher()</span></code> then
 calculates the maximum intensity projections of each tile to reduce the computational workload.
 Afterwards,  Fast Fourier transform-based cross-correlations on the overlapping sections of the background subtracted maximum intensity projections are calculated to obtain the translational shift between tiles as the highest value of all cross-correlations.
 Lastly, the individual tiles are fused using a sigmoidal blending function. Alternatively, also fusion with maximum intensity projections is available.</p>

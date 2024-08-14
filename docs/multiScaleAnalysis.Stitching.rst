@@ -1,13 +1,13 @@
-multiScaleAnalysis.stitching package
+multiScaleAnalysis.Stitching package
 ====================================
 
 Submodules
 ----------
 
-multiScaleAnalysis.stitching.multiScale\_stitching module
+multiScaleAnalysis.Stitching.multiScale\_stitching module
 ---------------------------------------------------------
 
-.. automodule:: multiScaleAnalysis.stitching.multiScale_stitching
+.. automodule:: multiScaleAnalysis.Stitching.multiScale_stitching
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ multiScaleAnalysis.stitching.multiScale\_stitching module
 Module contents
 ---------------
 
-.. automodule:: multiScaleAnalysis.stitching
+.. automodule:: multiScaleAnalysis.Stitching
    :members:
    :undoc-members:
    :show-inheritance:

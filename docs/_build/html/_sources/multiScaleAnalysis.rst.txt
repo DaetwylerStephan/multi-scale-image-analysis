@@ -7,11 +7,10 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   multiScaleAnalysis.SegmentationHighres
    multiScaleAnalysis.SegmentationLowres
    multiScaleAnalysis.Tools
-   multiScaleAnalysis.stitching
-   multiScaleAnalysis.visualization
+   multiScaleAnalysis.Stitching
+   multiScaleAnalysis.Visualization
 
 Module contents
 ---------------

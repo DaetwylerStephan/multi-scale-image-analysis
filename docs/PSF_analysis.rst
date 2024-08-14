@@ -45,6 +45,7 @@ Next, define parameters used for calculation of the PSFs:
     cutoff_lateralPSFvalue = 1
     cutoff_axialPSFvalue = 2
     showbeadplot = True
+    averageplotstepsize = 100
 
 Parameter explanation:
 In the script, beads are identified as pixels with an intensity higher
@@ -61,7 +62,10 @@ with the physical sizes of each pixel (e.g. in micrometer) for lateral (pixelval
 axial (pixelvalue_lateral_um) directions. As preparation of bead samples often leads to aggregates,
 a maximally expected value of the PSF (in physical distances) can be chosen to exclude these aggregates
 from the visualization and median calculation (cutoff_lateralPSFvalue, cutoff_axialPSFvalue). To show
-the resulting plot of PSF values along the image directions while running the script, select: showbeadplot = True
+the resulting plot of PSF values along the image directions while running the script, select: showbeadplot = True.
+To plot the change of the average of multiple beads in this plot, set the pixel range over which beads
+are averaged with: averageplotstepsize = 100
+
 
 To run the script after changing the parameters, use the terminal with the activated conda environment (see Installation),
 navigate to the folder and enter:

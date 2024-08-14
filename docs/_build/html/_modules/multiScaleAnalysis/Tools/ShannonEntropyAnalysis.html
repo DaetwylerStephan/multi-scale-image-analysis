@@ -153,6 +153,7 @@
 
     <span class="n">parentfoldertimeseries</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parentfolder</span><span class="p">,</span> <span class="s2">&quot;timeseries&quot;</span><span class="p">)</span>
     <span class="n">result_xlsxfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parentfolder</span><span class="p">,</span> <span class="s2">&quot;ShannonEntropyValues.xlsx&quot;</span><span class="p">)</span>
+    <span class="n">result_figure</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parentfolder</span><span class="p">,</span> <span class="s2">&quot;ShannonEntropyPlot.jpg&quot;</span><span class="p">)</span>
 
     <span class="c1">#get all timepoints from folder</span>
     <span class="n">dir_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">parentfoldertimeseries</span><span class="p">)</span>
@@ -170,6 +171,7 @@
 
     <span class="c1">#plot result</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">timepointlist</span><span class="p">)),</span> <span class="n">DCT_array</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">result_figure</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
     <span class="c1">## save to xlsx file</span>

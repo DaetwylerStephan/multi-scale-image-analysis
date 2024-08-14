@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
+  <title>multiScaleAnalysis.Visualization.visualize_with_napariHighRes_nuclei_histones &mdash; Self-driving, multi-scale image analysis 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
 
@@ -87,7 +87,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones</li>
+      <li class="breadcrumb-item active">multiScaleAnalysis.Visualization.visualize_with_napariHighRes_nuclei_histones</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -96,7 +96,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones</h1><div class="highlight"><pre>
+  <h1>Source code for multiScaleAnalysis.Visualization.visualize_with_napariHighRes_nuclei_histones</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">napari</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -105,14 +105,14 @@
 <span class="kn">from</span> <span class="nn">tifffile</span> <span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imwrite</span>
 
 <div class="viewcode-block" id="image_visualizer2">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2">[docs]</a>
 <span class="k">class</span> <span class="nc">image_visualizer2</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">       This class generates visualizations of highres segmentation results.</span>
 <span class="sd">       &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="image_visualizer2.__init__">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2.__init__">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2.__init__">[docs]</a>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize data folders and start Napari</span>
@@ -129,7 +129,7 @@
 
 
 <div class="viewcode-block" id="image_visualizer2.load_images">
-<a class="viewcode-back" href="../../../multiScaleAnalysis.visualization.html#multiScaleAnalysis.visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2.load_images">[docs]</a>
+<a class="viewcode-back" href="../../../multiScaleAnalysis.Visualization.html#multiScaleAnalysis.Visualization.visualize_with_napariHighRes_nuclei_histones.image_visualizer2.load_images">[docs]</a>
     <span class="k">def</span> <span class="nf">load_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vis_param</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;&quot;</span>
 <span class="sd">        Load images from folder and render them according Visualization parameters specified.</span>
