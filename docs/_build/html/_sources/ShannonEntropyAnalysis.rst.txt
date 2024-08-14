@@ -33,7 +33,8 @@ The data in the parentfolder should be organized in the following way:
 Output
 ======
 
-The script will generate a plot of the Shannon Entropy values over time and save the data as an Excel file.
+The script will generate a plot of the Shannon Entropy values over time and save the plot and the data as an Excel file.
+
 
 
 Testdata set for PSF characterization
