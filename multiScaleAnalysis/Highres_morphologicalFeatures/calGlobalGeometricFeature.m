@@ -1,29 +1,28 @@
 function [globalGeoFeature convexImage Image] = calGlobalGeometricFeature(image,varargin)
 %calGeoFea calculates the geometric features for an image.
 % It uses the regionprop3|regionprop for a 3D|2D image
-% 
-% INPUT       
-% image    3D image (matrix)
-% 
-% OUTPUT      
-% globalGeoFeature    structure array of global geometric features of an
+%
+% INPUT image    3D image (matrix)
+%
+% OUTPUT globalGeoFeature    structure array of global geometric features
+% of an
 %                     cell image
-% convexImage         convex image of the cell (output of regionprop)
-% Image               image of the cell without blancked frames
-% 
+% convexImage         convex image of the cell (output of regionprop) Image
+% image of the cell without blancked frames
+%
 % Hanieh Mazloom-Farsibaf, Gaudenz Danuser lab, 2020
 
 %calculate the basic global features from regionprop3
 if ~size(image,3) > 1 % 3D image
     error('Input should be 3D image')
-else 
+else
     s = regionprops3(image,"ConvexHull","Volume",'ConvexImage',...
         'ConvexVolume','Centroid',"BoundingBox",'Extent','Solidity','Image', ...
         'SurfaceArea','SubarrayIdx','EquivDiameter','PrincipalAxisLength');
     s(s.Volume==0,:)=[]; %to clean up the nonrelevent output of regionprop3
-    globalGeoFeature.Volume=s.Volume; % in pixels^3 
+    globalGeoFeature.Volume=s.Volume; % in pixels^3
     globalGeoFeature.SurfaceArea= s.SurfaceArea;
-    globalGeoFeature.Solidity= s.Solidity; 
+    globalGeoFeature.Solidity= s.Solidity;
     globalGeoFeature.EquivDiameter=s.EquivDiameter;
     globalGeoFeature.CompactNess= s.SurfaceArea^1.5/s.Volume;
     globalGeoFeature.Sphericity= ((pi)^(1/3)*(6*s.Volume)^(2/3))/s.SurfaceArea;
@@ -38,7 +37,7 @@ else
     s_convHull(s_convHull.Volume==0,:)=[]; %to clean up the nonrelevent output of regionprop3
     globalGeoFeature.Roughness=s.SurfaceArea/s_convHull.SurfaceArea;
 
-%calculate the longest length
+    %calculate the longest length
     points3D=s.ConvexHull{end}; % vertex coordinate of a polygon
     distTemp=zeros(size(points3D,1));
     for ii=1:size(points3D,1)
@@ -53,11 +52,18 @@ else
 
     globalGeoFeature.NShortLength=min(distTemp(:))/s.Volume;
     globalGeoFeature.ShortLength=min(distTemp(:));
-    
-    %calculate the circumscribed sphericity, 
+
+    %calculate the circumscribed sphericity,
     [rows, cols, z] = findND(image); %Find non-zero elements in ND-arrays
     NonZeroMatrix = [rows, cols, z];
-    [circumscribed_center, circumscribed_radius] = minboundsphere(NonZeroMatrix); %find the radius and center of the minimum bounding sphere using external function.
+    % [circumscribed_center, circumscribed_radius] = minboundsphere(NonZeroMatrix); % random search, not optmized 
+    % I used this package based on Ritter's algorithm 
+    %https://www.mathworks.com/matlabcentral/fileexchange/48725-exact-minimum-bounding-spheres-and-circles
+    [circumscribed_radius, circumscribed_center] = ApproxMinBoundSphereND(NonZeroMatrix);
+
+
+    %find the radius and center of the minimum bounding sphere using external
+    %function.
     %property of circumscribed Sphere
     CirumscribedSphere.center=circumscribed_center;
     CirumscribedSphere.radius=circumscribed_radius;
@@ -66,7 +72,7 @@ else
     globalGeoFeature.CirumscribedSphere=CirumscribedSphere;
     globalGeoFeature.CirmuscribedSurfaceRatio=globalGeoFeature.SurfaceArea/ ...
         CirumscribedSphere.surfaceArea
-    
+
     %calculate the inscribed sphericity, (Roshan),
     [inscribed_radius, inscribed_center] = findInteriorMostPoint(image); %find the innermost point of the image; this will be
     %property of inscribed Sphere
@@ -75,14 +81,14 @@ else
     InscribedSphere.volume=4/3 * pi * (inscribed_radius);
     InscribedSphere.surfaceArea = 4 * pi * (inscribed_radius ^2);
     globalGeoFeature.InscribedSphere=InscribedSphere;
-    
+
     %define the various sphericity
     VolumeSphericity=globalGeoFeature.Volume/CirumscribedSphere.volume;
     globalGeoFeature.VolumeSphericity=VolumeSphericity;
-    
+
     RadiusSphericity=(globalGeoFeature.EquivDiameter/2)/CirumscribedSphere.radius;
     globalGeoFeature.RadiusSphericity=RadiusSphericity;
-    
+
     RatioSphericity=InscribedSphere.radius/CirumscribedSphere.radius;
     globalGeoFeature.RatioSphericity=RatioSphericity;
 

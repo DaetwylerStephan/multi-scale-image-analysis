@@ -1,8 +1,8 @@
 %% run a random dist inside whole fish and calculate the Hopkins 
 
 % set the directory 
-fileDir = '/archive/bioinformatics/Danuser_lab/zebrafish/analysis/Hanieh/Stephan/lowRes/multiscale_data/xenograft_experiments/macrophage_control/20230602_Daetwyler_Xenograft/Experiment0013_stitched/fish3/segmentationWholeFish_StephanFijiCode/fish_volume_singleComponent'; 
-saveDirectory = '/archive/bioinformatics/Danuser_lab/zebrafish/analysis/Hanieh/Stephan/lowRes/multiscale_data/xenograft_experiments/macrophage_control/20230602_Daetwyler_Xenograft/Experiment0013_stitched/fish3/segmentationWholeFish_StephanFijiCode/Testcode/fish_volume_RandomDistHopkins_d3_p30_N350'; 
+fileDir = ''; %path to data
+saveDirectory = ''; % path to save results 
 if ~isdir(saveDirectory) mkdir(saveDirectory); end 
 
 

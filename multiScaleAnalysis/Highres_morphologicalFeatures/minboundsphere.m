@@ -150,7 +150,8 @@ else
     iter = 0;
     centeri = inf(1,3);
     radiusi = inf;
-    while flag && (iter < 12)
+%     while flag && (iter < 12)  % 12 is low, we need to have more search for center
+    while flag && (iter < round(n/3))  % I consider 33% of the convex point for maxIter - HMF
       iter = iter + 1;
       
       % get the enclosing sphere for the current set

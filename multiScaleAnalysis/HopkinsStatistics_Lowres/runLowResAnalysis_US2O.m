@@ -1,14 +1,9 @@
 % script for running low resolution data
 %% set directory
-imageDirectory = '/archive/bioinformatics/Danuser_lab/zebrafish/analysis/Hanieh/Stephan/lowRes/multiscale_data/xenograft_experiments/macrophage_control/20230602_Daetwyler_Xenograft/Experiment0013_stitched/fish3/segmentationWholeFish_StephanFijiCode/fish_volume'; 
-saveDirectory = '/archive/bioinformatics/Danuser_lab/zebrafish/analysis/Hanieh/Stephan/lowRes/multiscale_data/xenograft_experiments/macrophage_control/20230602_Daetwyler_Xenograft/Experiment0013_stitched/fish3/segmentationWholeFish_StephanFijiCode/Hopkins_d3_Sample30_N200'; 
-xlsxDir = '/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/xenograft_experiments/macrophage_control/20230602_Daetwyler_Xenograft/Experiment0013_stitched/fish3_segmented_xlsx/1_CH488_000000';
+imageDirectory = ''; %path to data
+saveDirectory = ''; % path to save results
+xlsxDir = ''; % path to excel file that contains cell centroids in low resulotion data
 
-% 
-% imageDirectory = '/archive/bioinformatics/Danuser_lab/zebrafish/analysis/Hanieh/Stephan/lowRes/multiscale_data/xenograft_experiments/U2OS_WT/20220729_Daetwyler_U2OS/Experiment0001_stitched/fish2/segmentationWholeFish_StephanFijiCode/fish_volume';
-% saveDirectory = '/archive/bioinformatics/Danuser_lab/zebrafish/analysis/Hanieh/Stephan/lowRes/multiscale_data/xenograft_experiments/U2OS_WT/20220729_Daetwyler_U2OS/Experiment0001_stitched/fish2/segmentationWholeFish_StephanFijiCode/Hopkins_d3_Sample30_N200';
-% % centroid of cell in and excel file - cells have been segmented
-% xlsxDir = '/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/xenograft_experiments/U2OS_WT/20220729_Daetwyler_U2OS/Experiment0001_stitched/fish2_segmented_xlsx/1_CH488_000000';
 saveDirConv = [saveDirectory filesep 'fish_volume_convHull'];
 saveDirSingleComp = [saveDirectory filesep 'fish_volume_singleComponent'];
 
@@ -50,8 +45,7 @@ for iTime = 0:97
     imwrite(Image3dMIP,fullfile(saveDirConv,savename));
 
     % flag for using the convexhull image
-    params.useConvHulfile:///project/bioinformatics/Danuser_lab/zebrafish/analysis/Hanieh/Stephan/codes/lowResAnalysis/runLowResAnalysis_RandomDist.m
-limage = 0;
+    params.useConvHullimage = 0;
     if params.useConvHullimage
         image = image3D_ConvHull;
     else
@@ -88,7 +82,7 @@ limage = 0;
     % coordinate of data points
     dataXYZ = [X Y Z];
     ParNum = size(X,1);
-    NTrial = 200;
+    NTrial = 350;
     %RandNum = ParNum*NTrial; % create more random position in allowed region then run the for loop for it later
     % generate the random point
     %run the cluster tendency

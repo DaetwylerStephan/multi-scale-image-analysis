@@ -2,9 +2,8 @@
 % this script runs all functions for global geometric features for a series
 % of images captured in zebrafish. 
 
-imageDirectory = '/archive/bioinformatics/Danuser_lab/zebrafish/analysis/Hanieh/Stephan/HighRes/multiscale_data/xenograft_experiments/U2OS_WT/20220729_Daetwyler_U2OS/Experiment00001_highres_manuallyCompiled2/high_stack_002';
-saveDirectory = '/archive/bioinformatics/Danuser_lab/zebrafish/analysis/Hanieh/Stephan/HighRes/multiscale_data/xenograft_experiments/U2OS_WT/20220729_Daetwyler_U2OS/Experiment00001_highres_manuallyCompiled2/high_stack_002/TestCodes_check';
-
+imageDirectory = ''; % path to data
+saveDirectory = ''; %path to save results
 timePoints = [0:49]; 
 %% Step1: calculate the global geometrical features
 filename = 'segmentedImage.tif'; % filename for cropped single cell
@@ -127,7 +126,7 @@ endTime= max(statMat(:,end)); %
 startTime = min(statMat(:,end));
 
 %boosttrapping parameters for pvalue
-Ntrials=300;  % number of iteration 
+Ntrials=500;  % number of iteration 
 metric='TukeyMedian';  % other matric: ConvexHull , mean ,TukeyMedian
 genSample='randomLabel'; %method to sample the point for boostrapping
 
@@ -136,7 +135,7 @@ Pvalue_matrix = nan(max(Time_New));
 
 % calculate the similarity matrix
 for iTime = startTime:endTime
-    time1 = iTime;
+    time1 = iTime
     Ind = find(statMat(:,end) == time1);
 
     %define dist1 for arbitary time point
@@ -144,16 +143,17 @@ for iTime = startTime:endTime
 
     %     define dist2 for another time point
     for iTime2 = startTime:endTime
-        time2 = iTime2;
-        if time2 ~= time1
+        time2 = iTime2
+         if time2 ~= time1
             Ind = find(Time_New == time2);
             %         define dist2 for arbitary time point
             dist2 = score(Ind,1:N_dim);
    
             [pValue compDist comp2Dists] =bootstrapping2DistComp(dist1,dist2,Ntrials,metric,genSample);
             %iTime starts from 0
-            Pvalue_matrix(iTime+1,iTime2+1) = pValue;
-        end
+            Pvalue_matrix(iTime,iTime2) = pValue;
+            % Pvalue_matrix(iTime+1,iTime2+1) = pValue;
+         end
     end
 
 end
