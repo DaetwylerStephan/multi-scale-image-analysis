@@ -21,7 +21,6 @@ class image_visualizer():
         self.region = "high_stack_001"
         self.establish_param = 0
 
-
         self.viewer = napari.Viewer()
 
 
@@ -130,7 +129,6 @@ if __name__ == '__main__':
         label_rescale_factor =[3.418, 1, 1],
         #raw_rescale_factor=[1, 1, 1],
         #label_rescale_factor=[1, 1, 1],
-        establish_param=0,
         set_label_colormap='default',
         scale_to_save=5,
         display_rawcancersignal=0,
@@ -143,7 +141,7 @@ if __name__ == '__main__':
     imagevisu.rawdatafolder = "/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/xenograft_experiments/U2OS_WT/20220729_Daetwyler_U2OS/Experiment0001"
     experimentfolder_result = imagevisu.rawdatafolder + "_highres_manuallyCompiled2"
     imagevisu.segmentationfolder = os.path.join(experimentfolder_result, 'high_stack_002')
-    imagevisu.visualizedfolder = os.path.join(experimentfolder_result, 'visualized_bright2')
+    imagevisu.visualizedfolder = os.path.join(experimentfolder_result, 'visualized_bright3')
     imagevisu.region = 'high_stack_002'
     imagevisu.establish_param = 0
     imagevisu.load_images(visualization_param)
