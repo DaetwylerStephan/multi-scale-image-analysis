@@ -222,6 +222,98 @@ class image_stitcher():
 
         return image_weighted
 
+    def perform_3D_fusion_stack(self, mode="weighted"):
+        """
+        Perform stack wise fusion on 3D stack.
+
+        :param mode: select mode of image fusion (maximum or weighted)
+        :return: fused_image. 3D image fused stack.
+        """
+
+        # calculate overall image shape
+        imagelength_y = np.max(self.calculated_displacement_y) + self.rawimages[len(self.rawimages) - 1].shape[2]
+        imagelength_x = 0
+        for i in range(len(self.maxprojections)):
+            current_x = self.maxprojections[i].shape[0] + self.calculated_displacement_x[i]
+            imagelength_x = max(current_x, imagelength_x)
+        nb_planes = self.rawimages[0].shape[0]
+
+        fused_image = np.zeros(shape=(nb_planes, imagelength_x, imagelength_y), dtype='uint16')
+
+        #fill in images without considering overlap
+        for iter_image in range(len(self.rawimages)):
+            start_x = self.calculated_displacement_x[iter_image]
+            end_x = start_x + self.rawimages[iter_image].shape[1]
+            start_y = self.calculated_displacement_y[iter_image]
+            end_y = start_y + self.rawimages[iter_image].shape[2]
+            fused_image[:,start_x:end_x, start_y:end_y] = self.rawimages[iter_image]
+        print("filled in image")
+
+
+        #resolve overlap regions
+        for iter_image in range(len(self.rawimages) - 1):
+
+            #calculate overlap
+            end_y = self.calculated_displacement_y[iter_image] + self.rawimages[iter_image].shape[2]
+            print(self.calculated_displacement_y)
+            print(iter_image)
+            startposition_next_y = self.calculated_displacement_y[(iter_image + 1)]
+            overlapsize = end_y - startposition_next_y
+
+            # define sigmoidal blending curves
+            n1sigmoidrange = np.linspace(-6, 6, num=overlapsize)  # use linspace not arrange here
+            n1sigmoid = 1 / (1 + np.exp(n1sigmoidrange))
+            inverse_1sigmoid = 1 - n1sigmoid
+
+            # make sigmoidal arrays
+            n2sigmoid = np.tile(n1sigmoid, (imagelength_x, 1))
+            n2_inversesigmoid = np.tile(inverse_1sigmoid, (imagelength_x, 1))
+            n3sigmoid = np.tile(n2sigmoid, (nb_planes, 1, 1))
+            n3_inversesigmoid = np.tile(n2_inversesigmoid, (nb_planes, 1, 1))
+
+            #get image information in overlap region
+            image_first_start = self.rawimages[iter_image].shape[2] - overlapsize
+            image_first_end = self.rawimages[iter_image].shape[2]
+            image_second_start = 0
+            image_second_end = overlapsize
+
+            start_x = self.calculated_displacement_x[iter_image]
+            end_x = start_x + self.rawimages[iter_image].shape[1]
+            start_x_second = self.calculated_displacement_x[iter_image+1]
+            end_x_second = start_x_second + self.rawimages[iter_image+1].shape[1]
+
+            compileimage_first = np.zeros(shape=(nb_planes, imagelength_x, overlapsize), dtype='uint16')
+            compileimage_first[:,start_x:end_x,:] = self.rawimages[iter_image][:,:,image_first_start:image_first_end]
+
+            compileimage_second = np.zeros(shape=(nb_planes, imagelength_x, overlapsize), dtype='uint16')
+            compileimage_second[:,start_x_second:end_x_second,:] = self.rawimages[iter_image+1][:,:,image_second_start:image_second_end]
+
+            fillinarray = np.ceil(compileimage_first*n3sigmoid + n3_inversesigmoid * compileimage_second)
+            fillinarray.astype("uint16")
+            fillinarray.shape
+
+            fused_image[:,:, startposition_next_y:end_y]=fillinarray
+        #print("resolved overlap")
+        # experimentfolder_test = "/archive/bioinformatics/Danuser_lab/Fiolka/LabMembers/Stephan/multiscale_data/amatruda_lab/20241108_Daetwyler_Amatruda/Experiment0002/test.tif"
+        #
+        # imwrite(experimentfolder_test, fused_image)
+
+        return fused_image
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def perform_3D_fusion(self, mode="weighted"):
         """
         Perform plane-by-plane wise fusion on 3D stack.
@@ -312,7 +404,10 @@ class image_stitcher():
         print("calculated displacement y " + str(self.calculated_displacement_y))
         print("calculated displacement x " + str(self.calculated_displacement_x))
 
-        fused_image = self.perform_3D_fusion()
+        # fused_image = self.perform_3D_fusion()
+
+
+        fused_image = self.perform_3D_fusion_stack()
 
         #clip to part with only data (remove 0 pixels at border
         if clipped == 1:
@@ -389,16 +484,20 @@ class image_stitcher():
             experimentfolder_timepoint = os.path.join(experimentfolder_parent, i_time)
 
             for imagechannelname in channelnames:
-                imagelist = [os.path.join(experimentfolder_timepoint, region[0], imagechannelname + ".tif"),
-                             os.path.join(experimentfolder_timepoint, region[1], imagechannelname + ".tif"),
-                             os.path.join(experimentfolder_timepoint, region[2], imagechannelname + ".tif")]
+                if len(region)>2:
+                    imagelist = [os.path.join(experimentfolder_timepoint, region[0], imagechannelname + ".tif"),
+                                 os.path.join(experimentfolder_timepoint, region[1], imagechannelname + ".tif"),
+                                 os.path.join(experimentfolder_timepoint, region[2], imagechannelname + ".tif")]
+                else:
+                    imagelist = [os.path.join(experimentfolder_timepoint, region[0], imagechannelname + ".tif"),
+                                 os.path.join(experimentfolder_timepoint, region[1], imagechannelname + ".tif")]
 
                 #check if you want to optimize alignment at all, if yes, which channel you want to optimize
                 # (e.g. cancer cells have almost no signal and any alignment there is faulty
                 optimize_channelalignment = optimize_alignment
                 if optimize_alignment==1:
                     #only align vascular channel / one channel so that other channels get same Stitching parameters
-                    if imagechannelname=="1_CH594_000000":
+                    if imagechannelname=="1_CH488_000000":
                         optimize_channelalignment =1
                     else:
                         optimize_channelalignment =0
@@ -448,7 +547,7 @@ class image_stitcher():
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-
+    print("starting")
     # =============================================================================
     # initialization of class
     # =============================================================================
