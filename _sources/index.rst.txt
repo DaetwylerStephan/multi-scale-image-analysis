@@ -10,7 +10,7 @@ Self-driving, multi-scale image analysis
 and Matlab code to analyse custom multi-scale light-sheet microscope data
 from continuous, long-term, simultaneous low- and high-resolution imaging.
 
-If you use this code, please cite our preprint:
+If you use this code, please cite our paper:
 Imaging of cellular dynamics from a whole organism to subcellular scale with self-driving, multiscale microscopy. Nat Methods 22, 569–578 (2025).
 by Stephan Daetwyler, Hanieh Mazloom-Farsibaf, Felix Y. Zhou, Dagan Segal,
 Etai Sapoznik, Jill M. Westcott, Rolf A. Brekken, Gaudenz Danuser and Reto Fiolka
