@@ -2,8 +2,9 @@
 
 This repository contains the software to analyze data from a self-driving, multi-scale microscope and tools to process and analyse the resulting data.
 
-A preprint about this work is available:
-https://www.biorxiv.org/content/10.1101/2024.02.28.582579v1
+If you use this code, please cite our paper: Daetwyler, S., Mazloom-Farsibaf, H., Zhou, F.Y. et al. Imaging of cellular dynamics from a whole organism to subcellular scale with self-driving, multiscale microscopy. Nat Methods 22, 569–578 (2025).
+
+https://doi.org/10.1038/s41592-025-02598-2
 
 and detailed documentation with instructions on how to run the code is available here: 
 https://daetwylerstephan.github.io/multi-scale-image-analysis/
